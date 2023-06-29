@@ -1,0 +1,170 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    /* font-size: 'Poppins'; */
+    margin: 0px;
+    justify-content: center;
+    /* overflow: hidden; */
+}
+
+.header {
+    margin: 0px 0px 0px 0px;
+    height: 19vh;
+    padding: 10px;
+    padding-right: 0;
+    background-color: #E3E9FC;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    z-index: 2;
+}
+
+.nav-bar {
+    /* padding: 0.7vw; */
+    margin-bottom: 1.5vh;
+    background-color: #37beb0;
+    right: 0;
+    height: 25%;
+    width: 60%;
+    border-radius: 16px 0 0 20px;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 7px gray;
+}
+
+.main-buttons {
+    display: flex;
+}
+
+.nav-bar-button {
+    /*Style of buttons*/
+    color: white;
+    background-color: #37beb0;
+    border: 0;
+    width: 5.5vw;
+    height: 3.5vh;
+    border-radius: 10px;
+    display: block;
+    margin: 8px 10px 10px 10px;
+    /* margin-right: 2vw;
+    margin-bottom: 0px; */
+    /* Font Style */
+    font-weight: bold;
+    font-size: 1.2vw;
+    text-shadow: 0 3px 3px gray;
+}
+
+#homeButton {
+    width: 11vw;
+}
+
+#logo {
+    position: absolute;
+    margin: 0 0 1vh 3vw ;
+    /* margin-left: 3vw; */
+    width: 28vw;
+}
+
+.register-area {
+    display: flex;
+    margin-right: 4vw;
+}
+
+#register-button {
+    color: white;
+    background-color: #37BEB0;
+    border: 0;
+    font-family: 'Poppins';
+    font-weight: 100;
+    font-size: 1.2vw;
+    text-shadow: 0 2px 5px darkslategray;
+    
+}
+
+#login-button {
+    background-color: #3E7A29;
+    color: white;
+    width: 5.5vw;
+    border: 0;
+    text-shadow: 0 0;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+.poppinsFont {
+    font-family: 'Poppins';
+    font-weight: bolder;
+}
+
+
+/* ============================================================= */
+
+.carousel{
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
+}
+
+.carousel-item img {
+    display: block;
+    width: 100%;
+    height: 75vh;
+    object-fit: cover;
+}
+
+/* ============================================================= */
+.search-area {
+    height: 25vh;
+    background-color: #37BEB0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-icon {
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+}
+
+#input-local {
+    width: 60%;
+    height: 20%;
+    margin-top: 7%;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
+    padding-left: 15px;
+    background-color: #D9D9D9;
+    /* Font */
+    font-size: 1.5rem;
+}
+
+/* ============================================================= */
+.recomendations {
+    height: 35vh;
+}
+
+
+#footer {
+    height: 5vh;
+    background-color: black;
+}
+
+
+/* Reactions */
+
+.nav-bar-button:hover {
+    background-color: #E3E9FC;
+    color: #37BEB0;
+    text-shadow: 0 3px 2px lightgray;
+}
+
+#input-local::placeholder {
+    color: black;
+    opacity: 0.4;
+}
