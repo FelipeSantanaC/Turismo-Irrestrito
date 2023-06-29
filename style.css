@@ -1,9 +1,7 @@
 body {
     font-family: 'Poppins', sans-serif;
-    /* font-size: 'Poppins'; */
     margin: 0px;
     justify-content: center;
-    /* overflow: hidden; */
 }
 
 .header {
@@ -14,7 +12,6 @@ body {
     background-color: #E3E9FC;
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -22,12 +19,11 @@ body {
 }
 
 .nav-bar {
-    /* padding: 0.7vw; */
     margin-bottom: 1.5vh;
     background-color: #37beb0;
     right: 0;
-    height: 25%;
-    width: 60%;
+    height: 5vh;
+    width: 55vw;
     border-radius: 16px 0 0 20px;
     position: absolute;
     display: flex;
@@ -53,7 +49,7 @@ body {
     margin-bottom: 0px; */
     /* Font Style */
     font-weight: bold;
-    font-size: 1.2vw;
+    font-size: 0.9rem;
     text-shadow: 0 3px 3px gray;
 }
 
@@ -64,7 +60,6 @@ body {
 #logo {
     position: absolute;
     margin: 0 0 1vh 3vw ;
-    /* margin-left: 3vw; */
     width: 28vw;
 }
 
@@ -79,7 +74,7 @@ body {
     border: 0;
     font-family: 'Poppins';
     font-weight: 100;
-    font-size: 1.2vw;
+    font-size: 0.9rem;
     text-shadow: 0 2px 5px darkslategray;
     
 }
@@ -98,7 +93,6 @@ body {
 
 .poppinsFont {
     font-family: 'Poppins';
-    font-weight: bolder;
 }
 
 
@@ -119,30 +113,64 @@ body {
 
 /* ============================================================= */
 .search-area {
-    height: 25vh;
+    height: 24vh;
     background-color: #37BEB0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: center;
 }
 
-.search-icon {
-    font-size: 24px;
-    color: red;
-    cursor: pointer;
+.input-container {
+    position: relative;
+    margin-top: 3.5em;
 }
 
 #input-local {
-    width: 60%;
-    height: 20%;
-    margin-top: 7%;
-    border-radius: 20px;
+    width: 70vw;
+    height: 40;
+    border-radius: 100px;
     border: 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
-    padding-left: 15px;
+    padding: 15px;
     background-color: #D9D9D9;
-    /* Font */
     font-size: 1.5rem;
 }
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    color: black;
+    font-size: 1.8rem;
+    border: 0;
+    background-color: #D9D9D9;
+}
+
+.local-underneath-search {
+    margin: 16px;
+    display: flex;
+    align-items: center;
+}
+
+#alter-local {
+    width: 9vw;
+    height: 5vh;
+    margin-right: 2vw;
+    border: 0;
+    border-radius: 20px;
+    color: black;
+    background-color: #D9D9D9;
+    box-shadow: 0 2px 3px gray;
+    font-size: 1.2vw;
+}
+
+#current-local {
+    margin-top: 0.8vh;
+}
+
+
 
 /* ============================================================= */
 .recomendations {
