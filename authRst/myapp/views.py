@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-def tutorial_list(request):
+def users_list(request):
     if request.method == 'GET':
         users = User.objects.all()
         
