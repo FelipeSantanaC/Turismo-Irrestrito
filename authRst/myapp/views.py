@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
- 
+from django.contrib.auth.hashers import make_password  # Importa a função make_password
+
 from myapp.models import User
 from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
@@ -25,6 +25,7 @@ def users_list(request):
         # 'safe=False' for objects serialization
     elif request.method == 'POST':
         users_data = JSONParser().parse(request)
+        users_data['password'] = make_password(users_data['password'])  # Gera o hash da senha
         users_serializer = UserSerializer(data=users_data)
         if users_serializer.is_valid():
             users_serializer.save()
