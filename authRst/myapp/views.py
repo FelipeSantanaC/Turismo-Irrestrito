@@ -8,6 +8,8 @@ from myapp.models import User
 from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
 
+def index(requests):
+    return render(requests , '.\index.html')
 
 @api_view(['GET', 'POST', 'DELETE'])
 def users_list(request):
