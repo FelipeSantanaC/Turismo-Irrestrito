@@ -11,6 +11,19 @@ closeRegisterButton.addEventListener('click', () =>{
     modal.close();
 })
 
+const loginButton = document.querySelector('#login-button');
+const closeLoginButton = document.querySelector('#closeButtonLogin');
+const modalLogin = document.querySelector('#modalLogin')
+
+loginButton.addEventListener('click', () =>{
+  modalLogin.showModal();
+
+})
+
+closeLoginButton.addEventListener('click', () =>{
+  modalLogin.close();
+})
+
 function cadastrar() {
     var nomeCompleto = document.getElementById('nomeCompleto').value;
     var email = document.getElementById('email').value;
