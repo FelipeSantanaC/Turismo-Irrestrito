@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Turrismo Irrestrito</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -30,25 +30,28 @@
     </div>
 
     <dialog class="modalCadastro" id="modalCadastro">
-        <div class="esquerdaCadastro">
-            <img id="logoCadastro" src="static/images/logo-back.png" alt="logo do Turrismo Irrestrito">
-            <h2 class="poppinsFont" id="h2-esquerda">Bem vindo de volta</h2>
-            <h3 class="poppinsFont" id="h3-esquerda">Acesse sua conta agora mesmo</h3>
-            <button id="buttonCadastroEntrar">ENTRAR</button>
-            <button class="poppinsFont" id="buttonEsqueciSenha">Esqueci minha senha</button>
+        <div class="registerContainer">
+            <div class="esquerdaCadastro">
+                <img id="logoCadastro" src="static/images/logo-back.png" alt="logo do Turrismo Irrestrito">
+                <h2 class="poppinsFont" id="h2-esquerda">Bem vindo de volta</h2>
+                <h3 class="poppinsFont" id="h3-esquerda">Acesse sua conta agora mesmo</h3>
+                <button id="buttonCadastroEntrar">ENTRAR</button>
+                <button class="poppinsFont" id="buttonEsqueciSenha">Esqueci minha senha</button>
+            </div>
+            <div class="direitaCadastro">
+                <button class="closeButton" id="closeButtonCadastro">X</button>
+                <h2 class="poppinsFont" id="h2-direita">Crie sua conta</h2>
+                <h3 class="poppinsFont" id="h3-direita">Preencha seus dados</h3>
+                <br><br><br><br>
+                <input class="cadastro-input" type="text" id="nomeCompleto" placeholder="Nome Completo">
+                <br><br>
+                <input class="cadastro-input" type="text" id="email" placeholder="Email">
+                <br><br>
+                <input class="cadastro-input" type="password" id="senha" placeholder="Senha">
+                <br><br>
+                <button id="buttonCadastrar">CADASTRAR</button>
+            </div>
         </div>
-        <div class="direitaCadastro">
-            <button class="closeButton" id="closeButtonCadastro">X</button>
-            <h2 class="poppinsFont" id="h2-direita">Crie sua conta</h2>
-            <h3 class="poppinsFont" id="h3-direita">Preencha seus dados</h3>
-            <br><br><br><br>
-            <input class="cadastro-input" type="text" id="nomeCompleto" placeholder="Nome Completo">
-            <br><br>
-            <input class="cadastro-input" type="text" id="email" placeholder="Email">
-            <br><br>
-            <input class="cadastro-input" type="password" id="senha" placeholder="Senha">
-            <br><br>
-            <button id="buttonCadastrar">CADASTRAR</button>
     </dialog>
 
     <dialog class="modalLogin" id="modalLogin">
@@ -117,6 +120,6 @@
     </div>
     <div class="recomendations"></div>
     <div id="footer"></div>
-    <script src="static/js/app.js"></script>
+    <script src="../static/js/app.js"></script>
 </body>
 </html>
