@@ -6,6 +6,9 @@ class MyUserForm(ModelForm):
     class Meta:
         model = MyUser
         fields = ['name', 'email','password']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
 
 
-    
+

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Turrismo Irrestrito</title>
     <link rel="stylesheet" href="../static/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,19 +31,29 @@
         <img
           id="logo"
           src="static/images/logo-back.png"
-          alt="logo do Turrismo Irrestrito"/>
+          alt="logo do Turrismo Irrestrito"
+        />
       </div>
       <div class="nav-bar">
         <div class="main-buttons">
           <button class="nav-bar-button poppins-font" id="home-button">
             Página Inicial
           </button>
-          <button class="nav-bar-button poppins-font" id="about-button">Sobre</button>
-          <button class="nav-bar-button poppins-font" id="advanced-search">Pesquisa</button>
+          <button class="nav-bar-button poppins-font" id="about-button">
+            Sobre
+          </button>
+          <button class="nav-bar-button poppins-font" id="advanced-search">
+            Pesquisa
+          </button>
         </div>
         <div class="register-area">
-          <button class="poppins-font" id="register-button">Cadastrar-se</button>
-          <button class="bold-text nav-bar-button poppins-font" id="login-button">
+          <button class="poppins-font" id="register-button">
+            Cadastrar-se
+          </button>
+          <button
+            class="bold-text nav-bar-button poppins-font"
+            id="login-button"
+          >
             Entrar
           </button>
         </div>
@@ -52,23 +62,40 @@
 
     <nav class="navbar" id="bootstrap-navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="static/images/logo-back.png" alt="logo do Turrismo Irrestrito" width="70" height="40"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#"
+          ><img
+            src="static/images/logo-back.png"
+            alt="logo do Turrismo Irrestrito"
+            width="70"
+            height="40"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="#">Página Inicial</a>
+            <a class="nav-link active" aria-current="page" href="#"
+              >Página Inicial</a
+            >
             <a class="nav-link" href="#">Sobre</a>
             <a class="nav-link" href="#">Pesquisa</a>
-            <a class="nav-link" href="#" id="register-button-toggle">Cadastre-se</a>
+            <a class="nav-link" href="#" id="register-button-toggle"
+              >Cadastre-se</a
+            >
             <a class="nav-link" href="#" id="login-button-toggle">Entrar</a>
             <!-- <a class="nav-link disabled" href="#" aria-disabled="true">Cadastre-se</a> -->
           </div>
         </div>
       </div>
     </nav>
-    
 
     <dialog class="modal-cadastro" id="modal-cadastro">
       <div class="register-container">
@@ -90,11 +117,19 @@
         <div class="direita-cadastro">
           <button class="close-button" id="close-button-cadastro">X</button>
           <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
-          <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h```html
+          <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h3>
           <br /><br /><br /><br />
           <form method="POST" novalidate>
-            {% csrf_token %} {{ form.as_p }}
-            <input type="submit" value="Register" />
+            {% csrf_token %}
+            <p>Nome</p>
+            {{ form.name }}
+            <p>E-mail</p>
+            {{ form.email }}
+            <p>Senha</p>
+            {{ form.password1}} <br />
+            <p>Repita a senha</p>
+            {{ form.password2}} <br />
+            <input type="submit" name="register_form" value="Register" />
           </form>
         </div>
       </div>
@@ -104,26 +139,13 @@
       <div class="container-login">
         <button class="close-button" id="close-button-login">X</button>
         <h2 class="title-login">Login</h2>
-        <form method="post" action="{% url 'login' %}">
+        <form method="POST" novalidate>
           {% csrf_token %}
-          <div class="input-modal">
-            <input
-              class="login-input"
-              type="email"
-              name="email"
-              placeholder="Email"
-            />
-            <input
-              class="login-input"
-              type="password"
-              name="senha"
-              placeholder="Senha"
-            />
-          </div>
-          <span class="span-senha"
-            ><a href="" class="esqueci-senha">Esqueci minha senha</a></span
-          >
-          <button type="submit" id="button-login">Entrar</button>
+          <p>E-mail</p>
+          {{ form.email }}
+          <p>Senha</p>
+          {{ form.password1}} <br />
+          <input type="submit" name="login_form" value="Login" />
         </form>
       </div>
     </dialog>
@@ -179,7 +201,7 @@
 
     <div class="search-area">
       <div class="input-container">
-        <input id="input-local"type="text" placeholder="Aonde você quer ir?"/>
+        <input id="input-local" type="text" placeholder="Aonde você quer ir?" />
         <button id="search-button" class="search-icon">
           <i class="bi bi-search"></i>
         </button>

@@ -1,7 +1,7 @@
 from rest_framework import serializers 
 from myapp.models import MyUser
  
- 
+
 class UserSerializer(serializers.ModelSerializer):  
 
     class Meta:
@@ -9,3 +9,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('email',
                   'name',
                   'password')
+        

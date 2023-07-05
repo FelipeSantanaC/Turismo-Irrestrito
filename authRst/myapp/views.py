@@ -1,22 +1,47 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
 from myapp.models import MyUser
 from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
-from .forms import MyUserForm
+#from .forms import MyUserForm
+from django.contrib.auth import authenticate, login, logout
+from .admin import UserCreationForm
 
-def index(requests):
-    form = MyUserForm()
-    return render(requests , '.\index.html',{'form':form})
+def index(request):
+    form = UserCreationForm()
+    
+    if request.method == "POST":
+        if 'register_form' in request.POST:
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('success')  # Redirect to a success page or a different URL
+            else:
+                return HttpResponse('Invalid form data')
+        
+        elif 'login_form' in request.POST:
+            email = request.POST.get('email')
+            password = request.POST.get('password1')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponse('Logged in successfully')
+            else:
+                return HttpResponse('Invalid credentials')
+    
+    # Render the initial page with the form
+    context = {'form': form}
+    return render(request, 'index.html', context=context)
+        
 
 def register_user (requests):
     pass
             
-def login (requests):
+def _login (requests):
     pass
 
 @api_view(['GET', 'POST', 'DELETE'])
