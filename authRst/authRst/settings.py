@@ -57,7 +57,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
 )
-
+AUTH_USER_MODEL = 'myapp.MyUser'
 ROOT_URLCONF = "authRst.urls"
 
 TEMPLATES = [
@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mydb',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'FbFb0112*',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

@@ -4,17 +4,25 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from myapp.models import User
+from myapp.models import MyUser
 from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
+from myapp.forms import MyUserForm 
 
 def index(requests):
+    form = MyUserForm(MyUser)
     return render(requests , '.\index.html')
+
+def register_user (requests):
+    pass
+            
+def login (requests):
+    pass
 
 @api_view(['GET', 'POST', 'DELETE'])
 def users_list(request):
     if request.method == 'GET':
-        users = User.objects.all()
+        users = MyUser.objects.all()
         
         title = request.GET.get('title', None)
         if title is not None:
@@ -31,5 +39,6 @@ def users_list(request):
             return JsonResponse(users_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(users_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE': #Delete all instances
-        count = User.objects.all().delete()
+        count = MyUser.objects.all().delete()
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+    
