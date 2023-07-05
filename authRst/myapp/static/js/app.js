@@ -1,12 +1,20 @@
 const registerButton = document.querySelector("#register-button");
-const closeRegisterButton = document.querySelector("#closeButtonCadastro");
-const modal = document.querySelector("#modalCadastro");
+const closeRegisterButton = document.querySelector("#close-button-cadastro");
+const modal = document.querySelector("#modal-cadastro");
+
+const registerButtonToggle = document.getElementById('register-button-toggle');
+const loginButtonToggle = document.getElementById('login-button-toggle');
 
 const loginButton = document.querySelector("#login-button");
-const closeLoginButton = document.querySelector("#closeButtonLogin");
-const modalLogin = document.querySelector("#modalLogin");
+const closeLoginButton = document.querySelector("#close-button-login");
+const modalLogin = document.querySelector("#modal-login");
 
 registerButton.addEventListener("click", () => {
+  console.log('2')
+  modal.showModal();
+});
+
+registerButtonToggle.addEventListener("click", () => {
   modal.showModal();
 });
 
@@ -17,10 +25,15 @@ closeRegisterButton.addEventListener("click", () => {
 loginButton.addEventListener("click", () => {
   modalLogin.showModal();
 });
+loginButtonToggle.addEventListener("click", () => {
+  modalLogin.showModal();
+});
 
 closeLoginButton.addEventListener("click", () => {
   modalLogin.close();
 });
+
+
 
 function ValidateEmail(mail) {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -62,4 +75,4 @@ function cadastrar() {
   }
 }
 
-document.getElementById("buttonCadastrar").addEventListener("click", cadastrar);
+// document.getElementById("buttonCadastrar").addEventListener("click", cadastrar);

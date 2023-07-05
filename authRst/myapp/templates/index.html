@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turrismo Irrestrito</title>
     <link rel="stylesheet" href="../static/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,6 +19,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
@@ -25,48 +27,70 @@
   </head>
   <body>
     <div class="header">
-      <img
-        id="logo"
-        src="static/images/logo-back.png"
-        alt="logo do Turrismo Irrestrito"
-      />
+      <div class="logo-container">
+        <img
+          id="logo"
+          src="static/images/logo-back.png"
+          alt="logo do Turrismo Irrestrito"/>
+      </div>
       <div class="nav-bar">
         <div class="main-buttons">
-          <button class="nav-bar-button poppinsFont" id="homeButton">
+          <button class="nav-bar-button poppins-font" id="home-button">
             Página Inicial
           </button>
-          <button class="nav-bar-button poppinsFont">Sobre</button>
+          <button class="nav-bar-button poppins-font" id="about-button">Sobre</button>
+          <button class="nav-bar-button poppins-font" id="advanced-search">Pesquisa</button>
         </div>
         <div class="register-area">
-          <button class="poppinsFont" id="register-button">Cadastrar-se</button>
-          <button class="boldText nav-bar-button poppinsFont" id="login-button">
+          <button class="poppins-font" id="register-button">Cadastrar-se</button>
+          <button class="bold-text nav-bar-button poppins-font" id="login-button">
             Entrar
           </button>
         </div>
       </div>
     </div>
 
-    <dialog class="modalCadastro" id="modalCadastro">
-      <div class="registerContainer">
-        <div class="esquerdaCadastro">
+    <nav class="navbar" id="bootstrap-navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="static/images/logo-back.png" alt="logo do Turrismo Irrestrito" width="70" height="40"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">Página Inicial</a>
+            <a class="nav-link" href="#">Sobre</a>
+            <a class="nav-link" href="#">Pesquisa</a>
+            <a class="nav-link" href="#" id="register-button-toggle">Cadastre-se</a>
+            <a class="nav-link" href="#" id="login-button-toggle">Entrar</a>
+            <!-- <a class="nav-link disabled" href="#" aria-disabled="true">Cadastre-se</a> -->
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+
+    <dialog class="modal-cadastro" id="modal-cadastro">
+      <div class="register-container">
+        <div class="esquerda-cadastro">
           <img
-            id="logoCadastro"
+            id="logo-cadastro"
             src="static/images/logo-back.png"
             alt="logo do Turrismo Irrestrito"
           />
-          <h2 class="poppinsFont" id="h2-esquerda">Bem vindo de volta</h2>
-          <h3 class="poppinsFont" id="h3-esquerda">
+          <h2 class="poppins-font" id="h2-esquerda">Bem vindo de volta</h2>
+          <h3 class="poppins-font" id="h3-esquerda">
             Acesse sua conta agora mesmo
           </h3>
-          <button id="buttonCadastroEntrar">ENTRAR</button>
-          <button class="poppinsFont" id="buttonEsqueciSenha">
+          <button id="button-cadastro-entrar">ENTRAR</button>
+          <button class="poppins-font" id="button-esqueci-senha">
             Esqueci minha senha
           </button>
         </div>
-        <div class="direitaCadastro">
-          <button class="closeButton" id="closeButtonCadastro">X</button>
-          <h2 class="poppinsFont" id="h2-direita">Crie sua conta</h2>
-          <h3 class="poppinsFont" id="h3-direita">Preencha seus dados</h3>
+        <div class="direita-cadastro">
+          <button class="close-button" id="close-button-cadastro">X</button>
+          <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
+          <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h```html
           <br /><br /><br /><br />
           <form method="POST" novalidate>
             {% csrf_token %} {{ form.as_p }}
@@ -76,9 +100,9 @@
       </div>
     </dialog>
 
-    <dialog class="modalLogin" id="modalLogin">
-      <div class="containerLogin">
-        <button class="closeButton" id="closeButtonLogin">X</button>
+    <dialog class="modal-login" id="modal-login">
+      <div class="container-login">
+        <button class="close-button" id="close-button-login">X</button>
         <h2 class="title-login">Login</h2>
         <form method="post" action="{% url 'login' %}">
           {% csrf_token %}
@@ -99,12 +123,12 @@
           <span class="span-senha"
             ><a href="" class="esqueci-senha">Esqueci minha senha</a></span
           >
-          <button type="submit" id="butonLogin">Entrar</button>
+          <button type="submit" id="button-login">Entrar</button>
         </form>
       </div>
     </dialog>
 
-    <div id="localCarousel" class="carousel slider" data-ride="carousel">
+    <div id="local-carousel" class="carousel slider" data-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
@@ -126,12 +150,12 @@
         </div>
       </div>
       <ol class="carousel-indicators">
-        <li data-target="#localCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#localCarousel" data-slide-to="1"></li>
-        <li data-target="#localCarousel" data-slide-to="2"></li>
+        <li data-target="#local-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#local-carousel" data-slide-to="1"></li>
+        <li data-target="#local-carousel" data-slide-to="2"></li>
       </ol>
       <a
-        href="#localCarousel"
+        href="#local-carousel"
         class="carousel-control-prev"
         role="button"
         data-slide="prev"
@@ -140,7 +164,7 @@
         <span class="sr-only" Previous></span>
       </a>
       <a
-        href="#localCarousel"
+        href="#local-carousel"
         class="carousel-control-next"
         role="button"
         data-slide="next"
@@ -154,16 +178,8 @@
     </div>
 
     <div class="search-area">
-      <!-- <div class="input-group">
-            <input class="form-control border-end-0 border rounded-pill" type="search" value="search" id="example-search-input">
-            <span class="input-group-append">
-                <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button">
-                    <i class="fa fa-search"></i>
-                </button>
-            </span>
-        </div> -->
       <div class="input-container">
-        <input id="input-local" type="text" placeholder="Aonde você quer ir?" />
+        <input id="input-local"type="text" placeholder="Aonde você quer ir?"/>
         <button id="search-button" class="search-icon">
           <i class="bi bi-search"></i>
         </button>
@@ -175,7 +191,7 @@
       </div>
     </div>
     <div class="recomendations"></div>
-    <div id="footer"></div>
+    <div id="footer">© 2023 Família Cosmus - All Rights Reserved</div>
     <script src="../static/js/app.js"></script>
   </body>
 </html>
