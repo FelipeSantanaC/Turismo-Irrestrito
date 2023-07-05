@@ -25,7 +25,7 @@
 * JavaScript;
 * MySQL:
 
-### Bibliotecas/Dependncias Utilizando:
+### Bibliotecas/Dependências Utilizando:
 * django;
 * django-cors-headers;
 * djangorestframerwork;
@@ -34,7 +34,7 @@
 * Cryptography;
 
 ## Instruções para executar:
-1. Instalar as dependncias/bibliotecas;
+1. Instalar as dependências/bibliotecas;
 2. Instalar o workbench MySQL (caso não tenha)
 3. no arquivo <code>Turismo-Irrestrito\authRst\authRst\settings.py</code> mude as configurações de login do MySQL Workbench
 4. no terminal execute o comando: 
