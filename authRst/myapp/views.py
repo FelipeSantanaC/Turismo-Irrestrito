@@ -7,11 +7,11 @@ from rest_framework import status
 from myapp.models import MyUser
 from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
-from myapp.forms import MyUserForm 
+from .forms import MyUserForm
 
 def index(requests):
-    form = MyUserForm(MyUser)
-    return render(requests , '.\index.html')
+    form = MyUserForm()
+    return render(requests , '.\index.html',{'form':form})
 
 def register_user (requests):
     pass

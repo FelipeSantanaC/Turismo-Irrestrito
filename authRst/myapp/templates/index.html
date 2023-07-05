@@ -68,18 +68,9 @@
           <h2 class="poppinsFont" id="h2-direita">Crie sua conta</h2>
           <h3 class="poppinsFont" id="h3-direita">Preencha seus dados</h3>
           <br /><br /><br /><br />
-          <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-              {{ form.username.label_tag }} {{ form.username }}
-            </div>
-            <div class="form-group">
-              {{ form.password1.label_tag }} {{ form.password1 }}
-            </div>
-            <div class="form-group">
-              {{ form.password2.label_tag }} {{ form.password2 }}
-            </div>
-            <button type="submit">Registrar</button>
+          <form method="POST" novalidate>
+            {% csrf_token %} {{ form.as_p }}
+            <input type="submit" value="Register" />
           </form>
         </div>
       </div>
