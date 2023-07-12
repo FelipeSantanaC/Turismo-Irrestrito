@@ -9,6 +9,7 @@ from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
 #from .forms import MyUserForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 
 def index(request):
@@ -19,7 +20,7 @@ def index(request):
             form = UserCreationForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('success')  # Redirect to a success page or a different URL
+                return redirect('index')
             else:
                 return HttpResponse('Invalid form data')
         
@@ -29,14 +30,24 @@ def index(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponse('Logged in successfully')
+                return redirect('home') 
             else:
                 return HttpResponse('Invalid credentials')
     
     # Render the initial page with the form
     context = {'form': form}
     return render(request, 'index.html', context=context)
-        
+
+@login_required(login_url='login')
+def home(request):
+    user = request.user 
+
+    context = {'user': user}
+    return render(request, 'home.html', context=context)
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')       
 
 def register_user (requests):
     pass
