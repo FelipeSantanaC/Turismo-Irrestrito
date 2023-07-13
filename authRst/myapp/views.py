@@ -7,7 +7,6 @@ from rest_framework import status
 from myapp.models import MyUser
 from myapp.serializers import UserSerializer
 from rest_framework.decorators import api_view
-#from .forms import MyUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm

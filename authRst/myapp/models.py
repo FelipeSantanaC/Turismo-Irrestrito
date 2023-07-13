@@ -18,9 +18,7 @@ class MyUserManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
-    """ def has_permission(self, request, view):
-        return request.user.is_admin
- """
+
 class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     name = models.CharField(max_length=45)
@@ -35,3 +33,15 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
       
     def has_perm(self, perm, obj=None):
         return True
+
+class Local(models.Model):
+    nome = models.CharField(max_length=100)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    bairro = models.CharField(max_length=100)
+    cidade = models.CharField(max_length=100)
+    estado = models.CharField(max_length=100)
+    recursos = models.TextField()
+    cep = models.CharField(max_length=10)
+    foto_url = models.CharField(max_length=200, blank=True)
+    
