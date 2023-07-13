@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Turrismo Irrestrito</title>
-    <link rel="stylesheet" href="../static/css/home.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,7 +30,7 @@
       <div class="logo-container">
         <img
           id="logo"
-          src="C:\Workspace\django_auth\authRst\myapp\static\images\logo-back.png"
+          src="static/images/logo-back.png"
           alt="logo do Turrismo Irrestrito"
         />
       </div>
@@ -46,11 +46,16 @@
             Pesquisa
           </button>
         </div>
-        <div class="user-area">
-          <button class="nav-bar-button poppins-font" id="user-button">
-            {{ user.name }}
+        <div class="register-area">
+          <button class="poppins-font" id="register-button">
+            Cadastrar-se
           </button>
-          <a class="button-logout" href="{% url 'logout' %}">Sair</a>
+          <button
+            class="bold-text nav-bar-button poppins-font"
+            id="login-button"
+          >
+            Entrar
+          </button>
         </div>
       </div>
     </div>
@@ -91,6 +96,59 @@
         </div>
       </div>
     </nav>
+
+    <dialog class="modal-cadastro" id="modal-cadastro">
+      <div class="register-container">
+        <div class="esquerda-cadastro">
+          <img
+            id="logo-cadastro"
+            src="static/images/logo-back.png"
+            alt="logo do Turrismo Irrestrito"
+          />
+          <h2 class="poppins-font" id="h2-esquerda">Bem vindo de volta</h2>
+          <h3 class="poppins-font" id="h3-esquerda">
+            Acesse sua conta agora mesmo
+          </h3>
+          <button id="button-cadastro-entrar">ENTRAR</button>
+          <button class="poppins-font" id="button-esqueci-senha">
+            Esqueci minha senha
+          </button>
+        </div>
+        <div class="direita-cadastro">
+          <button class="close-button" id="close-button-cadastro">X</button>
+          <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
+          <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h3>
+          <br /><br /><br /><br />
+          <form method="POST" novalidate>
+            {% csrf_token %}
+            <p>Nome</p>
+            {{ form.name }}
+            <p>E-mail</p>
+            {{ form.email }}
+            <p>Senha</p>
+            {{ form.password1}} <br />
+            <p>Repita a senha</p>
+            {{ form.password2}} <br />
+            <input type="submit" name="register_form" value="Register" />
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal-login" id="modal-login">
+      <div class="container-login">
+        <button class="close-button" id="close-button-login">X</button>
+        <h2 class="title-login">Login</h2>
+        <form method="POST" novalidate>
+          {% csrf_token %}
+          <p>E-mail</p>
+          {{ form.email }}
+          <p>Senha</p>
+          {{ form.password1}} <br />
+          <input type="submit" name="login_form" value="Login" />
+        </form>
+      </div>
+    </dialog>
 
     <div id="local-carousel" class="carousel slider" data-ride="carousel">
       <div class="carousel-inner">

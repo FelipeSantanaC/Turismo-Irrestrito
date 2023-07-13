@@ -48,11 +48,6 @@ def logout_view(request):
     logout(request)
     return redirect('index')       
 
-def register_user (requests):
-    pass
-            
-def _login (requests):
-    pass
 
 @api_view(['GET', 'POST', 'DELETE'])
 def users_list(request):
@@ -76,4 +71,7 @@ def users_list(request):
     elif request.method == 'DELETE': #Delete all instances
         count = MyUser.objects.all().delete()
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+
+def results(request):
+    return render(request, 'results.html')
     

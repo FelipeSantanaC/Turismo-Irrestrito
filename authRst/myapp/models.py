@@ -44,4 +44,5 @@ class Local(models.Model):
     recursos = models.TextField()
     cep = models.CharField(max_length=10)
     foto_url = models.CharField(max_length=200, blank=True)
+    tipo = models.CharField(max_length=100, default='')
     
