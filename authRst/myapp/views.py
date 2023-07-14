@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.http.response import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status,filters
- 
+from django.core.exceptions import ObjectDoesNotExist
+
 from myapp.models import MyUser, Local
 from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
@@ -80,8 +81,17 @@ def users_list(request):
 
 def results(request):
     if request.method == 'GET':
-        search_query = request.GET.get('search', '')
-        locals = Local.objects.filter(nome__icontains=search_query)
-        local_serializer = LocalSerializer(locals, many=True)
-        return render(request, 'results.html', {'data': local_serializer.data})
-        
+        search_query = request.GET.get('search','')
+        try:
+            locals = Local.objects.filter(nome__icontains=search_query)
+            local_serializer = LocalSerializer(locals, many=True)
+            if len(local_serializer.data) == 0:
+                context = {'mensagem': 'Nenhuma correspondência encontrada.'}
+            else:
+                context = {'data': local_serializer.data}
+            return render(request, 'results.html', context)
+        except ObjectDoesNotExist:
+            context = {'mensagem': 'Nenhuma correspondência encontrada.'}
+            return render(request, 'results.html', context)
+    else:
+        return render(request, 'results.html')

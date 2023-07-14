@@ -81,10 +81,14 @@
 
     <div class="search-area">
       <div class="input-container">
-        <input id="input-local" type="text" placeholder="Aonde você quer ir?" />
-        <button id="search-button" class="search-icon">
-          <i class="bi bi-search"></i>
+      <form class="form-search"  method="GET" action="{% url 'results' %}">
+        {% csrf_token %}
+        <input id="input-local" type="text" name="search" placeholder="Aonde você quer ir?">
+        <button id="search-button" class="search-icon" type="submit">
+        <i class="bi bi-search"></i>
         </button>
+      </form>
+    </div>    
       </div>
 
       <div class="local-underneath-search">

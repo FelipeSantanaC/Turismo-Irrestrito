@@ -26,55 +26,56 @@
     />
   </head>
   <body>
-    {% extends 'base.html' %}
-
-    {% block content %}
-
-      <div class="search-area">
-        <div class="input-container">
-          <input id="input-local" type="text" placeholder="Aonde você quer ir?" />
-          <button id="search-button" class="search-icon">
+    {% extends 'base.html' %} {% block content %}
+    <div class="search-area">
+      <div class="input-container">
+        <form class="form-search" method="GET" action="{% url 'results' %}">
+          {% csrf_token %}
+          <input
+            id="input-local"
+            type="text"
+            name="search"
+            placeholder="Aonde você quer ir?"
+          />
+          <button id="search-button" class="search-icon" type="submit">
             <i class="bi bi-search"></i>
           </button>
-        </div>
-
-        <div class="local-underneath-search">
-          <button id="alter-local">Alterar Local</button>
-          <p id="current-local">Local Atual: <span>Recife - PE</span></p>
-        </div>
+        </form>
       </div>
-      <div class="recomendations">
-        <!-- {% for item in data %}
+      <div class="local-underneath-search">
+        <button id="alter-local">Alterar Local</button>
+        <p id="current-local">Local Atual: <span>Recife - PE</span></p>
+      </div>
+    </div>
+    <div class="recomendations">
+      <!-- {% for item in data %}
         <li>{{ item }}</li>
         {% endfor %} -->
-        {% if data %}
-          {% for local in data %}
-              <div class="card" style="background-color: #A0A3A9;">
-                <div class="image-overlay">
-                  {% if local.image_url %}
-                    <img src="{{ local.image_url }}" alt="{{ local.name }}">
-                  {% else %}
-                    <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                  {% endif %}
-                  <div class="overlay-content">
-                    <h3 id="local-name-card">{{ local.nome }}</h3>
-                    <p id="local-neighborhood-card">{{ local.bairro }}</p>
-                  </div>
-                </div>
-                <div id="card-body">
-                  <p>Score <span>Estrelinhas</span></p>
-                  <!-- <p>Score: {{ local.score }}</p>
+      {% if data %} {% for local in data %}
+      <div class="card" style="background-color: #a0a3a9">
+        <div class="image-overlay">
+          {% if local.image_url %}
+          <img src="{{ local.image_url }}" alt="{{ local.name }}" />
+          {% else %}
+          <img src="../static/images/img-not-found.png" alt="Image Not Found" />
+          {% endif %}
+          <div class="overlay-content">
+            <h3 id="local-name-card">{{ local.nome }}</h3>
+            <p id="local-neighborhood-card">{{ local.bairro }}</p>
+          </div>
+        </div>
+        <div id="card-body">
+          <p>Score <span>Estrelinhas</span></p>
+          <!-- <p>Score: {{ local.score }}</p>
                   <p>Review Count: {{ local.review_count }}</p> -->
-                </div>
-
-              </div>
-          {% endfor %}
-        {% else %}
-            <div class="no-results">
-                <p>No places found.</p>
-            </div>
-        {% endif %}
-      </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="no-results">
+        <p>No places found.</p>
+      </div>
+      {% endif %}
+    </div>
     {% endblock %}
     <script src="../static/js/app.js"></script>
   </body>
