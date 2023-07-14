@@ -26,71 +26,9 @@
     />
   </head>
   <body>
-    <div class="header">
-      <div class="logo-container">
-        <img
-          id="logo"
-          src="C:\Workspace\django_auth\authRst\myapp\static\images\logo-back.png"
-          alt="logo do Turrismo Irrestrito"
-        />
-      </div>
-      <div class="nav-bar">
-        <div class="main-buttons">
-          <button class="nav-bar-button poppins-font" id="home-button">
-            Página Inicial
-          </button>
-          <button class="nav-bar-button poppins-font" id="about-button">
-            Sobre
-          </button>
-          <button class="nav-bar-button poppins-font" id="advanced-search">
-            Pesquisa
-          </button>
-        </div>
-        <div class="user-area">
-          <button class="nav-bar-button poppins-font" id="user-button">
-            {{ user.name }}
-          </button>
-          <a class="button-logout" href="{% url 'logout' %}">Sair</a>
-        </div>
-      </div>
-    </div>
+    {% extends 'base.html' %}
 
-    <nav class="navbar" id="bootstrap-navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"
-          ><img
-            src="static/images/logo-back.png"
-            alt="logo do Turrismo Irrestrito"
-            width="70"
-            height="40"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="#"
-              >Página Inicial</a
-            >
-            <a class="nav-link" href="#">Sobre</a>
-            <a class="nav-link" href="#">Pesquisa</a>
-            <a class="nav-link" href="#" id="register-button-toggle"
-              >Cadastre-se</a
-            >
-            <a class="nav-link" href="#" id="login-button-toggle">Entrar</a>
-            <!-- <a class="nav-link disabled" href="#" aria-disabled="true">Cadastre-se</a> -->
-          </div>
-        </div>
-      </div>
-    </nav>
+    {% block content %}
 
     <div id="local-carousel" class="carousel slider" data-ride="carousel">
       <div class="carousel-inner">
@@ -155,7 +93,7 @@
       </div>
     </div>
     <div class="recomendations"></div>
-    <div id="footer">© 2023 Família Cosmus - All Rights Reserved</div>
+    {% endblock %}
     <script src="../static/js/app.js"></script>
   </body>
 </html>

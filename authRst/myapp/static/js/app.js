@@ -10,7 +10,6 @@ const closeLoginButton = document.querySelector("#close-button-login");
 const modalLogin = document.querySelector("#modal-login");
 
 registerButton.addEventListener("click", () => {
-  console.log('2')
   modal.showModal();
 });
 

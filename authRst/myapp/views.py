@@ -21,7 +21,13 @@ def index(request):
                 form.save()
                 return redirect('index')
             else:
-                return HttpResponse('Invalid form data')
+                # Display form errors
+                errors = form.errors.as_data()
+                error_messages = []
+                for field, error_list in errors.items():
+                    error_messages.append(f"{field}: {', '.join(error.message for error in error_list)}")
+                return HttpResponse(f"Invalid form data: {', '.join(error_messages)}")
+                # return HttpResponse('Invalid form data')
         
         elif 'login_form' in request.POST:
             email = request.POST.get('email')
@@ -35,7 +41,7 @@ def index(request):
     
     # Render the initial page with the form
     context = {'form': form}
-    return render(request, 'index.html', context=context)
+    return render(request, 'home.html', context=context)
 
 @login_required(login_url='login')
 def home(request):
