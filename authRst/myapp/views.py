@@ -2,12 +2,11 @@ from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser 
-from rest_framework import status
+from rest_framework import status,filters
  
-from myapp.models import MyUser
-from myapp.serializers import UserSerializer
+from myapp.models import MyUser, Local
+from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
-#from .forms import MyUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
@@ -22,7 +21,13 @@ def index(request):
                 form.save()
                 return redirect('index')
             else:
-                return HttpResponse('Invalid form data')
+                # Display form errors
+                errors = form.errors.as_data()
+                error_messages = []
+                for field, error_list in errors.items():
+                    error_messages.append(f"{field}: {', '.join(error.message for error in error_list)}")
+                return HttpResponse(f"Invalid form data: {', '.join(error_messages)}")
+                # return HttpResponse('Invalid form data')
         
         elif 'login_form' in request.POST:
             email = request.POST.get('email')
@@ -36,7 +41,7 @@ def index(request):
     
     # Render the initial page with the form
     context = {'form': form}
-    return render(request, 'index.html', context=context)
+    return render(request, 'home.html', context=context)
 
 @login_required(login_url='login')
 def home(request):
@@ -49,11 +54,6 @@ def logout_view(request):
     logout(request)
     return redirect('index')       
 
-def register_user (requests):
-    pass
-            
-def _login (requests):
-    pass
 
 @api_view(['GET', 'POST', 'DELETE'])
 def users_list(request):
@@ -77,4 +77,11 @@ def users_list(request):
     elif request.method == 'DELETE': #Delete all instances
         count = MyUser.objects.all().delete()
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
-    
+
+def results(request):
+    if request.method == 'GET':
+        search_query = request.GET.get('search', '')
+        locals = Local.objects.filter(nome__icontains=search_query)
+        local_serializer = LocalSerializer(locals, many=True)
+        return render(request, 'results.html', {'data': local_serializer.data})
+        
