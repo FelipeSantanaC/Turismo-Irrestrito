@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser 
-from rest_framework import status
+from rest_framework import status,filters
  
-from myapp.models import MyUser
-from myapp.serializers import UserSerializer
+from myapp.models import MyUser, Local
+from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -73,5 +73,9 @@ def users_list(request):
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
 
 def results(request):
-    return render(request, 'results.html')
-    
+    if request.method == 'GET':
+        search_query = request.GET.get('search', '')
+        locals = Local.objects.filter(nome__icontains=search_query)
+        local_serializer = LocalSerializer(locals, many=True)
+        return render(request, 'results.html', {'data': local_serializer.data})
+        
