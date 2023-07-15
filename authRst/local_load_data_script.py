@@ -1,5 +1,6 @@
 import csv
 import mysql.connector
+import re
 
 # Conectar ao banco de dados MySQL
 cnx = mysql.connector.connect(
@@ -11,11 +12,20 @@ cnx = mysql.connector.connect(
 cursor = cnx.cursor()
 
 # Ler o arquivo CSV e inserir os dados no banco de dados
-with open('C:/Workspace/django_auth/authRst/local_data.csv', 'r', encoding='utf-8') as file:
+with open('./authRst/local_data.csv', 'r', encoding='utf-8') as file:
     reader = csv.DictReader(file)
     for row in reader:
-        latitude = float(row['latitude'].replace('.', ''))
-        longitude = float(row['longitude'].replace('.', ''))
+        latitude = row['latitude']
+        longitude = row['longitude']
+
+        latitude_first_dot_index = latitude.find(".")
+        latitude = latitude[:latitude_first_dot_index+1] + latitude[latitude_first_dot_index+1:].replace(".", "")
+
+        longitude_first_dot_index = longitude.find(".")
+        longitude = longitude[:longitude_first_dot_index+1] + longitude[longitude_first_dot_index+1:].replace(".", "")
+
+        print(latitude)
+        print(longitude)
         query = """
             INSERT INTO myapp_local (id, nome, latitude, longitude, bairro, recursos, cidade, estado, cep, foto_url,nota, relevancia, tipo)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -23,8 +33,8 @@ with open('C:/Workspace/django_auth/authRst/local_data.csv', 'r', encoding='utf-
         values = (
             int(row['id']),
             row['nome'],
-            latitude,
-            longitude,
+            float(latitude),
+            float(longitude),
             row['bairro'],
             row['recursos'],
             row['cidade'],

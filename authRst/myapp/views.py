@@ -5,6 +5,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.db.models import Max
 from myapp.models import MyUser, Local
 from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
@@ -14,7 +15,10 @@ from .admin import UserCreationForm
 
 
 def index(request):
-    return render(request,'home.html')
+    search_query = request.GET.get('search', '')
+    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
+    local_serializer = LocalSerializer(locals, many=True)
+    return render(request,'home.html',{'data': local_serializer.data})
 
 def user_login(request):
     if request.method == "POST":

@@ -55,20 +55,25 @@
       {% if data %} {% for local in data %}
       <div class="card" style="background-color: #a0a3a9">
         <div class="image-overlay">
-          {% if local.image_url %}
-          <img src="{{ local.image_url }}" alt="{{ local.name }}" />
+          <!-- <h1>{{local}}</h1> -->
+          {% if local.foto_url %}
+          <img class="card-image" src="{{ local.foto_url }}" alt="{{ local.name }}" />
           {% else %}
-          <img src="../static/images/img-not-found.png" alt="Image Not Found" />
+          <img class="card-image" src="../static/images/img-not-found.png" alt="Image Not Found" />
           {% endif %}
           <div class="overlay-content">
             <h3 id="local-name-card">{{ local.nome }}</h3>
             <p id="local-neighborhood-card">{{ local.bairro }}</p>
+            
           </div>
         </div>
         <div id="card-body">
-          <p>Score <span>Estrelinhas</span></p>
-          <!-- <p>Score: {{ local.score }}</p>
-                  <p>Review Count: {{ local.review_count }}</p> -->
+          <p>{{ local.relevancia }} Avaliações</p>
+          <div class="star-rating">
+            <p>
+              {{ local.nota }}
+            </p>
+          </div>
         </div>
       </div>
       {% endfor %} {% else %}

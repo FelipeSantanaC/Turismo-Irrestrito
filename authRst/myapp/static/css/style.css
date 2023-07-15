@@ -402,7 +402,14 @@ body {
 
 #card-body {
   padding: 5px 5px 0px 5px;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
 }
+
+/* #card-body p:first-child {
+  margin-top: 10px;
+} */
 
 .image-overlay {
   display: inline-block;
@@ -413,7 +420,7 @@ body {
 .image-overlay img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 180px;
   border-radius: 6px 6px 10px 10px;
 }
 
@@ -468,4 +475,21 @@ body {
 
 .active {
   display: flex;
+}
+
+.star-rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  display: flex;
+}
+
+.star-rating p {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.star-rating p::before {
+  content: "\2605"; /* Unicode character for a star */
+  color: gold; /* Adjust color as desired */
 }
