@@ -1,8 +1,11 @@
 body {
   font-family: "Poppins", sans-serif;
-  margin: 0px;
+  margin: 0;
   justify-content: center;
   background-color: #e3e9fc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -28,16 +31,18 @@ body {
   width: 100%;
   text-align: center;
   height: 3vh;
+  margin-top: auto;
   background-color: #37beb0;
 }
 
 .recomendations {
   background-color: #e3e9fc;
+  /* height: 60vh; */
   padding: 2% 3% 4% 3%;
-  /* height: 35vh; */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex: 1;
 }
 
 .scroll-container {
@@ -313,6 +318,9 @@ body {
 }
 
 .search-area {
+  min-height: 100%;
+  margin-bottom: -50px;
+  padding-bottom: 50px;
   height: 24vh;
   background-color: #37beb0;
   display: flex;
@@ -384,6 +392,7 @@ body {
 .card {
   width: 18rem;
   height: 10rem;
+  max-height: 220px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 16px;
