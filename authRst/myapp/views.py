@@ -12,9 +12,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 
+
 def index(request):
-    form = UserCreationForm()
-    
+    return render(request,'home.html')
+
+def user_login(request):
     if request.method == "POST":
         if 'register_form' in request.POST:
             form = UserCreationForm(request.POST)
@@ -36,13 +38,15 @@ def index(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home') 
+                return redirect('index') 
             else:
                 return HttpResponse('Invalid credentials')
+
+
     
-    # Render the initial page with the form
+    """ # Render the initial page with the form
     context = {'form': form}
-    return render(request, 'home.html', context=context)
+    return render(request, 'home.html', context=context) """
 
 @login_required(login_url='login')
 def home(request):
