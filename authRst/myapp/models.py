@@ -43,6 +43,8 @@ class Local(models.Model):
     estado = models.CharField(max_length=100)
     recursos = models.TextField()
     cep = models.CharField(max_length=10)
-    foto_url = models.CharField(max_length=200, blank=True)
+    foto_url = models.CharField(max_length=255)
+    nota = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
+    relevancia = models.IntegerField(default=0)
     tipo = models.CharField(max_length=100, default='')
     
