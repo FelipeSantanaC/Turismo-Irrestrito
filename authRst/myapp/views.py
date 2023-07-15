@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
+from django.contrib.auth import views as auth_views
+
 
 def index(request):
     form = UserCreationForm()
