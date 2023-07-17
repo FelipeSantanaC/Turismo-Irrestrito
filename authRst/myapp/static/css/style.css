@@ -34,14 +34,40 @@ body {
   margin-top: auto;
   background-color: #37beb0;
 }
-
 .recomendations {
+  background-color: #e3e9fc;
+  padding-top: 2%;
+  flex: 1;
+  flex-direction: column;
+  height: 100%; /* Add this line */
+}
+
+.tags {
+  text-align: center;
+}
+
+a.tag {
+  background-color: #FFB4F9;
+  color: black;
+  min-width: 1.5vw;
+  border: 0;
+  text-shadow: 0 0;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-left: 1%;
+}
+
+.card-container {
   background-color: #e3e9fc;
   /* height: 60vh; */
   padding: 2% 3% 4% 3%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  /* flex-direction: column; */
+  /* min-height: 50.9vh; */
+  min-height: 0;
+  height: 100%; /* Add this line */
   flex: 1;
 }
 
@@ -319,7 +345,7 @@ body {
 
 .search-area {
   min-height: 100%;
-  margin-bottom: -50px;
+  /* margin-bottom: -50px; */
   padding-bottom: 50px;
   height: 24vh;
   background-color: #37beb0;
