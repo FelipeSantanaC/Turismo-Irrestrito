@@ -7,8 +7,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
     path('api/myapp/user/', views.users_list, name='user_list'),
-    path('api/myapp/results/', views.results, name='results'),
     path('home/', views.home, name='home'),
     path('logout', views.logout_view, name='logout'),
+    path('user_login', views.user_login, name='user_login'),
 ]   
-    
+

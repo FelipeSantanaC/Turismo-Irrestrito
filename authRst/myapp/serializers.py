@@ -20,5 +20,7 @@ class LocalSerializer(serializers.ModelSerializer):
         'estado',
         'foto_url',
         'tipo',
+        'nota',
+        'relevancia'
             
         )
