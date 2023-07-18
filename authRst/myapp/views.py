@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
+from django.db.models import Q
 
 
 def index(request):
@@ -88,18 +89,24 @@ def users_list(request):
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
 
 def results(request):
-    if request.method == 'GET':
-        search_query = request.GET.get('search','')
-        try:
-            locals = Local.objects.filter(nome__icontains=search_query)
-            local_serializer = LocalSerializer(locals, many=True)
-            if len(local_serializer.data) == 0:
-                context = {'mensagem': 'Nenhuma correspondência encontrada.'}
-            else:
-                context = {'data': local_serializer.data}
-            return render(request, 'results.html', context)
-        except ObjectDoesNotExist:
-            context = {'mensagem': 'Nenhuma correspondência encontrada.'}
-            return render(request, 'results.html', context)
-    else:
-        return render(request, 'results.html')
+    search_query = request.GET.get('search', '')
+    selected_types = request.GET.getlist('tipo')
+
+    locals = Local.objects.all()
+
+    if search_query:
+        locals = locals.filter(Q(nome__icontains=search_query))
+
+    for type in selected_types:
+        locals = locals.filter(tipo=type)
+
+    local_serializer = LocalSerializer(locals, many=True)
+    unique_types = Local.objects.values_list('tipo', flat=True).distinct()
+
+    context = {
+        'data': local_serializer.data,
+        'types': unique_types,
+        'selected_types': selected_types,
+        'search_query': search_query,
+    }
+    return render(request, 'results.html', context)

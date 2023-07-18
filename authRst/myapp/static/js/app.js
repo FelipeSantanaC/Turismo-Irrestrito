@@ -75,3 +75,35 @@ function cadastrar() {
 }
 
 // document.getElementById("buttonCadastrar").addEventListener("click", cadastrar);
+
+// SCRIPT DE FILTRO DOS CHECKBOXS
+
+$(document).ready(function() {
+  $('#filter-form').submit(function(event) {
+    event.preventDefault();
+
+    var selectedTypes = [];
+    $('input[name="tipo"]:checked').each(function() {
+      selectedTypes.push($(this).val());
+    });
+
+    var searchQuery = $('#input-local').val();
+    var url = '/results/';
+
+    var queryParams = [];
+
+    if (searchQuery) {
+      queryParams.push('search=' + encodeURIComponent(searchQuery));
+    }
+
+    if (selectedTypes.length > 0) {
+      queryParams.push('tipo=' + selectedTypes.join(','));
+    }
+
+    if (queryParams.length > 0) {
+      url += '?' + queryParams.join('&');
+    }
+
+    window.location.href = url;
+  });
+});

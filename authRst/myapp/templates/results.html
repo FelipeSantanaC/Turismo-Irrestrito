@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Turrismo Irrestrito</title>
 
+    <link rel="stylesheet" href="../static/css/filter-style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -50,18 +51,22 @@
         <p id="current-local">Local Atual: <span>Recife - PE</span></p>
       </div>
     </div>
-    <div class="recomendations">
-      <div class="tags">
-        
-        <a class="tag" href="/results/?search=museu" data-tag="Museu">Museu</a>
-        <a class="tag" href="/results/?search=praia" data-tag="Praia">Praia</a>
-        <a class="tag" href="/results/?search=biblioteca" data-tag="Biblioteca">Biblioteca</a>
-        <a class="tag" href="/results/?search=ilha" data-tag="Ilha">Ilha</a>
-        <a class="tag" href="/results/?search=praça" data-tag="Praça">Praça</a>
-        <a class="tag" href="/results/?search=castelo" data-tag="Castelo">Castelo</a>
-        <a class="tag" href="/results/?search=mesquita" data-tag="Mesquita">Mesquita</a>
-        <a class="tag" href="/results/?search=estatua" data-tag="Estatua">Estatua</a>
-      </div>
+    <h2 class="title-filter">Filtrar por Tipo</h2>
+    <div class="tags">
+        <form id="filter-form" method="GET">
+            {% csrf_token %}
+            {% for type in types %}
+                <label>
+                    <input type="checkbox" name="tipo" value="{{ type }}" {% if type in selected_types %}checked{% endif %}>
+                    {{ type }}
+                </label>
+            {% endfor %}
+            <button id="button-filter" type="submit">Filtrar</button>
+            {% if search_query or selected_types %}
+                <a href="{% url 'results' %}" class="clear-filter">Remover Filtro</a>
+            {% endif %}
+        </form>
+    </div>
       <!-- {% for item in data %}
         <li>{{ item }}</li>
         {% endfor %} -->

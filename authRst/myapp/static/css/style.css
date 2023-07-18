@@ -415,6 +415,66 @@ a.tag {
 
 /* ============================================================= */
 
+.title-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: capitalize; /* Todas as primeiras letras em maiúsculo */
+}
+
+button#button-filter {
+  background-color: #3e7a29;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: uppercase;
+  transition: 0.4s;
+}
+
+button#button-filter:hover {
+  opacity: 0.9;
+}
+
+.clear-filter {
+  color: red;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.4s;
+  padding: 5px;
+
+}
+
+.clear-filter:hover {
+  opacity: 0.9;
+  color: red;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 4px;
+}
+
 .card {
   width: 18rem;
   height: 10rem;
