@@ -145,7 +145,7 @@
           <button class="close-button" id="close-button-cadastro">X</button>
           <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
           <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h3>
-          <form method="POST" novalidate>
+          <form method="POST" action="{% url 'user_login' %}" novalidate>
             {% load widget_tweaks %} {% csrf_token %}
             {{form.name|attr:"placeholder:Nome"|add_class:'form-fields'}}
             {{form.email|attr:"placeholder:Email"|add_class:'form-fields' }}
@@ -168,7 +168,7 @@
       <div class="container-login">
         <button class="close-button" id="close-button-login">X</button>
         <h2 class="title-login">Login</h2>
-        <form method="POST" novalidate>
+        <form method="POST" action="{% url 'user_login' %}" novalidate>
           {% load widget_tweaks %} {% csrf_token %}
           {{form.email|attr:"placeholder:Email"|add_class:'form-fields'}}
           {{form.password1|add_class:'form-fields'}}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'myapp.apps.MyappConfig',
     'corsheaders',
+	'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
