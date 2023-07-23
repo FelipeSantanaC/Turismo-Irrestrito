@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div  class="register-container">
-    <div class="esquerda-cadastro">
-      <img
-        id="logo-cadastro"
-        src="static/images/logo-back.png"
-        alt="logo do Turismo Irrestrito"
-      />
-      <h2 class="poppins-font" id="h2-esquerda">Bem vindo de volta</h2>
-      <h3 class="poppins-font" id="h3-esquerda">
-        Acesse sua conta agora mesmo
-      </h3>
-      <button id="button-cadastro-entrar">ENTRAR</button>
-      <button class="poppins-font" id="button-esqueci-senha">
-        Esqueci minha senha
-      </button>
-    </div>
-    <div class="direita-cadastro">
-      <button class="close-button" id="close-button">X</button>
-      <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
-      <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h3>
-      <form method="POST" action="{% url 'user_login' %}" novalidate>
-        {% csrf_token %}
-        {{form.name}}
-        {{form.email}}
-        {{form.password1}}
-        <br />
-        {{ form.password2}}
-        <br />
-        <input
-          class="button-green"
-          type="submit"
-          name="register_form"
-          value="CADASTRAR"
+  <head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="register-container">
+      <div class="esquerda-cadastro">
+        <img
+          id="logo-cadastro"
+          src="../../static/images/logo-back.png"
+          alt="logo do Turismo Irrestrito"
         />
-      </form>
+        <h2 class="poppins-font" id="h2-esquerda">Bem vindo de volta</h2>
+        <h3 class="poppins-font" id="h3-esquerda">
+          Acesse sua conta agora mesmo
+        </h3>
+        <button id="button-cadastro-entrar">ENTRAR</button>
+        <button class="poppins-font" id="button-esqueci-senha">
+          Esqueci minha senha
+        </button>
+      </div>
+      <div class="direita-cadastro">
+        <button class="close-button" id="close-button">X</button>
+        <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
+        <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h3>
+        <form method="POST" action="{% url 'user_login' %}" novalidate>
+          {% csrf_token %} {{form.name}} {{form.email}} {{form.password1}}
+          <br />
+          {{ form.password2}}
+          <br />
+          <input
+            class="button-green"
+            type="submit"
+            name="register_form"
+            value="CADASTRAR"
+          />
+        </form>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

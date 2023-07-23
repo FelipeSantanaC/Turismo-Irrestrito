@@ -6,7 +6,7 @@ from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.db.models import Max
-from myapp.models import MyUser, Local, UserProfile
+from myapp.models import MyUser, Local, UserProfile, ListaRecursos, ListaDispositivos, TiposLocais
 from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
@@ -54,8 +54,12 @@ def complementar_register(request):
     user_profile_exists = UserProfile.objects.filter(user=request.user).exists()
     if user_profile_exists:
         return HttpResponse('Você já preencheu este formulário')
+    tipos_locais = TiposLocais.objects.all()
+    tipos_recursos = ListaRecursos.objects.all()
+    tipos_dispositivos = ListaDispositivos.objects.all()
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
+       
         if additional_form.is_valid():
             user_profile = additional_form.save(commit=False)
             user_profile.user = request.user
@@ -64,7 +68,10 @@ def complementar_register(request):
     else:
         additional_form = UserProfileForm()
 
-    return render(request, 'comp.html', context={'additional_form': additional_form})
+    return render(request, 'comp.html', context={'additional_form': additional_form, 
+                                                'tipos_locais' : tipos_locais,
+                                                'tipos_recursos' : tipos_recursos,
+                                                'tipos_dispositivos' : tipos_dispositivos})
 
 @login_required(login_url='login')
 def home(request):

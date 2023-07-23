@@ -40,7 +40,18 @@
       {% csrf_token %} {{ additional_form.as_p }}
       <input type="submit" value="Save" />
     </form>
-    {% endblock %}
+
+    {%for local in tipos_locais%}
+    <li>{{local.title}}</li>
+    {%endfor%}
+    <p>==============</p>
+    {%for recurso in tipos_recursos%}
+    <li>{{recurso.title}}</li>
+    {%endfor%}
+    <p>==============</p>
+    {%for dispositivo in tipos_dispositivos%}
+    <li>{{dispositivo.title}}</li>
+    {%endfor%} {% endblock %}
     <script src="../static/js/app.js"></script>
   </body>
 </html>

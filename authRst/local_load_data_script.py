@@ -6,7 +6,7 @@ import re
 cnx = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='FbFb0112*',
+    password='root',
     database='mydb'
 )
 cursor = cnx.cursor()
