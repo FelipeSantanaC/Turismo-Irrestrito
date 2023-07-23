@@ -6,14 +6,14 @@ from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.db.models import Max
-from myapp.models import MyUser, Local
+from myapp.models import MyUser, Local, UserProfile
 from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 from django.db.models import Q
-
+from .forms import UserProfileForm
 
 def index(request):
     search_query = request.GET.get('search', '')
@@ -21,8 +21,9 @@ def index(request):
     local_serializer = LocalSerializer(locals, many=True)
     return render(request,'home.html',{'data': local_serializer.data})
 
-def user_login(request):
+def user_login(request):   
     if request.method == "POST":
+        
         if 'register_form' in request.POST:
             form = UserCreationForm(request.POST)
             if form.is_valid():
@@ -48,10 +49,22 @@ def user_login(request):
                 return HttpResponse('Invalid credentials')
 
 
-    
-    """ # Render the initial page with the form
-    context = {'form': form}
-    return render(request, 'home.html', context=context) """
+@login_required
+def complementar_register(request):
+    user_profile_exists = UserProfile.objects.filter(user=request.user).exists()
+    if user_profile_exists:
+        return HttpResponse('Você já preencheu este formulário')
+    if request.method == 'POST':
+        additional_form = UserProfileForm(request.POST)
+        if additional_form.is_valid():
+            user_profile = additional_form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect('index')
+    else:
+        additional_form = UserProfileForm()
+
+    return render(request, 'comp.html', context={'additional_form': additional_form})
 
 @login_required(login_url='login')
 def home(request):
