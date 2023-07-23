@@ -320,20 +320,10 @@ a.tag {
   align-items: center;
 }
 
-.modal-cadastro {
-  display: flex;
-  padding: 0;
-  border: 0;
-  border-radius: 15px;
-  justify-content: flex-start;
-  color: #ece9fc;
-  width: 50%;
-  padding: 0;
-}
-
 .register-container {
   background-color: #efefef;
   display: flex;
+  border-radius: 16px;
 }
 
 .esquerda-cadastro {
@@ -357,7 +347,7 @@ a.tag {
 /*fim cadastro*/
 
 /*login*/
-.modal-login {
+/* .modal-login {
   border-radius: 15px;
   background-color: #ffffff;
   width: 471px;
@@ -366,7 +356,7 @@ a.tag {
   font-weight: bold;
   border: none;
   padding: 2%;
-}
+} */
 
 .container-login {
   display: flex;
@@ -679,4 +669,112 @@ button#button-filter:hover {
 .star-rating p::before {
   content: "\2605"; /* Unicode character for a star */
   color: gold; /* Adjust color as desired */
+}
+
+
+/*  */
+
+/* styles.css */
+/* Hide the pop-up container by default */
+.popup-container {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+}
+
+/* Show the pop-up container when it has the 'active' class */
+.popup-container.active {
+  display: block;
+}
+
+.overlay {
+  position:absolute;
+  top : 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  content:"";
+  /* pointer-events: none; */
+  z-index:100;
+  opacity: .5
+}
+
+.wizard-container {
+  width: 80vw;
+  max-width: 60vw;
+  height: 70vh;
+  background-color: #fff;
+}
+
+.left-complement {
+  width: fit-content;
+  padding-right: 0;
+  border-right: 0;
+}
+
+.wizardTracking {
+  margin-top: 30%;
+}
+
+.right-complement {
+  display: flex;
+  flex-direction: column;
+  /* width: fit-content; */
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+#logo-popup {
+  max-width: 100%;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+  margin-top: auto;
+  margin-bottom: 15%;
+  padding: 2%;
+}
+
+.complement-track {
+  display: flex;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 0 0 25px;
+}
+
+#button-complement {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 3vh;
+  margin-top: auto;
+  background-color: #37beb0;
+}
+
+#side-by-side {
+  display: flex;
+  flex-direction: row;
+}
+
+#complement-active {
+  background-color: #fff;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.disable-wizard {
+  display: none;
 }

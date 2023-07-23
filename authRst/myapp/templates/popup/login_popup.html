@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container-login">
+    <button class="close-button" id="close-button">X</button>
+    <h2 class="title-login">Login</h2>
+    <form method="POST" action="{% url 'user_login' %}" novalidate>
+       {% csrf_token %}
+      {{form.email}}
+      {{form.password1}}
+      <button class="poppins-font" id="button-esqueci-senha-login">
+        Esqueci minha senha
+      </button>
+      <input
+        class="button-green"
+        type="submit"
+        name="login_form"
+        value="Login"
+      />
+    </form>
+  </div>
+</body>
+</html>

@@ -89,6 +89,7 @@ def users_list(request):
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
 
 def results(request):
+
     search_query = request.GET.get('search', '')
     selected_types = request.GET.getlist('tipo')
 
@@ -110,3 +111,32 @@ def results(request):
         'search_query': search_query,
     }
     return render(request, 'results.html', context)
+
+
+def open_pop_up(request):
+    pop_up_model = request.GET.get('model') # Retrieve the data from the request
+    print(pop_up_model)
+    if pop_up_model == '0': # Register One
+        return render(request, 'popup/register_popup.html')
+    elif pop_up_model == '1': # Login One
+        return render(request, 'popup/login_popup.html')
+    elif pop_up_model == '4': # Complement
+        return render(request, "popup/complementInfo_popup_pcd_start.html")
+    # if request.method =='post':
+    return #Just Placeholder
+
+def next_step(request): 
+    # pcd = 1 => Is PCD
+    # pcd = 0 => Not PCD
+    userType = request.GET.get('pcd')
+    nextStep = request.GET.get('step')
+    if nextStep == "2": # DAM
+        return render(request, 'popup/complementInfo_dam_type.html')
+    elif nextStep == "3":
+        if userType == "1": # The condition type
+            return render(request, 'popup/complementInfo_condition_type.html') 
+        return render(request, 'popup/complementInfo_tag_preference.html') # TAGS if not pcd
+    elif nextStep == "4" and userType == "1":
+        return render(request, 'popup/complementInfo_tag_preference.html') # TAGS
+    else:
+        return HttpResponse("Realizar Cadastro")
