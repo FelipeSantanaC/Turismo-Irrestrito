@@ -24,8 +24,6 @@ with open('./authRst/local_data.csv', 'r', encoding='utf-8') as file:
         longitude_first_dot_index = longitude.find(".")
         longitude = longitude[:longitude_first_dot_index+1] + longitude[longitude_first_dot_index+1:].replace(".", "")
 
-        print(latitude)
-        print(longitude)
         query = """
             INSERT INTO myapp_local (id, nome, latitude, longitude, bairro, recursos, cidade, estado, cep, foto_url,nota, relevancia, tipo)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)

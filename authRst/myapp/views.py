@@ -6,7 +6,7 @@ from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.db.models import Max
-from myapp.models import MyUser, Local, UserProfile, ListaRecursos, ListaDispositivos, TiposLocais
+from myapp.models import MyUser, Local, UserProfile, TiposRecursos, TiposDispositivos, TiposLocais, PreferenciaLocais, PreferenciaDispositivos, PreferenciaRecursos
 from myapp.serializers import UserSerializer, LocalSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
@@ -51,27 +51,46 @@ def user_login(request):
 
 @login_required
 def complementar_register(request):
-    user_profile_exists = UserProfile.objects.filter(user=request.user).exists()
+    #Faz com que o usuário só possa preencher o cadastro complementar uma única vez
+    """ user_profile_exists = UserProfile.objects.filter(user=request.user).exists()
     if user_profile_exists:
-        return HttpResponse('Você já preencheu este formulário')
-    tipos_locais = TiposLocais.objects.all()
-    tipos_recursos = ListaRecursos.objects.all()
-    tipos_dispositivos = ListaDispositivos.objects.all()
+        return HttpResponse('Você já preencheu este formulário') """
+    
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
-       
         if additional_form.is_valid():
-            user_profile = additional_form.save(commit=False)
-            user_profile.user = request.user
-            user_profile.save()
-            return redirect('index')
+            current_user = additional_form.save(commit=False) #Cria uma instancia de UserProfile
+            current_user.user = request.user #Associa o UserProfile ao usuário logado (MyUser)
+            current_user.save()
+            """ 
+                As proximas linhas repetem para locais, recursos e dispositivos:
+                Armazena os id dos elementos selecionados no form pelo usuário
+                Para cada id armazenado:
+                Usa o id para instanciar um tipo de elemento
+                Instancia Preferencias com  o usuario logado e o tipo de elemento
+                Salva o id usuario e o id elemento na tabela"""
+            preferencia_locais_ids = additional_form.cleaned_data['preferencia_locais'].values_list('id', flat=True)
+            for tipo_local_id in preferencia_locais_ids:
+                tipo_local_instance = TiposLocais(tipo_local_id)
+                preferencia_locais_instance = PreferenciaLocais(user=current_user.user, local=tipo_local_instance)
+                preferencia_locais_instance.save()
+            preferencia_recursos_ids = additional_form.cleaned_data['preferencia_recursos'].values_list('id', flat=True)
+            for tipo_recurso_id in preferencia_recursos_ids:
+                tipo_recurso_instance = TiposRecursos(tipo_recurso_id)
+                preferencia_recursos_instance = PreferenciaRecursos(user=current_user.user, recurso=tipo_recurso_instance)
+                preferencia_recursos_instance.save()
+            dispositivo_aux_marcha_ids = additional_form.cleaned_data['preferencia_dam'].values_list('id', flat=True)
+            for tipo_dam_id in dispositivo_aux_marcha_ids:
+                tipo_dispositivo_instance = TiposDispositivos(tipo_dam_id)
+                preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
+                preferencia_dispositivos_instance.save()
+            
+            return redirect('index') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()
 
     return render(request, 'comp.html', context={'additional_form': additional_form, 
-                                                'tipos_locais' : tipos_locais,
-                                                'tipos_recursos' : tipos_recursos,
-                                                'tipos_dispositivos' : tipos_dispositivos})
+                                                })                                                                                                
 
 @login_required(login_url='login')
 def home(request):

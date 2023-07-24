@@ -48,34 +48,38 @@ class Local(models.Model):
     relevancia = models.IntegerField(default=0)
     tipo = models.CharField(max_length=100, default='')
 
-
 #Esses modelos irão armazenar um id e o tipo do local/DAM/recurso, ex. museu, muleta, rampa,  respectivamente.
 class TiposLocais(models.Model):
     title = models.CharField(max_length=40)
-class ListaRecursos(models.Model):
+    def __str__(self):
+        return self.title
+class TiposRecursos(models.Model):
     title = models.CharField(max_length=80)
-class ListaDispositivos(models.Model):
+    def __str__(self):
+        return self.title
+class TiposDispositivos(models.Model):
     title = models.CharField(max_length=40)
-
-
+    def __str__(self):
+        return self.title
 
 #Esses modelos ligam MyUser de modo OneToMany a LocaldeInteresse, Recursos, e DAM, através do id do MyUser e o id do local/DAM/recurso.
-class LocaisInteresse(models.Model):
-    user_id = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    recurso_id = models.ForeignKey(TiposLocais, on_delete=models.CASCADE)
+class PreferenciaLocais(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    local = models.ForeignKey(TiposLocais, on_delete=models.CASCADE)
 
-class RecursosAcessibilidade(models.Model):
-    user_id = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    tipo_local_id = models.ForeignKey(ListaRecursos, on_delete=models.CASCADE)
+class PreferenciaRecursos(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    recurso = models.ForeignKey(TiposRecursos, on_delete=models.CASCADE)
 
-class DispositivoAuxiliarMarcha(models.Model):
-    user_id = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    dispositivo_id = models.ForeignKey(ListaDispositivos, on_delete=models.CASCADE)
+class PreferenciaDispositivos(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    dispositivo = models.ForeignKey(TiposDispositivos, on_delete=models.CASCADE)
 
 
 #Esse modelo armazena os dados exibidos no perfil do usuário.
 class UserProfile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    DATE_INPUT_FORMATS = ['%d-%m-%Y']
     data_nascimento = models.DateField(null=True, blank=True)
     foto_perfil = models.URLField(blank=True)
     acompanhamento = models.CharField(max_length=3, choices=[('sim', 'Sim'), ('nao', 'Não')], default='nao')
