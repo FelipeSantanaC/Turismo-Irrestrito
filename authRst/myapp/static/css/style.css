@@ -113,6 +113,7 @@ a.tag {
   text-shadow: 0 3px 3px gray;
   white-space: nowrap;
   transition: width 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .button-logout {

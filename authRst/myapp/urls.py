@@ -13,5 +13,6 @@ urlpatterns = [
     path('popup/', views.open_pop_up, name='open_pop_up'),
     path('nextWizard/', views.next_step, name='next_step'),
     path('comp/', views.complementar_register, name='complementar_register'),
+    path('user_display/', views.user_display, name='user_display'),
 ]   
 
