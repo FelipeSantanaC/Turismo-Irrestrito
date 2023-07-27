@@ -2,16 +2,11 @@ const registerButton = document.querySelector("#register-button");
 const loginButton = document.querySelector("#login-button");
 const registerButtonBoot = document.querySelector("#register-button-boot");
 const loginButtonBoot = document.querySelector("#login-button-boot");
-const aboutButton = document.getElementById('about-button');
 let step = 1;
 let allsteps = 1;
 
 
 // Add a click event listener to the button
-aboutButton.addEventListener('click', function() {
-  openPopup('/popup/?model=4')  // Open pop up of complement information (test purpose)
-});
-
 registerButton.addEventListener("click", () => {
   openPopup('/popup/?model=0')
 });

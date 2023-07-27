@@ -206,4 +206,7 @@ def user_display(request):
         'preferencias_recursos': recursos_preferidos,
     }
 
-    return render(request, 'perfil.html', context)
+    return render(request, 'profile.html', context)
+
+def about(request):
+    return render(request, 'about.html')
