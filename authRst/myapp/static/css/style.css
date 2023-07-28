@@ -183,12 +183,15 @@ a.tag {
 
 #bootstrap-navbar {
   display: none;
-  background-color: #37beb0;
+  background-image: linear-gradient(to right, #04247C , #010418);
 }
 
 @media (max-width: 800px) {
   .header {
     display: none;
+  }
+  .navbar {
+    background-image: linear-gradient(to right, #010418, #04247C);
   }
 
   #login-button-toggle {
@@ -215,7 +218,6 @@ a.tag {
     display: block;
   }
 }
-
 .navbar-collapse {
   border-top: 1px solid #499fa4;
 }
