@@ -1,30 +1,35 @@
-const registerButton = document.querySelector("#register-button");
-const loginButton = document.querySelector("#login-button");
-const registerButtonBoot = document.querySelector("#register-button-boot");
-const loginButtonBoot = document.querySelector("#login-button-boot");
-const aboutButton = document.getElementById('about-button');
 let step = 1;
 let allsteps = 1;
+document.addEventListener('DOMContentLoaded', () => {
+
+  const registerButton = document.getElementById("register-button");
+  const loginButton = document.getElementById("login-button");
+  const registerButtonBoot = document.getElementById("register-button-boot");
+  const loginButtonBoot = document.getElementById("login-button-boot");
+  const aboutButton = document.getElementById('about-button')
+
+  // Add a click event listener to the button
+  aboutButton.addEventListener('click', () => {
+    openPopup('/popup/?model=4')  // Open pop up of complement information (test purpose)
+  });
+
+  registerButton.addEventListener("click", () => {
+    openPopup('/popup/?model=0')
+  });
+  registerButtonBoot.addEventListener("click", () => {
+    openPopup('/popup/?model=0')
+  });
+
+  loginButton.addEventListener("click", () => {
+    openPopup('/popup/?model=1')
+  });
+  loginButtonBoot.addEventListener("click", () => {
+    openPopup('/popup/?model=1')
+  });
+})
 
 
-// Add a click event listener to the button
-aboutButton.addEventListener('click', function() {
-  openPopup('/popup/?model=4')  // Open pop up of complement information (test purpose)
-});
 
-registerButton.addEventListener("click", () => {
-  openPopup('/popup/?model=0')
-});
-registerButtonBoot.addEventListener("click", () => {
-  openPopup('/popup/?model=0')
-});
-
-loginButton.addEventListener("click", () => {
-  openPopup('/popup/?model=1')
-});
-loginButtonBoot.addEventListener("click", () => {
-  openPopup('/popup/?model=1')
-});
 
 function openPopup(url) {
   // Make an AJAX request to the provided URL

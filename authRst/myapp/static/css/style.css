@@ -578,6 +578,7 @@ button#button-filter:hover {
 }
 
 .card {
+  background-color: #558BE2;
   width: 18rem;
   height: 10rem;
   max-height: 220px;
@@ -790,4 +791,21 @@ button#button-filter:hover {
 
 .disable-wizard {
   display: none;
+}
+
+#disable-checkbox-box {
+  display: none;
+}
+
+.checkbox-label {
+  background-color: #558BE2;
+  color: #051537;
+  border-radius: 15px ;
+  padding: 5px 15px;
+}
+
+.checked {
+  background-color: #0458AB;
+  color: #C2E2F5;
+  
 }
