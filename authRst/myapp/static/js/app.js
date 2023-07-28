@@ -1,3 +1,7 @@
+const registerButton = document.querySelector("#register-button");
+const loginButton = document.querySelector("#login-button");
+const registerButtonBoot = document.querySelector("#register-button-boot");
+const loginButtonBoot = document.querySelector("#login-button-boot");
 let step = 1;
 let allsteps = 1;
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,7 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })
 
-
+// Add a click event listener to the button
+registerButton.addEventListener("click", () => {
+  openPopup('/popup/?model=0')
+});
+registerButtonBoot.addEventListener("click", () => {
+  openPopup('/popup/?model=0')
+});
 
 
 function openPopup(url) {

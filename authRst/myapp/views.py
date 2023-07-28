@@ -192,3 +192,34 @@ def next_step(request):
         return render(request, 'popup/complementInfo_tag_preference.html') # TAGS
     else:
         return HttpResponse("Realizar Cadastro")
+
+@login_required
+def user_display(request):
+    usuario = request.user  # Obtém o usuário logado
+    preferencias_locais = PreferenciaLocais.objects.filter(user=usuario)
+    preferencias_recursos = PreferenciaRecursos.objects.filter(user=usuario)
+
+    locais_unicos = set()
+    locais_preferidos = []
+    for preferencia in preferencias_locais:
+        if preferencia.local not in locais_unicos:
+            locais_unicos.add(preferencia.local)
+            locais_preferidos.append(preferencia)
+
+    recursos_unicos = set()
+    recursos_preferidos = []
+    for preferencia in preferencias_recursos:
+        if preferencia.recurso not in recursos_unicos:
+            recursos_unicos.add(preferencia.recurso)
+            recursos_preferidos.append(preferencia)
+
+    context = {
+        'usuario': usuario,
+        'preferencias_locais': locais_preferidos,
+        'preferencias_recursos': recursos_preferidos,
+    }
+
+    return render(request, 'profile.html', context)
+
+def about(request):
+    return render(request, 'about.html')

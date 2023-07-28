@@ -22,7 +22,7 @@
             id="home-button"
           >Página Inicial
           </button>
-          <button class="nav-bar-button poppins-font" id="about-button">
+          <button class="nav-bar-button poppins-font" onclick="location.href='/about/'">
             Sobre
           </button>
           <button
@@ -36,10 +36,10 @@
 
         {% if user.is_authenticated %}
         <div class="user-area">
-          <button class="nav-bar-button poppins-font" id="user-button">
+          <button onclick="location.href='/user_display/'" class="nav-bar-button poppins-font">
             {{ user.name }}
           </button>
-          <a class="button-logout" href="{% url 'logout' %}">Sair</a>
+          <button class="nav-bar-button poppins-font" onclick="location.href='/logout'">Sair</button>
         </div>
         {% else %}
 
