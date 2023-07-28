@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+
+  </head>
   <body>
     {% block header %}
+    <script src="../static/js/app.js"></script>
     <div class="header">
       <div class="logo-container">
         <img
@@ -16,8 +20,7 @@
             onclick="location.href='/'"
             class="nav-bar-button poppins-font"
             id="home-button"
-          >
-            Página Inicial
+          >Página Inicial
           </button>
           <button class="nav-bar-button poppins-font" onclick="location.href='/about/'">
             Sobre
@@ -63,6 +66,7 @@
         /></a>
         <button
           class="navbar-toggler"
+          id="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -91,7 +95,6 @@
         </div>
       </div>
     </nav>
-    <script src="../static/js/app.js"></script>
     {% endblock %} {% block content %} {% endblock %} {% block footer %}
     <footer id="footer">© 2023 Família Cosmus - All Rights Reserved</footer>
     {% endblock %}

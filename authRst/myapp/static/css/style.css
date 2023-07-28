@@ -184,12 +184,15 @@ a.tag {
 
 #bootstrap-navbar {
   display: none;
-  background-color: #37beb0;
+  background-image: linear-gradient(to right, #04247C , #010418);
 }
 
 @media (max-width: 800px) {
   .header {
     display: none;
+  }
+  .navbar {
+    background-image: linear-gradient(to right, #010418, #04247C);
   }
 
   #login-button-toggle {
@@ -216,7 +219,6 @@ a.tag {
     display: block;
   }
 }
-
 .navbar-collapse {
   border-top: 1px solid #499fa4;
 }
@@ -579,6 +581,7 @@ button#button-filter:hover {
 }
 
 .card {
+  background-color: #558BE2;
   width: 18rem;
   height: 10rem;
   max-height: 220px;
@@ -791,4 +794,21 @@ button#button-filter:hover {
 
 .disable-wizard {
   display: none;
+}
+
+#disable-checkbox-box {
+  display: none;
+}
+
+.checkbox-label {
+  background-color: #558BE2;
+  color: #051537;
+  border-radius: 15px ;
+  padding: 5px 15px;
+}
+
+.checked {
+  background-color: #0458AB;
+  color: #C2E2F5;
+  
 }

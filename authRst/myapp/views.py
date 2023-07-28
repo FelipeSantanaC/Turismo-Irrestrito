@@ -128,27 +128,40 @@ def users_list(request):
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
 
 def results(request):
-
-    search_query = request.GET.get('search', '')
-    selected_types = request.GET.getlist('tipo')
+    search = False
+    tags = False
+    try: search_query = request.GET.get('searchQuery') 
+    except: pass
+    try: selected_types = request.GET.get('checkboxesData')
+    except: pass
 
     locals = Local.objects.all()
+    if selected_types == 'all' and search_query == 'all':
+        tags = True
+        # search = True
+    else: 
+        if selected_types and selected_types != 'undefined':
+            selected_types = selected_types.split(',')
+            locals = locals.filter(tipo__in=selected_types)
+            tags = True
 
-    if search_query:
-        locals = locals.filter(Q(nome__icontains=search_query))
-
-    for type in selected_types:
-        locals = locals.filter(tipo=type)
+        if search_query and search_query != 'undefined':
+            locals = locals.filter(Q(nome__icontains=search_query))
+            search = True
+        
 
     local_serializer = LocalSerializer(locals, many=True)
     unique_types = Local.objects.values_list('tipo', flat=True).distinct()
 
     context = {
         'data': local_serializer.data,
-        'types': unique_types,
+        'types': list(unique_types),
         'selected_types': selected_types,
         'search_query': search_query,
     }
+
+    if search or tags:
+        return JsonResponse(context)
     return render(request, 'results.html', context)
 
 

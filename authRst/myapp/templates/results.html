@@ -26,14 +26,19 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/results.js"></script>
   </head>
   <body>
-    {% extends 'base.html' %}{% block content %}
+    {% extends 'base.html' %} 
+
+    {% block content %}
 
     <div class="search-area">
       <div class="input-container">
-        <form class="form-search" method="GET" action="{% url 'results' %}">
+        <form id="search-form"> 
+          <!-- action="{% url 'results' %}" -->
           {% csrf_token %}
           <input
             id="input-local"
@@ -41,7 +46,7 @@
             name="search"
             placeholder="Aonde você quer ir?"
           />
-          <button id="search-button" class="search-icon" type="submit">
+          <button id="search-button" class="search-icon">
             <i class="bi bi-search"></i>
           </button>
         </form>
@@ -53,26 +58,24 @@
     </div>
     <h2 class="title-filter">Filtrar por Tipo</h2>
     <div class="tags">
-        <form id="filter-form" method="GET">
+        <form id="filter-form" method="GET" action="{% url 'results' %}">
             {% csrf_token %}
             {% for type in types %}
-                <label>
-                    <input type="checkbox" name="tipo" value="{{ type }}" {% if type in selected_types %}checked{% endif %}>
+                <label class="checkbox-label">
+                    <input id="disable-checkbox-box" type="checkbox" name="tipo" value="{{ type }}" {% if type in selected_types %}checked{% endif %}>
                     {{ type }}
                 </label>
             {% endfor %}
-            <button id="button-filter" type="submit">Filtrar</button>
-            {% if search_query or selected_types %}
-                <a href="{% url 'results' %}" class="clear-filter">Remover Filtro</a>
-            {% endif %}
+            <script>addCheckboxFunctionality()</script>
         </form>
     </div>
       <!-- {% for item in data %}
         <li>{{ item }}</li>
         {% endfor %} -->
-      <div class="card-container">
+    <div id="parent-container">
+      <div class="card-container" id="card-container">
         {% if data %} {% for local in data %}
-        <div class="card" style="background-color: #558BE2">
+        <div class="card" style="background-color: #558BE2"> 
           <div class="image-overlay">
             <!-- <h1>{{local}}</h1> -->
             {% if local.foto_url %}
@@ -102,7 +105,8 @@
         {% endif %}
       </div>
     </div>
-    {% endblock %}
-    <script src="../static/js/app.js"></script>
+  </div>
+  {% endblock %}
+    
   </body>
 </html>
