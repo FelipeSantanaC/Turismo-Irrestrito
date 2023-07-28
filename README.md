@@ -32,15 +32,17 @@
 * PyMySQL;
 * myswlclient;
 * Cryptography;
+* mysql.connector;
 
 ## Instruções para executar:
 1. Instalar as dependências/bibliotecas;
 2. Instalar o workbench MySQL (caso não tenha)
 3. no arquivo <code>Turismo-Irrestrito\authRst\authRst\settings.py</code> mude as configurações de login do MySQL Workbench
 4. no terminal execute o comando: 
-<code>python manage.py migrate</code>
-5. no terminal execute o comando: <code>python manage.py runserver</code>
-6. Abra no navegador o link fornecido no terminal.
+<code>python manage.py migrate</code> (reinicie o arquivo script se necessario)
+5. execute o arquivo "local_load_data_script.py";
+6.  no terminal execute o comando: <code>python manage.py runserver</code>
+7. Abra no navegador o link fornecido no terminal.
 
 
 ## Links 
