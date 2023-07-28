@@ -14,5 +14,6 @@ urlpatterns = [
     path('nextWizard/', views.next_step, name='next_step'),
     path('comp/', views.complementar_register, name='complementar_register'),
     path('user_display/', views.user_display, name='user_display'),
+    path('about/', views.about, name='about'),
 ]   
 

@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.principal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-imagem-acessibilidade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.container-publico,
+.container-voce-sabia,
+.container-sobre {
+  margin-top: 50px;
+}
+
+.container-conteudo {
+  width: 80%;
+  height: 352px;
+  margin: 30px 30px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 50px;
+  font-size: 20px;
+  color: #000000;
+  font-weight: 700;
+}
+
+.title {
+  font-weight: bold;
+  display: flex;
+  margin-top: 50px;
+}
+
+.title-sobre {
+  display: flex;
+  justify-content: center;
+}
+
+.container-sobre {
+  width: 80%;
+  height: 352px;
+  margin-top: 100px;
+  margin-bottom: 30px;
+}
