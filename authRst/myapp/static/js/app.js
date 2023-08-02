@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })
 
-function openPopup(url, type=undefined) {
+function openPopup(url, typePopup=undefined) {
   // Make an AJAX request to the provided URL
   fetch(url)
     .then(response => response.text())
@@ -40,18 +40,28 @@ function openPopup(url, type=undefined) {
         document.body.appendChild(overlay);
         document.addEventListener('wheel', preventScroll, { passive: false }); // Prevent scroll
 
+        // To "upload" the js file into the base.html 
+        // login == 1 | register == 0
+        const scriptElement = document.createElement('script');
+        if (typePopup == 1) {
+          // this is to load the login.js into the page
+          scriptElement.src = '../static/js/login.js';
+          document.body.appendChild(scriptElement);
+        } else if (typePopup == 0) {
+          // Upload the js related to register
+          // Use the scriptElement object
+        }
+
         // Close button functionality
         const closeButton = document.getElementById('close-button');
         closeButton.addEventListener('click', () => {
           document.body.removeChild(popupContainer);
           document.body.removeChild(overlay);
+          document.body.removeChild(scriptElement)
           document.removeEventListener('wheel', preventScroll); // Prevent scroll
           step = 1;
         });
-        // To "upload" the js file into the base.html this is to load the login;js
-        const scriptElement = document.createElement('script');
-        scriptElement.src = '../static/js/login.js';
-        document.body.appendChild(scriptElement);
+        
 
     }).then(() => {
       const previousButtonWizard = document.getElementById('previous-button-wizard');
