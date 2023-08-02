@@ -16,14 +16,15 @@ from django.db.models import Q
 from .forms import UserProfileForm
 
 def index(request):
+    print('index being load')
     search_query = request.GET.get('search', '')
     locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
     local_serializer = LocalSerializer(locals, many=True)
     return render(request,'home.html',{'data': local_serializer.data})
 
 def user_login(request):   
+    print('userLogin')
     if request.method == "POST":
-        
         if 'register_form' in request.POST:
             form = UserCreationForm(request.POST)
             if form.is_valid():
@@ -43,10 +44,12 @@ def user_login(request):
             password = request.POST.get('password1')
             user = authenticate(request, email=email, password=password)
             if user is not None:
+                print('200')
                 login(request, user)
                 return redirect('index') 
             else:
-                return HttpResponse('Invalid credentials')
+                print('400')
+                return JsonResponse({'confirmed':False, 'message':'Login failed.'}, status=400)
 
 
 @login_required
@@ -89,8 +92,7 @@ def complementar_register(request):
     else:
         additional_form = UserProfileForm()
 
-    return render(request, 'comp.html', context={'additional_form': additional_form, 
-                                                })                                                                                                
+    return render(request, 'comp.html', context={'additional_form': additional_form,})   
 
 @login_required(login_url='login')
 def home(request):

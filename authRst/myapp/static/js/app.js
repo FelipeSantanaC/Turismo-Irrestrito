@@ -1,7 +1,4 @@
-const registerButton = document.querySelector("#register-button");
-const loginButton = document.querySelector("#login-button");
-const registerButtonBoot = document.querySelector("#register-button-boot");
-const loginButtonBoot = document.querySelector("#login-button-boot");
+
 let step = 1;
 let allsteps = 1;
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,38 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginButton = document.getElementById("login-button");
   const registerButtonBoot = document.getElementById("register-button-boot");
   const loginButtonBoot = document.getElementById("login-button-boot");
-  const aboutButton = document.getElementById('about-button')
-
-  // Add a click event listener to the button
-  aboutButton.addEventListener('click', () => {
-    openPopup('/popup/?model=4')  // Open pop up of complement information (test purpose)
-  });
 
   registerButton.addEventListener("click", () => {
-    openPopup('/popup/?model=0')
+    openPopup('/popup/?model=0', 1)
   });
   registerButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=0')
+    openPopup('/popup/?model=0', 1)
   });
 
   loginButton.addEventListener("click", () => {
-    openPopup('/popup/?model=1')
+    openPopup('/popup/?model=1', 1)
   });
+
   loginButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=1')
+    openPopup('/popup/?model=1', 1)
   });
 })
 
-// Add a click event listener to the button
-registerButton.addEventListener("click", () => {
-  openPopup('/popup/?model=0')
-});
-registerButtonBoot.addEventListener("click", () => {
-  openPopup('/popup/?model=0')
-});
-
-
-function openPopup(url) {
+function openPopup(url, type=undefined) {
   // Make an AJAX request to the provided URL
   fetch(url)
     .then(response => response.text())
@@ -65,14 +48,21 @@ function openPopup(url) {
           document.removeEventListener('wheel', preventScroll); // Prevent scroll
           step = 1;
         });
+        // To "upload" the js file into the base.html this is to load the login;js
+        const scriptElement = document.createElement('script');
+        scriptElement.src = '../static/js/login.js';
+        document.body.appendChild(scriptElement);
+
     }).then(() => {
       const previousButtonWizard = document.getElementById('previous-button-wizard');
       const nextButtonWizard = document.getElementById('next-button-wizard');
       const wizardContent = document.querySelector('.wizard-content');
-      const userType = wizardContent.getAttribute('data-value');
+      try {
+        const userType = wizardContent.getAttribute('data-value');
+        nextButtonWizard.addEventListener('click', () => {getNextStep(userType)})
+        previousButtonWizard.addEventListener('click', () => {previousPopUpStep()})
+      } catch (error) {}
 
-      previousButtonWizard.addEventListener('click', () => {previousPopUpStep()})
-      nextButtonWizard.addEventListener('click', () => {getNextStep(userType)})
     });
 }
 
@@ -175,37 +165,3 @@ function cadastrar() {
       });
   }
 }
-
-// document.getElementById("buttonCadastrar").addEventListener("click", cadastrar);
-
-// SCRIPT DE FILTRO DOS CHECKBOXS
-
-$(document).ready(function() {
-  $('#filter-form').submit(function(event) {
-    event.preventDefault();
-
-    var selectedTypes = [];
-    $('input[name="tipo"]:checked').each(function() {
-      selectedTypes.push($(this).val());
-    });
-
-    var searchQuery = $('#input-local').val();
-    var url = '/results/';
-
-    var queryParams = [];
-
-    if (searchQuery) {
-      queryParams.push('search=' + encodeURIComponent(searchQuery));
-    }
-
-    if (selectedTypes.length > 0) {
-      queryParams.push('tipo=' + selectedTypes.join(','));
-    }
-
-    if (queryParams.length > 0) {
-      url += '?' + queryParams.join('&');
-    }
-
-    window.location.href = url;
-  });
-});
