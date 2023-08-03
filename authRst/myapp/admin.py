@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.password_validation import validate_password
+from django.core.validators import EmailValidator
 
 from .models import MyUser
 
@@ -14,7 +16,8 @@ class UserCreationForm(forms.ModelForm):
         'placeholder':'Nome',
         'class':'form-fields'
     }))
-    email = forms.CharField(label='Email', widget=forms.EmailInput(attrs={
+    email = forms.CharField(label='Email',validators=[EmailValidator(message='Please enter a valid email address.')],
+         widget=forms.EmailInput(attrs={
         'placeholder':'Email',
         'class':'form-fields'
     }))
@@ -35,6 +38,12 @@ class UserCreationForm(forms.ModelForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
         return password2
+    
+    def clean_password1(self):
+        # Validate password strength
+        password1 = self.cleaned_data.get("password1")
+        validate_password(password1, self.instance)
+        return password1
 
     def save(self, commit=True):
         # Save the provided password in hashed format

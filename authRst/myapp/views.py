@@ -16,6 +16,8 @@ from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
 
+
+
 def index(request):
     print('index being load')
     search_query = request.GET.get('search', '')
@@ -23,22 +25,22 @@ def index(request):
     local_serializer = LocalSerializer(locals, many=True)
     return render(request,'home.html',{'data': local_serializer.data})
 
+
+def user_register(request):
+     if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True, 'redirect_url': reverse('results')})
+        else:
+            # Display form errors
+            errors = form.errors.as_data()
+            error_messages = []
+            for field, error_list in errors.items():
+                error_messages.append(f"{field}: {', '.join(error.message for error in error_list)}")
+            return JsonResponse({'success': False, 'message':error_messages})
+
 def user_login(request):   
-    # if request.method == "POST":
-    #     if 'register_form' in request.POST:
-    #         form = UserCreationForm(request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             return redirect('index')
-    #         else:
-    #             # Display form errors
-    #             errors = form.errors.as_data()
-    #             error_messages = []
-    #             for field, error_list in errors.items():
-    #                 error_messages.append(f"{field}: {', '.join(error.message for error in error_list)}")
-    #             return HttpResponse(f"Invalid form data: {', '.join(error_messages)}")
-    #             # return HttpResponse('Invalid form data')
-        
     if request.method == "GET":
         email = request.GET.get('email')
         password = request.GET.get('password')
