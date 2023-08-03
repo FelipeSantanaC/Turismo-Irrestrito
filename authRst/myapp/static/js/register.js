@@ -1,5 +1,5 @@
 const confirmButton = document.getElementById('confirm-register-button');
-const failedLogin = document.getElementById('register-error-message');
+const failedRegister = document.getElementById('register-error-message');
 
 confirmButton.addEventListener('click', function() {
     const form = document.getElementById('register-form');
@@ -19,16 +19,20 @@ confirmButton.addEventListener('click', function() {
         password1: password1,
         password2: password2
     };
+    const hedaers = {
+        'X-CSRFToken':getCookie('csrftoken'),
+    }
 
     fetch(url, {
-        method: 'POST'
+        method: 'POST',
+        headers: headers,
     })
     .then(response => response.json())
-    print(response)
     .then(data => {
+        console.log(data)  // Moises
         if (!data.success) {
             // Change the thing on the pop up
-            failedLogin.innerText = "Email ou Senha invalido."
+            failedRegister.innerText = "Email ou Senha invalido."
         } else {
             console.log(data)
             window.location.href = data.redirect_url;
@@ -36,3 +40,9 @@ confirmButton.addEventListener('click', function() {
     })
     
 })
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}

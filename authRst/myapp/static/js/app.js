@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginButtonBoot = document.getElementById("login-button-boot");
 
   registerButton.addEventListener("click", () => {
-    openPopup('/popup/?model=0', 1)
+    openPopup('/popup/?model=0', 0)
   });
   registerButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=0', 1)
+    openPopup('/popup/?model=0', 0)
   });
 
   loginButton.addEventListener("click", () => {
@@ -46,11 +46,10 @@ function openPopup(url, typePopup=undefined) {
         if (typePopup == 1) {
           // this is to load the login.js into the page
           scriptElement.src = '../static/js/login.js';
-          document.body.appendChild(scriptElement);
         } else if (typePopup == 0) {
-          // Upload the js related to register
-          // Use the scriptElement object
+          scriptElement.src = '../static/js/register.js';
         }
+        document.body.appendChild(scriptElement);
 
         // Close button functionality
         const closeButton = document.getElementById('close-button');

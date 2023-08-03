@@ -27,8 +27,10 @@ def index(request):
 
 
 def user_register(request):
+     print('Test:',request)
      if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        print('POST: ', request)
+        form = UserCreationForm(request.GET)
         if form.is_valid():
             form.save()
             return JsonResponse({'success': True, 'redirect_url': reverse('results')})
