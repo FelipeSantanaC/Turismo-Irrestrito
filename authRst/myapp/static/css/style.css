@@ -812,3 +812,16 @@ button#button-filter:hover {
   color: #C2E2F5;
   
 }
+
+#error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 3px;
+  text-align: left;
+  padding-left: 5%;
+}
+
+.error-field {
+  border: 1px solid #f44336;
+}

@@ -13,13 +13,7 @@ confirmButton.addEventListener('click', function() {
 
     const url = `/user_register/?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password1=${encodeURIComponent(password1)}&password2=${encodeURIComponent(password2)}`;
 
-    const dataToSend = {
-        name: name,
-        email: email,
-        password1: password1,
-        password2: password2
-    };
-    const hedaers = {
+    const headers = {
         'X-CSRFToken':getCookie('csrftoken'),
     }
 
@@ -29,12 +23,18 @@ confirmButton.addEventListener('click', function() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data)  // Moises
         if (!data.success) {
             // Change the thing on the pop up
-            failedRegister.innerText = "Email ou Senha invalido."
+
+            $('#error-messages').empty();
+            $.each(data.message, function (index, message) {
+                let error_message = message.split(':')[1].trim();
+                $('#error-messages').append('<p id="error-message">' + error_message +'</p>');
+            })
+
+            handleFormErrors(data.message)
+            // failedRegister.innerText = "Email ou Senha invalido."
         } else {
-            console.log(data)
             window.location.href = data.redirect_url;
         }
     })
@@ -46,3 +46,26 @@ function getCookie(name) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+function handleFormErrors(errors) {
+    const formInputs = document.querySelectorAll('input');
+    
+    // Remove error styles from all inputs
+    formInputs.forEach(input => {
+      input.classList.remove('error-field');
+    });
+  
+    // Update the form inputs with error styles
+    for (const error of errors) {
+      const field = error.split(':')[0].trim();
+      const input = document.getElementById(`id_${field}`);
+      if (input) {
+        input.classList.add('error-field');
+        if (field == 'password1') {
+            const input = document.getElementById(`id_password2`);
+            input.classList.add('error-field')
+        }
+      }
+    }
+  }
+  

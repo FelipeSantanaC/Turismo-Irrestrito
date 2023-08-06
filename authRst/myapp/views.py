@@ -17,6 +17,18 @@ from django.db.models import Q
 from .forms import UserProfileForm
 
 
+error_translation = {
+    'This field is required.': 'Este campo é obrigatório.',
+    'Enter a valid email address.': 'Insira um endereço de e-mail válido.',
+    'A user with that username already exists.': 'Já existe um usuário com esse nome de usuário.',
+    'This password is too short. It must contain at least 8 characters.': 'A senha é muito curta. Deve conter pelo menos 8 caracteres.',
+    'This password is too common.': 'Esta senha é muito comum.',
+    'This password is entirely numeric.': 'A senha é totalmente numérica.',
+    'This password is too similar to the username.': 'A senha é muito semelhante ao nome de usuário.',
+    'The two password fields didn’t match.': 'As duas senhas não correspondem.',
+    # Add more translations for other error messages if needed
+}
+
 
 def index(request):
     print('index being load')
@@ -27,9 +39,7 @@ def index(request):
 
 
 def user_register(request):
-     print('Test:',request)
      if request.method == "POST":
-        print('POST: ', request)
         form = UserCreationForm(request.GET)
         if form.is_valid():
             form.save()
@@ -39,7 +49,10 @@ def user_register(request):
             errors = form.errors.as_data()
             error_messages = []
             for field, error_list in errors.items():
-                error_messages.append(f"{field}: {', '.join(error.message for error in error_list)}")
+                for error in error_list:
+                    for message in error:
+                        translated_message = error_translation.get(str(message), str(message))
+                        error_messages.append(f"{field}:{translated_message}")
             return JsonResponse({'success': False, 'message':error_messages})
 
 def user_login(request):   
