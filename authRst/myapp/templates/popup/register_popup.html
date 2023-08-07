@@ -24,18 +24,15 @@
         <button class="close-button" id="close-button">X</button>
         <h2 class="poppins-font" id="h2-direita">Crie sua conta</h2>
         <h3 class="poppins-font" id="h3-direita">Preencha seus dados</h3>
-        <form method="POST" action="{% url 'user_login' %}" novalidate>
+        <form id="register-form">
           {% csrf_token %} {{form.name}} {{form.email}} {{form.password1}}
           <br />
           {{ form.password2}}
           <br />
-          <input
-            class="button-green"
-            type="submit"
-            name="register_form"
-            value="CADASTRAR"
-          />
+          <div id="error-messages"></div>
         </form>
+        <p id="register-error-message" style="color: red;"></p>
+        <button id="confirm-register-button">Cadastrar</button>
       </div>
     </div>
   </body>

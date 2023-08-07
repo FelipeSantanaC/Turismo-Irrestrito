@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
+from django.urls import reverse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
@@ -15,38 +16,58 @@ from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
 
+
+error_translation = {
+    'This field is required.': 'Este campo é obrigatório.',
+    'Enter a valid email address.': 'Insira um endereço de e-mail válido.',
+    'A user with that username already exists.': 'Já existe um usuário com esse nome de usuário.',
+    'This password is too short. It must contain at least 8 characters.': 'A senha é muito curta. Deve conter pelo menos 8 caracteres.',
+    'This password is too common.': 'Esta senha é muito comum.',
+    'This password is entirely numeric.': 'A senha é totalmente numérica.',
+    'This password is too similar to the username.': 'A senha é muito semelhante ao nome de usuário.',
+    'The two password fields didn’t match.': 'As duas senhas não correspondem.',
+    # Add more translations for other error messages if needed
+}
+
+
 def index(request):
+    print('index being load')
     search_query = request.GET.get('search', '')
     locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
     local_serializer = LocalSerializer(locals, many=True)
     return render(request,'home.html',{'data': local_serializer.data})
 
+
+def user_register(request):
+     if request.method == "POST":
+        form = UserCreationForm(request.GET)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True, 'redirect_url': reverse('results')})
+        else:
+            # Display form errors
+            errors = form.errors.as_data()
+            error_messages = []
+            for field, error_list in errors.items():
+                for error in error_list:
+                    for message in error:
+                        translated_message = error_translation.get(str(message), str(message))
+                        error_messages.append(f"{field}:{translated_message}")
+            return JsonResponse({'success': False, 'message':error_messages})
+
 def user_login(request):   
-    if request.method == "POST":
-        
-        if 'register_form' in request.POST:
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('index')
-            else:
-                # Display form errors
-                errors = form.errors.as_data()
-                error_messages = []
-                for field, error_list in errors.items():
-                    error_messages.append(f"{field}: {', '.join(error.message for error in error_list)}")
-                return HttpResponse(f"Invalid form data: {', '.join(error_messages)}")
-                # return HttpResponse('Invalid form data')
-        
-        elif 'login_form' in request.POST:
-            email = request.POST.get('email')
-            password = request.POST.get('password1')
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('index') 
-            else:
-                return HttpResponse('Invalid credentials')
+    if request.method == "GET":
+        email = request.GET.get('email')
+        password = request.GET.get('password')
+        print(f"email:{email}\npassword:{password}")
+        user = authenticate(request, email=email, password=password)
+        print(f"request:{user}")
+        if user != None:
+            print("Redirect")
+            login(request, user)
+            return JsonResponse({'success': True, 'redirect_url': reverse('index')}) 
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid credentials'})
 
 
 @login_required
@@ -89,8 +110,7 @@ def complementar_register(request):
     else:
         additional_form = UserProfileForm()
 
-    return render(request, 'comp.html', context={'additional_form': additional_form, 
-                                                })                                                                                                
+    return render(request, 'comp.html', context={'additional_form': additional_form,})   
 
 @login_required(login_url='login')
 def home(request):
@@ -163,7 +183,6 @@ def results(request):
     if search or tags:
         return JsonResponse(context)
     return render(request, 'results.html', context)
-
 
 def open_pop_up(request):
     pop_up_model = request.GET.get('model') # Retrieve the data from the request

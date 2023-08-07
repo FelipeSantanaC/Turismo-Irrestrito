@@ -1,7 +1,4 @@
-const registerButton = document.querySelector("#register-button");
-const loginButton = document.querySelector("#login-button");
-const registerButtonBoot = document.querySelector("#register-button-boot");
-const loginButtonBoot = document.querySelector("#login-button-boot");
+
 let step = 1;
 let allsteps = 1;
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,38 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginButton = document.getElementById("login-button");
   const registerButtonBoot = document.getElementById("register-button-boot");
   const loginButtonBoot = document.getElementById("login-button-boot");
-  const aboutButton = document.getElementById('about-button')
-
-  // Add a click event listener to the button
-  aboutButton.addEventListener('click', () => {
-    openPopup('/popup/?model=4')  // Open pop up of complement information (test purpose)
-  });
 
   registerButton.addEventListener("click", () => {
-    openPopup('/popup/?model=0')
+    openPopup('/popup/?model=0', 0)
   });
   registerButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=0')
+    openPopup('/popup/?model=0', 0)
   });
 
   loginButton.addEventListener("click", () => {
-    openPopup('/popup/?model=1')
+    openPopup('/popup/?model=1', 1)
   });
+
   loginButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=1')
+    openPopup('/popup/?model=1', 1)
   });
 })
 
-// Add a click event listener to the button
-registerButton.addEventListener("click", () => {
-  openPopup('/popup/?model=0')
-});
-registerButtonBoot.addEventListener("click", () => {
-  openPopup('/popup/?model=0')
-});
-
-
-function openPopup(url) {
+function openPopup(url, typePopup=undefined) {
   // Make an AJAX request to the provided URL
   fetch(url)
     .then(response => response.text())
@@ -57,22 +40,38 @@ function openPopup(url) {
         document.body.appendChild(overlay);
         document.addEventListener('wheel', preventScroll, { passive: false }); // Prevent scroll
 
+        // To "upload" the js file into the base.html 
+        // login == 1 | register == 0
+        const scriptElement = document.createElement('script');
+        if (typePopup == 1) {
+          // this is to load the login.js into the page
+          scriptElement.src = '../static/js/login.js';
+        } else if (typePopup == 0) {
+          scriptElement.src = '../static/js/register.js';
+        }
+        document.body.appendChild(scriptElement);
+
         // Close button functionality
         const closeButton = document.getElementById('close-button');
         closeButton.addEventListener('click', () => {
           document.body.removeChild(popupContainer);
           document.body.removeChild(overlay);
+          document.body.removeChild(scriptElement)
           document.removeEventListener('wheel', preventScroll); // Prevent scroll
           step = 1;
         });
+        
+
     }).then(() => {
       const previousButtonWizard = document.getElementById('previous-button-wizard');
       const nextButtonWizard = document.getElementById('next-button-wizard');
       const wizardContent = document.querySelector('.wizard-content');
-      const userType = wizardContent.getAttribute('data-value');
+      try {
+        const userType = wizardContent.getAttribute('data-value');
+        nextButtonWizard.addEventListener('click', () => {getNextStep(userType)})
+        previousButtonWizard.addEventListener('click', () => {previousPopUpStep()})
+      } catch (error) {}
 
-      previousButtonWizard.addEventListener('click', () => {previousPopUpStep()})
-      nextButtonWizard.addEventListener('click', () => {getNextStep(userType)})
     });
 }
 
@@ -175,37 +174,3 @@ function cadastrar() {
       });
   }
 }
-
-// document.getElementById("buttonCadastrar").addEventListener("click", cadastrar);
-
-// SCRIPT DE FILTRO DOS CHECKBOXS
-
-$(document).ready(function() {
-  $('#filter-form').submit(function(event) {
-    event.preventDefault();
-
-    var selectedTypes = [];
-    $('input[name="tipo"]:checked').each(function() {
-      selectedTypes.push($(this).val());
-    });
-
-    var searchQuery = $('#input-local').val();
-    var url = '/results/';
-
-    var queryParams = [];
-
-    if (searchQuery) {
-      queryParams.push('search=' + encodeURIComponent(searchQuery));
-    }
-
-    if (selectedTypes.length > 0) {
-      queryParams.push('tipo=' + selectedTypes.join(','));
-    }
-
-    if (queryParams.length > 0) {
-      url += '?' + queryParams.join('&');
-    }
-
-    window.location.href = url;
-  });
-});
