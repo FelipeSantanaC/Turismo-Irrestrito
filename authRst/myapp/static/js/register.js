@@ -35,7 +35,7 @@ confirmButton.addEventListener('click', function() {
             handleFormErrors(data.message)
             // failedRegister.innerText = "Email ou Senha invalido."
         } else {
-            window.location.href = data.redirect_url;
+            window.location.reload()
         }
     })
     
