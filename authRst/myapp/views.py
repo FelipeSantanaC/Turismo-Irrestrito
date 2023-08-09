@@ -72,10 +72,10 @@ def user_login(request):
 
 @login_required
 def complementar_register(request):
-    #Faz com que o usuário só possa preencher o cadastro complementar uma única vez
-    """ user_profile_exists = UserProfile.objects.filter(user=request.user).exists()
+    usuario = request.user
+    user_profile_exists = UserProfile.objects.filter(user=usuario).exists()
     if user_profile_exists:
-        return HttpResponse('Você já preencheu este formulário') """
+        return redirect(user_display) 
     
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
