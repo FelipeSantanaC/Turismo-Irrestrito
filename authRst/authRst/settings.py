@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'myapp.apps.MyappConfig',
     'corsheaders',
+    'recommendations.apps.RecommendationsConfig',
 ]
 
 MIDDLEWARE = [

@@ -312,24 +312,17 @@ a.tag {
   border-radius: 15px;
 }
 
-#button-cadastro-entrar {
-  border-radius: 30px;
+#confirm-register-button, #confirm-login-button {
+  border-radius: 16px;
+  font-size: 18px;
   border-style: solid;
   border-color: #e3e9fc;
   color: white;
-  padding: 5% 15% 5% 15%;
+  padding: 3%;
   background-color: #051537;
+  margin-top: 10px;
 }
 
-.login-button {
-  border-radius: 50px;
-  margin-top: 5%;
-  border-style: solid;
-  border-color: #e3e9fc;
-  color: white;
-  padding: 2% 10% 2% 10%;
-  background-color: #051537;
-}
 #button-esqueci-senha {
   border-radius: 30px;
   font-size: small;
