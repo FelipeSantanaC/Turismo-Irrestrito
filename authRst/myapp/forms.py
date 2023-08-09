@@ -11,7 +11,7 @@ class BRDateField(forms.DateField):
         if value in self.empty_values:
             return None
         try:
-            return datetime.strptime(value, '%d/%m/%Y').date()
+            return datetime.strptime(value, '%Y-%m-%d').date()
         except ValueError:
             raise forms.ValidationError('Data inválida. Use o formato dd/mm/aaaa.')
 
