@@ -28,7 +28,7 @@
 ### Bibliotecas/Dependências Utilizando:
 * django;
 * django-cors-headers;
-* djangorestframerwork;
+* djangorestframework;
 * PyMySQL;
 * myswlclient;
 * Cryptography;
