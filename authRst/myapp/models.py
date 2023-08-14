@@ -84,14 +84,15 @@ class UserProfile(models.Model):
     foto_perfil = models.URLField(blank=True)
     acompanhamento = models.CharField(max_length=3, choices=[('sim', 'Sim'), ('nao', 'Não')], default='nao')
     DURACAO_CONDICAO_CHOICES = [
-        ('progressiva', 'Progressiva/Degenerativa'),
+        ('progressiva/degenerativa', 'Progressiva/Degenerativa'),
         ('temporaria', 'Temporária'),
-        ('estavel', 'Estável ou Permanente'),
+        ('estavel ou permanente', 'Estável ou Permanente'),
     ]
     duracao_condicao = models.CharField(max_length=40, choices= DURACAO_CONDICAO_CHOICES, default='temporaria')
     TIPO_USUARIO_CHOICES = [
-        ('acompanhantes','Acompanhante'),
+        ('acompanhante','Acompanhante'),
         ('pmlr','Pessoa com mobilidade de locomoção reduzida'),
         ('outro','Outro')
     ]
     tipo_usuario = models.CharField(max_length=50, choices= TIPO_USUARIO_CHOICES, default='temporaria')
+    cluster_usuario = models.IntegerField(null=True, editable=False)

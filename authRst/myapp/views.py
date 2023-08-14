@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
 from django.urls import reverse
+import numpy as np
 from rest_framework.parsers import JSONParser 
 from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
@@ -15,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
+
+from recommendations.processUserProfileData import ProcessData
 
 
 error_translation = {
@@ -76,13 +79,13 @@ def complementar_register(request):
     user_profile_exists = UserProfile.objects.filter(user=usuario).exists()
     if user_profile_exists:
         return redirect(user_display) 
-    
+
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
         if additional_form.is_valid():
             current_user = additional_form.save(commit=False) #Cria uma instancia de UserProfile
             current_user.user = request.user #Associa o UserProfile ao usuário logado (MyUser)
-            current_user.save()
+            #current_user.save()
             """ 
                 As proximas linhas repetem para locais, recursos e dispositivos:
                 Armazena os id dos elementos selecionados no form pelo usuário
@@ -105,7 +108,12 @@ def complementar_register(request):
                 tipo_dispositivo_instance = TiposDispositivos(tipo_dam_id)
                 preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
                 preferencia_dispositivos_instance.save()
-            
+
+            cluster = ProcessData(additional_form.cleaned_data)
+            current_user.cluster_usuario = cluster[0]
+            current_user.save()
+
+            print(f"CLUSTER: ", type(cluster))
             return redirect('index') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()

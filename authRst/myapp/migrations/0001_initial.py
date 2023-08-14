@@ -289,6 +289,12 @@ class Migration(migrations.Migration):
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
+                (
+                    "cluster_usuario",
+                    models.IntegerField(
+                        null=True
+                    )
+                ),
             ],
         ),
     ]
