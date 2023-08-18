@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
 from django.urls import reverse
+import numpy as np
 from rest_framework.parsers import JSONParser 
 from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
@@ -16,6 +17,8 @@ from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
 
+from recommendations.processUserProfileData import ProcessData
+
 
 error_translation = {
     'This field is required.': 'Este campo é obrigatório.',
@@ -29,14 +32,36 @@ error_translation = {
     # Add more translations for other error messages if needed
 }
 
-
 def index(request):
-    print('index being load')
     search_query = request.GET.get('search', '')
     locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
     local_serializer = LocalSerializer(locals, many=True)
-    return render(request,'home.html',{'data': local_serializer.data})
 
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            cluster_number = user_profile.cluster_usuario
+
+            recommended_locations = {
+                0: ['museu', 'jardim botânico', 'mercado', 'catedral'],
+                1: ['igreja', 'estátua', 'praia', 'mercado'],
+                2: ['mesquita', 'parque', 'mercado', 'zoológico'],
+                3: ['praia', 'farol', 'biblioteca', 'galeria']
+            }
+
+            recommended_places = recommended_locations.get(cluster_number, [])
+            
+            # Filter the recommended places by name
+            recommended_locals = Local.objects.filter(tipo__in=recommended_places)
+            
+            # Serialize the recommended places
+            recommended_locals_serializer = LocalSerializer(recommended_locals, many=True)
+            
+            return render(request, 'home.html', {'data': recommended_locals_serializer.data})
+        except UserProfile.DoesNotExist:
+            pass
+    
+    return render(request, 'home.html', {'data': local_serializer.data})
 
 def user_register(request):
      if request.method == "POST":
@@ -76,13 +101,13 @@ def complementar_register(request):
     user_profile_exists = UserProfile.objects.filter(user=usuario).exists()
     if user_profile_exists:
         return redirect(user_display) 
-    
+
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
         if additional_form.is_valid():
             current_user = additional_form.save(commit=False) #Cria uma instancia de UserProfile
             current_user.user = request.user #Associa o UserProfile ao usuário logado (MyUser)
-            current_user.save()
+            #current_user.save()
             """ 
                 As proximas linhas repetem para locais, recursos e dispositivos:
                 Armazena os id dos elementos selecionados no form pelo usuário
@@ -105,7 +130,12 @@ def complementar_register(request):
                 tipo_dispositivo_instance = TiposDispositivos(tipo_dam_id)
                 preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
                 preferencia_dispositivos_instance.save()
-            
+
+            cluster = ProcessData(additional_form.cleaned_data)
+            current_user.cluster_usuario = cluster[0]
+            current_user.save()
+
+            print(f"CLUSTER: ", type(cluster))
             return redirect('index') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()
