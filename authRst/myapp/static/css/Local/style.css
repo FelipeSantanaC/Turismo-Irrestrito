@@ -1,8 +1,9 @@
-body {
+body, html {
     font-family: "Poppins", sans-serif;
     margin: 0;
+    padding: 0;
     justify-content: center;
-    background-color: #c2e2f5;
+    background-color: #E3E9FC;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -10,9 +11,219 @@ body {
 }
 
 #content {
-    padding: 0 5% 5% 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
 }
 
-#feedback-buttons-panel {
-    
+.local-underneath-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#alter-local {
+    width: 9vw;
+    height: 3vh;
+    margin-right: 2vw;
+    border: 0;
+    border-radius: 20px;
+    color: black;
+    background-color: #d9d9d9;
+    box-shadow: 0 2px 3px gray;
+    font-size: 1.2vw;
+    display: flex;
+    align-items: center; /* Vertically center-align the text */
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  #current-local {
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .search-area {
+    min-height: 100%;
+    /* margin-bottom: -50px; */
+    padding-bottom: 50px;
+    height: 24vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: center;
+    background-image: url("../../images/Local/VectorOutrasTelas.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-top: 3.5em;
+  }
+  
+  #input-local {
+    width: 70vw;
+    height: 3vw;
+    border-radius: 100px;
+    border: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
+    padding: 15px;
+    background-color: #d9d9d9;
+    font-size: 1.5rem;
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    color: black;
+    font-size: 1.8rem;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .local-info-container {
+    margin-top: -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title-local {
+    align-self: flex-start;
+    margin-left: 150px;
+  }
+
+  .images_container {
+    margin-top: 50px;
+  }
+
+  #extra_info {
+    display: flex;
+    align-self: flex-start;
+    margin-left: 150px;
+    font-family: 'Poppins', sans-serif;
+    gap: 10px;
+    font-size: 18px;
+  }
+
+  #divider {
+    margin-bottom: 20px;
+  }
+
+  #primary-image {
+    border-radius: 16px;
+  }
+
+  .tags-container {
+    background-color: #558be2;
+    width: 1122px;
+    height: 215px;
+    border-radius: 16px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.button-tags {
+    font-size: 18px;
+    min-width: 100px;
+    margin: 5px; 
+    background-color: #6DBE6D; 
+    color: white;
+    border: 1px solid #558be2;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.feedback-container {
+    margin-top: -30px;
+    display: flex;
+    width: 100%;
+    max-width: 1122px;
+    padding: 20px;
+    gap: 140px;
+}
+
+.image-feedback {
+    margin-right: 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.buttons-feedback {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#make-review-button, #send-image-button {
+    font-size: 20px;
+    min-width: 100px;
+    margin: 5px; 
+    background-color: #558be2; 
+    color: black;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container-avaliacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
+}
+
+.container-perfil {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 50px;
+}
+
+.title-avaliacoes {
+    display: flex;
+}
+
+.content-avaliacoes {
+    margin-top: 20px;
+    display: flex;
+    gap: 200px;
+}
+
+.paragraf-avaliacao {
+    margin: 50px;
+    margin-left: -10px;
+}
+
+#primary-image {
+    display: flex;
+    min-width: 800px;
+}
+
+.content-principal {
+    flex: 1;
+}
+
+.mais-atracoes {
+    flex: 1;
 }
