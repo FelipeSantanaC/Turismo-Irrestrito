@@ -272,3 +272,30 @@ def user_display(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def local_detail(request, local_id):
+    local = Local.objects.get(pk=local_id)
+    recursos = local.recursos[1:-2]
+    recursos = recursos.split(',')
+    
+    local_data = {
+        'nome': local.nome,
+        'latitude': local.latitude,
+        'longitude': local.longitude,
+        'bairro': local.bairro,
+        'cidade': local.cidade,
+        'estado': local.estado,
+        'recursos': recursos,
+        'cep': local.cep,
+        'foto_url': local.foto_url,
+        'nota': local.nota,
+        'relevancia': local.relevancia,
+        'tipo': local.tipo,
+    }
+    
+    context = {
+        'local_data': local_data,
+    }
+    
+    return render(request, 'local.html', context)

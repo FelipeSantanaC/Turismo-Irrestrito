@@ -48,6 +48,9 @@ class Local(models.Model):
     relevancia = models.IntegerField(default=0)
     tipo = models.CharField(max_length=100, default='')
 
+    def __str__(self):
+        return self.nome
+
 #Esses modelos irão armazenar um id e o tipo do local/DAM/recurso, ex. museu, muleta, rampa,  respectivamente.
 class TiposLocais(models.Model):
     title = models.CharField(max_length=40)

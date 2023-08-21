@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/header/style.css" />
+    <link rel="stylesheet" href="../static/css/Local/style.css" />
+</head>
+<body>
+    {% extends 'base.html' %} 
+    {% block content %}
+    <div id="content">
+        <div class="search-area">
+            <div class="input-container">
+              <form id="search-form"> 
+                <!-- action="{% url 'results' %}" -->
+                {% csrf_token %}
+                <input
+                  id="input-local"
+                  type="text"
+                  name="search"
+                  placeholder="Aonde você quer ir?"
+                />
+                <button id="search-button" class="search-icon">
+                  <i class="bi bi-search"></i>
+                </button>
+              </form>
+            </div>
+            <div class="local-underneath-search">
+              <button id="alter-local">Alterar Local</button>
+              <p id="current-local">Local Atual: <span>Recife - PE</span></p>
+            </div>
+        </div>
+        <div class="local-info-container">
+            <h1>{{ local_data.nome }}</h1>
+            <div id="extra_info">
+        
+            </div>
+            <hr style="color: black;
+            background-color: black;
+            height: 2px;
+            width: 90%" id="divider">
+            <div class="images_container">
+                <img id="primary-image" src="{{ local_data.foto_url }}" alt="">
+            </div>
+            <div class="tags-container">
+                {% for value in local_data.recursos %}
+                    <dd>{{ value }}</dd>
+                {% endfor %}
+            </div>
+
+            <div id="feedback-buttons-panel">
+                <button id="make-review-button">Faça Uma Avaliação</button>
+                <button id="send-image-button">Envie uma Imagem</button>
+            </div>
+
+            <dl>
+                <h3>Test Purpose</h3>
+                {% for field, value in local_data.items %}
+                    <dt>{{ field|capfirst }}</dt>
+                    <dd>{{ value }}</dd>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -16,5 +16,6 @@ urlpatterns = [
     path('comp/', views.complementar_register, name='complementar_register'),
     path('user_display/', views.user_display, name='user_display'),
     path('about/', views.about, name='about'),
+    path('local/<int:local_id>', views.local_detail, name="local_detail"),
 ]   
 
