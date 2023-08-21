@@ -1,12 +1,12 @@
 import csv
-import mysql.connector
+import mysql.connector 
 import re
 
 # Conectar ao banco de dados MySQL
 cnx = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='root',
+    password='-Dia17na20',
     database='mydb'
 )
 cursor = cnx.cursor()

@@ -91,17 +91,17 @@ def complementar_register(request):
                 Instancia Preferencias com  o usuario logado e o tipo de elemento
                 Salva o id usuario e o id elemento na tabela"""
             preferencia_locais_ids = additional_form.cleaned_data['preferencia_locais'].values_list('id', flat=True)
-            for tipo_local_id in preferencia_locais_ids:
+            for tipo_local_id in preferencia_locais_ids: # se o usuario escoleher varios 
                 tipo_local_instance = TiposLocais(tipo_local_id)
                 preferencia_locais_instance = PreferenciaLocais(user=current_user.user, local=tipo_local_instance)
                 preferencia_locais_instance.save()
             preferencia_recursos_ids = additional_form.cleaned_data['preferencia_recursos'].values_list('id', flat=True)
-            for tipo_recurso_id in preferencia_recursos_ids:
+            for tipo_recurso_id in preferencia_recursos_ids: # se o recurso escoleher varios
                 tipo_recurso_instance = TiposRecursos(tipo_recurso_id)
                 preferencia_recursos_instance = PreferenciaRecursos(user=current_user.user, recurso=tipo_recurso_instance)
                 preferencia_recursos_instance.save()
             dispositivo_aux_marcha_ids = additional_form.cleaned_data['preferencia_dam'].values_list('id', flat=True)
-            for tipo_dam_id in dispositivo_aux_marcha_ids:
+            for tipo_dam_id in dispositivo_aux_marcha_ids: # varios dispositivos
                 tipo_dispositivo_instance = TiposDispositivos(tipo_dam_id)
                 preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
                 preferencia_dispositivos_instance.save()
@@ -242,3 +242,30 @@ def user_display(request):
 
 def about(request):
     return render(request, 'about.html')
+
+def editprofile(request): # é provisoria 
+    usuario = request.user  # Obtém o usuário logado
+    preferencias_locais = PreferenciaLocais.objects.filter(user=usuario)
+    preferencias_recursos = PreferenciaRecursos.objects.filter(user=usuario)
+
+    locais_unicos = set()
+    locais_preferidos = []
+    for preferencia in preferencias_locais:
+        if preferencia.local not in locais_unicos:
+            locais_unicos.add(preferencia.local)
+            locais_preferidos.append(preferencia)
+
+    recursos_unicos = set()
+    recursos_preferidos = []
+    for preferencia in preferencias_recursos:
+        if preferencia.recurso not in recursos_unicos:
+            recursos_unicos.add(preferencia.recurso)
+            recursos_preferidos.append(preferencia)
+
+    context = {
+        'usuario': usuario,
+        'preferencias_locais': locais_preferidos,
+        'preferencias_recursos': recursos_preferidos,
+    }
+
+    return render(request, 'editprofile.html', context)
