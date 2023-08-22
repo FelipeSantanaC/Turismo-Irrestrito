@@ -15,11 +15,89 @@
 
   {% if usuario.is_authenticated %}
        <div>
-        <h2></h1>
+        <h1>Informações Pessoais</h1>
+        <label>Nome</label>
+        <input type="text" placeholder="Nome">
+        <label>Redes Sociais</label>
+        <input type="text" placeholder="@example">
+        <form action="">
+          <label>Tipo de Usuario</label>
+          <input list="tipos_usuarios">
+          <datalist id="tipos_usuarios">
+              <option value="Acompanhante">
+              <option value="Pessoa com mobilidade de Locomoção reduzida">
+              <option value="Outro">
+          </datalist>
+        <label>Condição de Mobilidade</label>
+        <input list="condicao_mobilidade">
+          <datalist id="condicao_mobilidade">
+              <option value="Progressiva/Degenerativa">
+              <option value="Tempóraria">
+              <option value="Estável ou Permanente">
+          </datalist>
+        <label>Precisa de Acompanhante para Locomoção</label>
+        <input type="radio" name="sim" id="sim">
+        <label for="sim">Sim</label>
+        <input type="radio" name="nao" id="nao">
+        <label for="sim">Não</label>
        </div> 
+       <div>
+        <h1>Ferramenta Auxiliar de Locomoção</h1>
+        <button>Bengala</button>
+        <button>Prótese</button>
+        <button>Andador</button>
+        <button>Cadeira de rodas manual</button>
+        <button>Muleta</button>
+        <button>Órtese</button>
+        <button>Cadeira de rodas motorizada</button>
+        <button>Cadeira de rodas dobrável em X</button>
+        <button>Nenhum</button>
+        <button>Outro</button>
+        <button>Cadeira de rodas monobloco</button>
+        <button>Cadeira de rodas com elevação automatica</button>
+       </div>
+       <div>
+        <h1>Recurso de Acessibilidade</h1>
+        <button>Elevador</button>
+        <button>Plataforma Elevatória</button>
+        <button>Ponto de Taxi</button>
+        <button>Sinalização</button>
+        <button>Rampas</button>
+        <button>Corrimões</button>
+        <button>Calçada acessível</button>
+        <button>Portas amplas</button>
+        <button>Vagas preferencias</button>
+        <button>Banheiro familiar</button>
+        <button>Piso nivelado</button>
+        <button>Barras de apoio</button>
+        <button>Ponto de ônibus </button>
+        <button>Funcionarios Treinados</button>
+        <button>Banheiro Adaptado</button>
+        <button>Filas preferenciais</button>
+        <button>Área de transferencia</button>
+        <button>Guia rebaixada</button>
+        <button>Barra sanitária</button>
+        <button>Piso antiderrapante</button>
+        <button>piso não trepidante</button>
+        <button>Outro</button>
+       </div>
+       <div>
+        <h1>Locais de Interesse</h1>
+        <button>Museus</button>
+        <button>Monumentos</button>
+        <button>Praças</button>
+        <button>Artesanatos</button>
+        <button>Igrejas</button>
+        <button>Outros</button>
+       </div>
+
+       <div>
+        <button>Salvar</button>
+        <button>Cancelar</button>
+       </div>
 
   {% else %}
-      <p>Por favor, faça o login para acessar esta página.</p>
+      <label>Por favor, faça o login para acessar esta página.</label>
   {% endif %}
   {% endblock %}
 </body>
