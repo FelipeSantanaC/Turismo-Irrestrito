@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'myapp.apps.MyappConfig',
     'corsheaders',
     'recommendations.apps.RecommendationsConfig',
+    'local_interactions'
 ]
 
 MIDDLEWARE = [
