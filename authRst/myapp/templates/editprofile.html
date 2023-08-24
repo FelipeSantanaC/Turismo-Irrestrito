@@ -14,8 +14,9 @@
   {% extends 'base.html' %}{% block content %}
 
   {% if usuario.is_authenticated %}
-       <div>
+       <div class="Info_Pessoais" >
         <h1>Informações Pessoais</h1>
+        <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="not-profile-picture">
         <label>Nome</label>
         <input type="text" placeholder="Nome">
         <label>Redes Sociais</label>
@@ -41,7 +42,7 @@
         <input type="radio" name="nao" id="nao">
         <label for="sim">Não</label>
        </div> 
-       <div>
+       <div class="Fer_Auxiliar">
         <h1>Ferramenta Auxiliar de Locomoção</h1>
         <button>Bengala</button>
         <button>Prótese</button>
@@ -56,7 +57,7 @@
         <button>Cadeira de rodas monobloco</button>
         <button>Cadeira de rodas com elevação automatica</button>
        </div>
-       <div>
+       <div class="Rec_Aces">
         <h1>Recurso de Acessibilidade</h1>
         <button>Elevador</button>
         <button>Plataforma Elevatória</button>
@@ -81,7 +82,7 @@
         <button>piso não trepidante</button>
         <button>Outro</button>
        </div>
-       <div>
+       <div class="Locais_Inter">
         <h1>Locais de Interesse</h1>
         <button>Museus</button>
         <button>Monumentos</button>
