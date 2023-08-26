@@ -1,3 +1,7 @@
+/*Padões -------------------------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
 body {
   margin: 0;
   padding: 0;
@@ -6,74 +10,108 @@ body {
   display: flex;
   box-sizing: border-box;
   align-items: center;
-  flex-direction: column;
-  gap: 1.6rem;
-  
+  gap: 16px;
 }
+
 html{
-  font-size: 62.5%;
-  background-color: #c2e2f5;
-  
+  font-family: 'Poppins', sans-serif;
 }
 
 :root {
   --gradiente-3: linear-gradient(176deg, #010418 0%, #04247C 28.51%, #0458AB 50.41%, #558BE2 72.78%);}
 
-label {
-  color:#F2FFFF;
-}
-
-h1{
-  color: #F2FFFF;
-  font-size: 2.4rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  margin-left: 4.0rem;
-}
-
-input{
-  color: #F2FFFF;
-  width: 66.9rem;
-  height: 3.2rem;
-  margin-left: 43.5rem;
-  border-radius: 1.6rem;
-  border: none;
-  box-shadow: 0rem 0.4rem 0.4rem 0rem #00000040 inset;
-}
-
-.Info_Pessoais {
+/*Conteiners -------------------------*/
+.Cont_Pessoais {
   width: 90%;
-  height: 56.6rem;
+  height: 566px;
   background: var(--gradiente-3);
-  display: flexbox;
-  flex-direction: column;
-  border-radius: 1.6rem;
-  box-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#Cont_form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 64px;
+  gap: 69px;
 }
 
 .Fer_Auxiliar{
   width: 90%;
   background: var(--gradiente-3);
-  display: flexbox;
-  flex-direction: column;
-  border-radius: 1.6rem;
-  box-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .Rec_Aces{
   width: 90%;
   background: var(--gradiente-3);
-  display: flexbox;
-  flex-direction: column;
-  border-radius: 1.6rem;
-  box-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .Locais_Inter{
   background: var(--gradiente-3);
-  display: flexbox;
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/*Textos -------------------------*/
+
+.P_form label {
+  color:#F2FFFF;
+  font-size: 20px;
+  font-weight: 400;
+  text-transform:none;
+}
+
+h1{
+  color: #F2FFFF;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 20px 0px 16px 40px;
+}
+
+/*Form e Inputs -------------------------*/
+
+.P_form {
+  display: flex;
   flex-direction: column;
-  border-radius: 1.6rem;
-  box-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+}
+
+
+input[type="text"]{
+  color: #010418;
+  width: 669px;
+  height: 32px;
+  border-radius:16px;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: -0.36px;
+  border: none;
+  margin: 8px 0 16px 0;
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+}
+
+.ipt_list{
+  width: 406px;
+  height: 40px;
+  margin: 8px 0 16px 0;
+}
+
+.cont_formInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/*Imgs -------------------------*/
+
+.img_perfil{
+  width: 222px;
+  height: 222px;
+  border: 3px solid #F2FFFF;
+  border-radius: 50%;
 }

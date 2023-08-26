@@ -7,41 +7,63 @@
   <link rel="stylesheet" href="../static/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
   <title>Turismo</title>
 </head>
 <body>
   {% extends 'base.html' %}{% block content %}
-
   {% if usuario.is_authenticated %}
-       <div class="Info_Pessoais" >
+
+       <div class="Cont_Pessoais" >
         <h1>Informações Pessoais</h1>
-        <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="not-profile-picture">
-        <label>Nome</label>
-        <input type="text" placeholder="Nome">
-        <label>Redes Sociais</label>
-        <input type="text" placeholder="@example">
-        <form action="">
-          <label>Tipo de Usuario</label>
-          <input list="tipos_usuarios">
-          <datalist id="tipos_usuarios">
-              <option value="Acompanhante">
-              <option value="Pessoa com mobilidade de Locomoção reduzida">
-              <option value="Outro">
-          </datalist>
-        <label>Condição de Mobilidade</label>
-        <input list="condicao_mobilidade">
-          <datalist id="condicao_mobilidade">
-              <option value="Progressiva/Degenerativa">
-              <option value="Tempóraria">
-              <option value="Estável ou Permanente">
-          </datalist>
-        <label>Precisa de Acompanhante para Locomoção</label>
-        <input type="radio" name="sim" id="sim">
-        <label for="sim">Sim</label>
-        <input type="radio" name="nao" id="nao">
-        <label for="sim">Não</label>
+        <div id="Cont_form">
+          <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="img_perfil">
+
+          <form action="" class="P_form">
+
+              <label>Nome</label>
+              <input type="text" placeholder="Nome" >
+
+              <label>Redes Sociais</label>
+              <input type="text" placeholder="@example" >
+
+            <div class="cont_formInfo">
+              <label>Tipo de Usuario</label>
+              <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            </div>
+            <input class="ipt_list" list="tipos_usuarios" >
+            <datalist id="tipos_usuarios">
+                <option value="Acompanhante">
+                <option value="Pessoa com mobilidade de Locomoção reduzida">
+                <option value="Outro">
+            </datalist>
+
+            <div class="cont_formInfo">
+              <label>Condição de Mobilidade</label>
+              <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            </div>
+              <input class="ipt_list" list="condicao_mobilidade">
+              <datalist id="condicao_mobilidade">
+                <option value="Progressiva/Degenerativa">
+                <option value="Tempóraria">
+                <option value="Estável ou Permanente">
+              </datalist>
+
+            <div class="cont_formInfo">
+              <label>Precisa de Acompanhante para Locomoção</label>
+              <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            </div>
+            <div class="ipt_radio">
+              <label for="sim">Sim</label>
+              <input type="radio" name="sim" id="sim">
+            </div>
+            <div class="ipt_radio">
+              <label for="nao">nao</label>
+              <input type="radio" name="nao" id="nao">
+            </div>
+      
+        </div>
        </div> 
+
        <div class="Fer_Auxiliar">
         <h1>Ferramenta Auxiliar de Locomoção</h1>
         <button>Bengala</button>
@@ -57,6 +79,7 @@
         <button>Cadeira de rodas monobloco</button>
         <button>Cadeira de rodas com elevação automatica</button>
        </div>
+
        <div class="Rec_Aces">
         <h1>Recurso de Acessibilidade</h1>
         <button>Elevador</button>
@@ -82,6 +105,7 @@
         <button>piso não trepidante</button>
         <button>Outro</button>
        </div>
+
        <div class="Locais_Inter">
         <h1>Locais de Interesse</h1>
         <button>Museus</button>
