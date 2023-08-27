@@ -176,7 +176,7 @@ def users_list(request):
     elif request.method == 'DELETE': #Delete all instances
         count = MyUser.objects.all().delete()
         return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
-
+ 
 def results(request):
     search = False
     tags = False

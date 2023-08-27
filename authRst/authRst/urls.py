@@ -21,4 +21,5 @@ from myapp import views
 
 urlpatterns = [
     re_path(r'^', include('myapp.urls')),
+    re_path(r'^', include('local_interactions.urls')),
 ]
