@@ -95,6 +95,17 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': 'railway',
+#     'MYSQL_URL': 'mysql://root:ETKKUfwSUs58MCChN6Q1@containers-us-west-123.railway.app:7621/railway',
+#     'HOST': 'containers-us-west-123.railway.app' ,
+#     'PASSWORD': 'ETKKUfwSUs58MCChN6Q1',
+#     'PORT': '7621' ,
+#     'USER': 'root' ,
+#     }
+#  }
 
 
 # Password validation

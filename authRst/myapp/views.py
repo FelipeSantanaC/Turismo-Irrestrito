@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
 from django.urls import reverse
-import numpy as np
 from rest_framework.parsers import JSONParser 
 from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
