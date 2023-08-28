@@ -603,6 +603,7 @@ button#button-filter:hover {
   border-radius: 16px;
   margin: 10px;
   position: relative;
+  cursor: pointer;
 }
 
 #card-body {

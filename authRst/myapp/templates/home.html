@@ -104,7 +104,7 @@
           <div class="d-flex flex-row flex-nowrap">
               {% if data %}
               {% for local in data %}
-              <div class="card" style="background-color: #558BE2; min-width: 300px;">
+              <div class="card" style="background-color: #558BE2; min-width: 300px;" data-local-id="{{ local.id }}">
                   <div class="image-overlay">
                       {% if local.foto_url %}
                       <img src="{{ local.foto_url }}" alt="{{ local.nome }}">

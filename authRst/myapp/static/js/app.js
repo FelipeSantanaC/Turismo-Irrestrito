@@ -22,6 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
   loginButtonBoot.addEventListener("click", () => {
     openPopup('/popup/?model=1', 1)
   });
+
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      const localId =card.getAttribute('data-local-id');
+      const url = `/local/${localId}`;
+      window.location.href = url;
+    })
+  })
+
+
 })
 
 function openPopup(url, typePopup=undefined) {
