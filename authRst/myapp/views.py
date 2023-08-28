@@ -220,9 +220,8 @@ def open_pop_up(request):
         return render(request, 'popup/register_popup.html')
     elif pop_up_model == '1': # Login One
         return render(request, 'popup/login_popup.html')
-    elif pop_up_model == '4': # Complement
-        return render(request, "popup/complementInfo_popup_pcd_start.html")
-    # if request.method =='post':
+    elif pop_up_model == '4': # make a review
+        return render(request, "popup/make_review_popup.html")
     return #Just Placeholder
 
 def next_step(request): 
