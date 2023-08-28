@@ -86,6 +86,7 @@ function updateCardSelect(checkboxes=undefined) {
       // Create a new div for each local
       const cardDiv = document.createElement('div');
       cardDiv.className = 'card';
+      cardDiv.setAttribute('data-local-id', local.id)
       cardDiv.style.backgroundColor = '#558BE2';
 
       // Create the image overlay
@@ -142,6 +143,16 @@ function updateCardSelect(checkboxes=undefined) {
 
     // Replace the existing card-container div with the updated content
     parentContainer.replaceChild(updatedCardContainer, document.getElementById('card-container'));
+
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        const localId =card.getAttribute('data-local-id');
+        const url = `/local/${localId}`;
+        window.location.href = url;
+      })
+    })
   })
   .catch(error => {
     console.error('Error occurred during AJAX request:', error);
