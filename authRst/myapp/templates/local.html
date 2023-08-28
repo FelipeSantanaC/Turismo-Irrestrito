@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/header/style.css" />
+    <link rel="stylesheet" href="../static/css/Local/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+    <script src="../static/js/local.js"></script>
+</head>
+<body>
+    {% extends 'base.html' %} 
+    {% block content %}
+    <div id="content">
+        <div class="search-area">
+            <div class="input-container">
+            <form class="form-search"  method="GET" action="{% url 'results' %}">
+              {% csrf_token %}
+              <input id="input-local" type="text" name="search" placeholder="Aonde você quer ir?">
+              <button id="search-button" class="search-icon" type="submit">
+              <i class="bi bi-search"></i>
+              </button>
+            </form>
+            </div>    
+            <div class="local-underneath-search">
+                <button id="alter-local">Alterar Local</button>
+                <p id="current-local">Local Atual: <span>Recife - PE</span></p>
+            </div>
+          </div>
+      
+        
+        <div class="local-info-container">
+            <h1 class="title-local">{{ local_data.nome|capfirst }}</h1>
+            <div id="extra_info">
+                <div class="icon-local">
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <div class="informations-local">
+                    {{ local_data.nota }}{% if local_data.nota %}{% endif %}
+                    {{ local_data.bairro }}{% if local_data.bairro %},{% endif %}
+                    {{ local_data.cidade|capfirst }}{% if local_data.cidade %},{% endif %}
+                    {{ local_data.estado }}.
+                </div>
+            </div>
+            <hr style="color: black;
+            background-color: black;
+            height: 2px;
+            width: 90%" id="divider">
+            <div class="images_container">
+                <img id="primary-image" src="{{ local_data.foto_url }}" alt="">
+            </div>
+            <h2 class="title-resources">O local possui</h2>
+            <div class="tags-container">
+                <div class="button-container">
+                    {% for value in local_data.recursos %}
+                        <button class="button-tags">{{ value|capfirst }}</button>
+                    {% endfor %}
+                </div>
+            </div>            
+            <h2>Contribua</h2>
+            <div class="feedback-container">
+                <div class="image-feedback">
+                    <img src="../static/images/Local/Group 60.svg" alt="">
+                </div>
+                <div class="buttons-feedback">
+                    <button id="make-review-button">Faça Uma Avaliação</button>
+                    <button id="send-image-button">Envie uma Imagem</button>
+                </div>
+            </div>  
+            <!-- Reviews  -->
+            <div class="content-avaliacoes">
+                <div class="content-principal">
+                    <h2 class="title-avaliacoes">Avaliações</h2>
+                    <div class="container-avaliacoes">
+                        <div class="container-perfil">
+                            <div class="image-perfil">
+                                <img src="../static/images/Perfil/not-profile-picture.png" alt="">
+                            </div>
+                            <div class="info-perfil">
+                                <h3>Tânia R. Rocha</h3>
+                                <h3>Março de 2023</h3>
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                            </div>
+                        </div>
+                        <p class="paragraf-avaliacao">
+                            Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!
+                        </p>
+                        <hr style="color: black;
+                        background-color: black;
+                        height: 2px;
+                        width: 90%" id="divider" class="divider-coment">
+                    </div>
+                    <div class="container-avaliacoes">
+                        <div class="container-perfil">
+                            <div class="image-perfil">
+                                <img src="../static/images/Perfil/not-profile-picture.png" alt="">
+                            </div>
+                            <div class="info-perfil">
+                                <h3>Tânia R. Rocha</h3>
+                                <h3>Março de 2023</h3>
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                            </div>
+                        </div>
+                        <p class="paragraf-avaliacao">
+                            Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!
+                        </p>
+                        <hr style="color: black;
+                        background-color: black;
+                        height: 2px;
+                        width: 90%" id="divider" class="divider-coment">
+                    </div>
+                </div>
+                <div class="mais-atracoes">
+                    <h2>Mais atrações</h2>
+                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
+                        <div class="image-overlay">
+                            {% if local.foto_url %}
+                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
+                            {% else %}
+                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
+                            {% endif %}
+                            <div class="overlay-content">
+                                <h3 id="local-name-card">{{ local.nome }}</h3>
+                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                            </div>
+                        </div>
+                        <div id="card-body">
+                            <p>{{ local.relevancia }} Avaliações</p>
+                            <div class="star-rating">
+                                <p>{{ local.nota }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
+                        <div class="image-overlay">
+                            {% if local.foto_url %}
+                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
+                            {% else %}
+                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
+                            {% endif %}
+                            <div class="overlay-content">
+                                <h3 id="local-name-card">{{ local.nome }}</h3>
+                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                            </div>
+                        </div>
+                        <div id="card-body">
+                            <p>{{ local.relevancia }} Avaliações</p>
+                            <div class="star-rating">
+                                <p>{{ local.nota }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

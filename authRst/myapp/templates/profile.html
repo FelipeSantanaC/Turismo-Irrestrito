@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/Perfil/index.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+  <title>Turismo</title>
+</head>
+<body>
+  {% extends 'base.html' %}{% block content %}
+
+  {% if usuario.is_authenticated %}
+        
+    <div class="content">
+      <div class="container-perfil">
+        <div class="header-perfil">
+          {% if usuario.userprofile.foto_perfil %}
+            <div class="image-content">
+                <img src="{{ usuario.userprofile.foto_perfil }}" alt="Foto de Perfil" class="image-perfil">
+            </div>
+          {% else %}
+              <div class="image-content">
+                  <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="not-profile-picture">
+              </div>
+          {% endif %}
+          <div class="button-container">
+            {% if usuario.userprofile %}
+              <p style="font-weight: bold;">Você já preencheu seu cadastro complementar!</p>
+            {% else %}
+                <a href="{% url 'complementar_register' %}" class="button-alterar">
+                  <img src="../static/images/Perfil/edit-user.svg" alt="">
+                </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="conteudo-perfil">
+          <h1>{{usuario.name}}</h1>
+          <div class="estado">
+            <img src="../static/images/Perfil/state.png" alt="" class="image-estado">
+            <span>Recife, Pernambuco</span>
+          </div>
+          <span>@FelipeSantana</span>
+        </div>
+      </div>
+      <div class="container-comentario">
+        <h1 class="titulo-comentario">Últimos comentários</h1>
+        <div class="container-dados-comentario">
+          <h3>Museu da abolição</h3>
+          <div class="data-visita">
+            <h3>Data: </h3>
+            <span>23 de março 2023</span>
+          </div>
+          <div class="score-visita">
+            <h3>Nota: </h3>
+            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
+            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
+            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
+            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
+            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
+          </div>
+          <div class="comentario-visita">
+            <h3>Comentário: </h3>
+            <span>Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!</span>
+          </div>
+        </div>
+      </div>
+      <div class="container-recursos">
+        <h1 class="titulo-recursos">Recursos de acessibilidade</h1>
+        <div class="tipos-recursos">
+          {% if preferencias_recursos %}
+                {% for preferencia in preferencias_recursos %}
+                    <button class="buttons-pagina-perfil">{{ preferencia.recurso.title|capfirst }}</button>
+                {% endfor %}
+            {% else %}
+                <span style="font-size: 16px; font-weight: bold; color: #010418;">Você ainda não adicionou nenhuma preferência de recurso!</span>
+            {% endif %}
+        </div>
+      </div>
+      <div class="container-locais">
+        <h1 class="titulo-locais">Locais de Interesse</h1>
+        <div class="tipos-locais">
+          {% if preferencias_locais %}
+                {% for preferencia in preferencias_locais %}
+                    <button class="buttons-pagina-perfil">{{ preferencia.local.title|capfirst }}</button>
+                {% endfor %}
+            {% else %}
+                <span style="font-size: 16px; font-weight: bold; color: #010418;">Você ainda não adicionou nenhum local de preferência!</span>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    {% else %}
+        <p>Por favor, faça o login para acessar esta página.</p>
+    {% endif %}
+  {% endblock %}
+</body>
+</html>

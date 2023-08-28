@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = "django-insecure-*z7v&t(mykgk%c3n3qvymvp(duv#5o)b**4+lbgem=*$!njxli
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 # Application definition
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     "rest_framework",
     'myapp.apps.MyappConfig',
     'corsheaders',
+    'recommendations.apps.RecommendationsConfig',
+    'local_interactions'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +60,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
 )
-
+AUTH_USER_MODEL = 'myapp.MyUser'
 ROOT_URLCONF = "authRst.urls"
 
 TEMPLATES = [
@@ -71,6 +74,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "myapp.context_processors.login_context",
             ],
         },
     },
@@ -82,7 +86,7 @@ WSGI_APPLICATION = "authRst.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mydb',
@@ -91,7 +95,19 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
-}
+} """
+
+DATABASES = {
+    'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'railway',
+    'MYSQL_URL': 'mysql://root:ETKKUfwSUs58MCChN6Q1@containers-us-west-123.railway.app:7621/railway',
+    'HOST': 'containers-us-west-123.railway.app' ,
+    'PASSWORD': 'ETKKUfwSUs58MCChN6Q1',
+    'PORT': '7621' ,
+    'USER': 'root' ,
+    }
+ }
 
 
 # Password validation
@@ -134,3 +150,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+

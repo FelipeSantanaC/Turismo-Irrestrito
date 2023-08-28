@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turrismo Irrestrito</title>
+
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/results.js"></script>
+    
+  </head>
+  <body>
+    {% extends 'base.html' %} 
+
+    {% block content %}
+
+    <div class="search-area">
+      <div class="input-container">
+        <form id="search-form"> 
+          <!-- action="{% url 'results' %}" -->
+          {% csrf_token %}
+          <input
+            id="input-local"
+            type="text"
+            name="search"
+            placeholder="Aonde você quer ir?"
+          />
+          <button id="search-button" class="search-icon">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+      <div class="local-underneath-search">
+        <button id="alter-local">Alterar Local</button>
+        <p id="current-local">Local Atual: <span>Recife - PE</span></p>
+      </div>
+    </div>
+    <h2 class="title-filter">Filtrar por Tipo</h2>
+    <div class="tags">
+        <form id="filter-form" method="GET" action="{% url 'results' %}">
+            {% csrf_token %}
+            {% for type in types %}
+                <label class="checkbox-label">
+                    <input id="disable-checkbox-box" type="checkbox" name="tipo" value="{{ type }}" {% if type in selected_types %}checked{% endif %}>
+                    {{ type }}
+                </label>
+            {% endfor %}
+            <script>addCheckboxFunctionality()</script>
+        </form>
+    </div>
+      <!-- {% for item in data %}
+        <li>{{ item }}</li>
+        {% endfor %} -->
+    <div id="parent-container">
+      <div class="card-container" id="card-container">
+        {% if data %} {% for local in data %}
+        <div class="card" style="background-color: #558BE2"> 
+          <div class="image-overlay">
+            <!-- <h1>{{local}}</h1> -->
+            {% if local.foto_url %}
+            <img class="card-image" src="{{ local.foto_url }}" alt="{{ local.name }}" />
+            {% else %}
+            <img class="card-image" src="../static/images/img-not-found.png" alt="Image Not Found" />
+            {% endif %}
+            <div class="overlay-content">
+              <h3 id="local-name-card">{{ local.nome }}</h3>
+              <p id="local-neighborhood-card">{{ local.bairro }}</p>
+              
+            </div>
+          </div>
+          <div id="card-body">
+            <p>{{ local.relevancia }} Avaliações</p>
+            <div class="star-rating">
+              <p>
+                {{ local.nota }}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <div class="no-results">
+          <p>No places found.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+    
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turrismo Irrestrito</title>
+    
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>.checked {
+      color: orange;
+    }</style>
+  </head>
+  <body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+
+    <div id="local-carousel" class="carousel slider" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            src="http://www.astrope.com.br/wp-content/uploads/2016/02/DSC_1035.jpg"
+            alt=""
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://cas.nyu.edu/content/dam/nyu-as/cassummerabroad/images/Summer%20in%20Brazil/Recife%20Sign_ED.jpg"
+            alt=""
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://cdn.folhape.com.br/img/pc/1100/1/dn_arquivo/2022/01/whatsapp-image-2022-01-23-at-104403.jpeg"
+            alt=""
+          />
+        </div>
+      </div>
+      <ol class="carousel-indicators">
+        <li data-target="#local-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#local-carousel" data-slide-to="1"></li>
+        <li data-target="#local-carousel" data-slide-to="2"></li>
+      </ol>
+      <a
+        href="#local-carousel"
+        class="carousel-control-prev"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only" Previous></span>
+      </a>
+      <a
+        href="#local-carousel"
+        class="carousel-control-next"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </div>
+    <div class="main-screen-bottom">
+    <div class="search-area">
+      <div class="input-container">
+      <form class="form-search"  method="GET" action="{% url 'results' %}">
+        {% csrf_token %}
+        <input id="input-local" type="text" name="search" placeholder="Aonde você quer ir?">
+        <button id="search-button" class="search-icon" type="submit">
+        <i class="bi bi-search"></i>
+        </button>
+      </form>
+      </div>    
+    </div>
+
+    <div class="local-underneath-search">
+        <button id="alter-local">Alterar Local</button>
+        <p id="current-local">Local Atual: <span>Recife - PE</span></p>
+    </div>
+    <div class="home-screen-recomendation">
+      <h2>
+        {% if request.user.is_authenticated %}
+                    {% if request.user.userprofile %}
+                        Locais Recomendados
+                    {% else %}
+                        Melhores Avaliados
+                    {% endif %}
+                {% else %}
+                    Melhores Avaliados
+                {% endif %}
+      </h2>
+      <div class="container-fluid py-2 scroll-container">
+          <div class="d-flex flex-row flex-nowrap">
+              {% if data %}
+              {% for local in data %}
+              <div class="card" style="background-color: #558BE2; min-width: 300px;">
+                  <div class="image-overlay">
+                      {% if local.foto_url %}
+                      <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
+                      {% else %}
+                      <img src="../static/images/img-not-found.png" alt="Image Not Found">
+                      {% endif %}
+                      <div class="overlay-content">
+                          <h3 id="local-name-card">{{ local.nome }}</h3>
+                          <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                      </div>
+                  </div>
+                  <div id="card-body">
+                      <p>{{ local.relevancia }} Avaliações</p>
+                      <div class="star-rating">
+                          <p>{{ local.nota }}</p>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <div class="no-results">
+                  <p>No places found.</p>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+    {% endblock %}
+    <!-- <script src="../static/js/app.js"></script> -->
+  </body>
+</html>

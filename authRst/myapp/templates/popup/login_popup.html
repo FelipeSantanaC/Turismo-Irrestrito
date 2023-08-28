@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container-login">
+    <button class="close-button" id="close-button">X</button>
+    <h2 class="title-login">Login</h2>
+    <form id="login-form">
+      {% csrf_token %}
+      {{form.email}}
+      {{form.password1}}
+    </form>
+    <p id="login-message" style="color: red;"></p>
+    <button class="poppins-font" id="button-esqueci-senha-login">
+      Esqueci minha senha
+    </button>
+    <button id="confirm-login-button">Login</button>
+    
+  </div>
+  <script src="..\static\js\login.js"></script>
+</body>
+</html>

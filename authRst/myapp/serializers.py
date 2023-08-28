@@ -1,12 +1,26 @@
 from rest_framework import serializers 
-from myapp.models import User
- 
- 
+from myapp.models import MyUser , Local
+
 class UserSerializer(serializers.ModelSerializer):  
 
     class Meta:
-        model = User
-        fields = ('id',
+        model = MyUser
+        fields = ('email',
                   'name',
-                  'email',
                   'password')
+
+
+class LocalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Local
+        fields = (
+        'nome',
+        'bairro',
+        'cidade',
+        'estado',
+        'foto_url',
+        'tipo',
+        'nota',
+        'relevancia'
+            
+        )
