@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 
 from django.http.response import JsonResponse, HttpResponse
 from django.urls import reverse
-import numpy as np
 from rest_framework.parsers import JSONParser 
 from rest_framework import status,filters
 from django.core.exceptions import ObjectDoesNotExist
@@ -221,9 +220,8 @@ def open_pop_up(request):
         return render(request, 'popup/register_popup.html')
     elif pop_up_model == '1': # Login One
         return render(request, 'popup/login_popup.html')
-    elif pop_up_model == '4': # Complement
-        return render(request, "popup/complementInfo_popup_pcd_start.html")
-    # if request.method =='post':
+    elif pop_up_model == '4': # make a review
+        return render(request, "popup/make_review_popup.html")
     return #Just Placeholder
 
 def next_step(request): 
@@ -272,3 +270,30 @@ def user_display(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def local_detail(request, local_id):
+    local = Local.objects.get(pk=local_id)
+    recursos = local.recursos[1:-2]
+    recursos = recursos.split(',')
+    
+    local_data = {
+        'nome': local.nome,
+        'latitude': local.latitude,
+        'longitude': local.longitude,
+        'bairro': local.bairro,
+        'cidade': local.cidade,
+        'estado': local.estado,
+        'recursos': recursos,
+        'cep': local.cep,
+        'foto_url': local.foto_url,
+        'nota': local.nota,
+        'relevancia': local.relevancia,
+        'tipo': local.tipo,
+    }
+    
+    context = {
+        'local_data': local_data,
+    }
+    
+    return render(request, 'local.html', context)

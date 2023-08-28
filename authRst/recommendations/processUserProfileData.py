@@ -1,4 +1,3 @@
-import numpy as np
 from recommendations.loadUserProfileCluster import PredictCluster
 from datetime import date
 
