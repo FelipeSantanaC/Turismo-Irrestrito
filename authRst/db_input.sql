@@ -1,6 +1,6 @@
 USE mydb;
 
-INSERT INTO myapp_listarecursos (title) VALUES
+INSERT INTO myapp_tiposrecursos (title) VALUES
 ('elevador'),
 ('plataforma elevatória'),
 ('ponto de taxi'),
@@ -23,7 +23,7 @@ INSERT INTO myapp_listarecursos (title) VALUES
 ('guia rebaixada'),
 ('piso não trepidante');
 
-INSERT INTO myapp_listadispositivos (title) VALUES
+INSERT INTO myapp_tiposdispositivos (title) VALUES
 ('bengala'),
 ('muleta'),
 ('andador'),

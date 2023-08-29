@@ -164,6 +164,15 @@
             </div>
         </div>
     </div>
+    <form method="POST" action="{% url 'local_rate' %}">
+        {% csrf_token %}
+        
+        {{ rating_form.as_p }}
+        {{ post_form.as_p }}
+        
+        <button type="submit">Enviar</button>
+    </form>
     {% endblock %}
+    
 </body>
 </html>
