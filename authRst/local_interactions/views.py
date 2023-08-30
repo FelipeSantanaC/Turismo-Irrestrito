@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
-from local_interactions.models import Post
-from myapp.models import Local
+from local_interactions.models import Post , LocalTags
+from myapp.models import Local, TiposRecursos
 from .forms import RatingForm, PostForm
 
 
@@ -37,7 +37,14 @@ def local_rate(request):
             post.local = local
             post.user = user
             post.save()
+
+            selected_tags_ids = post_form.cleaned_data['tag_list'].values_list('id' , flat=True)
+            for tag_id in selected_tags_ids:
+                tag_instance = TiposRecursos(tag_id)
+                local_tag_instance = LocalTags(local = local , tag =tag_instance)
+                local_tag_instance.save()  
             return HttpResponse('Agradecemos sua contribuição.')
+
         else:
             return HttpResponse('Algo deu errado, preencha novamente os campos.')
 
