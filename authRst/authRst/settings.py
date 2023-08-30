@@ -75,6 +75,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "myapp.context_processors.login_context",
+                "local_interactions.context_processors.post_rating",
             ],
         },
     },
@@ -86,7 +87,7 @@ WSGI_APPLICATION = "authRst.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-""" DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mydb',
@@ -95,9 +96,9 @@ WSGI_APPLICATION = "authRst.wsgi.application"
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
-} """
+}
 
-DATABASES = {
+""" DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'railway',
@@ -107,7 +108,7 @@ DATABASES = {
     'PORT': '7621' ,
     'USER': 'root' ,
     }
- }
+ } """
 
 
 # Password validation

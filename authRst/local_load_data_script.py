@@ -1,6 +1,6 @@
 import csv
 import mysql.connector
-import re
+
 
 # Conectar ao banco de dados MySQL
 cnx = mysql.connector.connect(

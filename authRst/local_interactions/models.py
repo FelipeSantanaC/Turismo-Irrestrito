@@ -1,5 +1,5 @@
 from django.db import models
-from myapp.models import MyUser, Local
+from myapp.models import MyUser, Local, TiposRecursos
 from django.db.models import Avg
 
 class Rating(models.Model):       
@@ -19,5 +19,8 @@ class Post(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+class LocalTags(models.Model):
+    local = models.ForeignKey(Local, on_delete=models.CASCADE)
+    tag = models.ForeignKey(TiposRecursos, on_delete=models.CASCADE)
 
 
