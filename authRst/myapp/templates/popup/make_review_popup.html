@@ -15,6 +15,16 @@
       </div>
       <div class="review-field-container">
         <button class="close-button" id="close-button">X</button>
+        <form method="POST" action="{% url 'local_rate' %}">
+          {% csrf_token %}
+          
+          {{ rating_form.as_p }}
+          {{ post_form.as_p }}
+        
+  
+          
+          <button type="submit">Enviar</button>
+      </form>
         
       </div>
     </div>
