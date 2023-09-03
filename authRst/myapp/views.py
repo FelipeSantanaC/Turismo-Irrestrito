@@ -16,6 +16,7 @@ from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
 import json
+import requests
 
 from recommendations.processUserProfileData import ProcessData
 
@@ -273,5 +274,13 @@ def local_detail(request, local_id):
     context = {
         "local_data": local_data,
     }
+    api_url = reverse("get_posts_by_local", args=[local_id])
+    api_url = request.build_absolute_uri(api_url)
+    print(api_url)
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json() # Retrieve the data from the jsonResponse
+    else: 
+        pass
     
     return render(request, 'local.html', context)
