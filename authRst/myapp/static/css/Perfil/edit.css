@@ -1,10 +1,13 @@
 /*Padões -------------------------*/
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
 body {
-  margin: 0;
-  padding: 0;
   width: 100%;
   overflow-x: hidden;
   display: flex;
@@ -13,20 +16,20 @@ body {
   gap: 16px;
 }
 
-html{
-  font-family: 'Poppins', sans-serif;
-}
-
 :root {
   --gradiente-3: linear-gradient(176deg, #010418 0%, #04247C 28.51%, #0458AB 50.41%, #558BE2 72.78%);}
 
 /*Conteiners -------------------------*/
-.Cont_Pessoais {
+
+.Fer_Auxiliar, .Cont_Pessoais, .Rec_Aces, .Locais_Inter{
   width: 90%;
-  height: 566px;
   background: var(--gradiente-3);
   border-radius: 16px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Cont_Pessoais {
+  height: 566px;
 }
 
 #Cont_form {
@@ -35,26 +38,6 @@ html{
   align-items: center;
   margin-left: 64px;
   gap: 69px;
-}
-
-.Fer_Auxiliar{
-  width: 90%;
-  background: var(--gradiente-3);
-  border-radius: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.Rec_Aces{
-  width: 90%;
-  background: var(--gradiente-3);
-  border-radius: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.Locais_Inter{
-  background: var(--gradiente-3);
-  border-radius: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /*Textos -------------------------*/
@@ -80,27 +63,32 @@ h1{
   flex-direction: column;
 }
 
+input[type="text"], .ipt_list {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.36px;
+  border: none;
+  margin: 8px 0 16px 0;
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+  padding-left: 12px;
+  outline: 0
+}
 
 input[type="text"]{
   color: #010418;
   width: 669px;
   height: 32px;
   border-radius:16px;
-  font-size: 18px;
-  font-weight: 300;
-  letter-spacing: -0.36px;
-  border: none;
-  margin: 8px 0 16px 0;
-  box-shadow: 0px 4px 4px 0px #00000040 inset;
 }
+
 
 .ipt_list{
   width: 406px;
   height: 40px;
-  margin: 8px 0 16px 0;
+  border-radius: 12px;
 }
 
-.cont_formInfo {
+.cont_formInfo, .ipt_radio {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -114,4 +102,37 @@ input[type="text"]{
   height: 222px;
   border: 3px solid #F2FFFF;
   border-radius: 50%;
+}
+
+/*Tooltip -------------------------*/
+.cont_tool {
+    position: relative; /* Importante para o posicionamento absoluto */
+    }
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  width: 300px;
+  padding: 10px;
+  border-radius: 8px;
+  top: 50%;
+  left: 125%; /* Posição à direita do elemento */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+  display: none;
+  }
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent rgba(0, 0, 0, 0.9)transparent transparent ;
+}
+
+.cont_tool:hover .tooltip {
+  display: block;
 }

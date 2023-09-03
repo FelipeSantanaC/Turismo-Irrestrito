@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../static/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
   <title>Turismo</title>
 </head>
 <body>
@@ -21,14 +22,16 @@
           <form action="" class="P_form">
 
               <label>Nome</label>
-              <input type="text" placeholder="Nome" >
-
-              <label>Redes Sociais</label>
-              <input type="text" placeholder="@example" >
+              <input type="text" placeholder="Nome" value={{usuario.name}}>
 
             <div class="cont_formInfo">
               <label>Tipo de Usuario</label>
-              <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+              <div class="cont_tool">
+                <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+                <div class="tooltip">
+                  Para qual tipo de usuário esta conta é destinada?
+                </div>
+              </div>
             </div>
             <input class="ipt_list" list="tipos_usuarios" >
             <datalist id="tipos_usuarios">
@@ -39,7 +42,12 @@
 
             <div class="cont_formInfo">
               <label>Condição de Mobilidade</label>
-              <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+              <div class="cont_tool">
+                <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+                <div class="tooltip">
+                  Das opções, qual é a sua condição atual de incapacidade para locomoção?
+                </div>
+              </div>
             </div>
               <input class="ipt_list" list="condicao_mobilidade">
               <datalist id="condicao_mobilidade">
@@ -50,70 +58,105 @@
 
             <div class="cont_formInfo">
               <label>Precisa de Acompanhante para Locomoção</label>
-              <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+              <div class="cont_tool">
+                <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+                <div class="tooltip">
+                  Para se locomover, você precisa do auxílio de acompanhante?
+                </div>
+              </div>
             </div>
             <div class="ipt_radio">
+              <input type="radio" name="radio_acom" id="sim">
               <label for="sim">Sim</label>
-              <input type="radio" name="sim" id="sim">
             </div>
             <div class="ipt_radio">
-              <label for="nao">nao</label>
-              <input type="radio" name="nao" id="nao">
+              <input type="radio" name="radio_acom" id="nao">
+              <label for="nao">Não</label>
             </div>
       
         </div>
        </div> 
 
        <div class="Fer_Auxiliar">
-        <h1>Ferramenta Auxiliar de Locomoção</h1>
-        <button>Bengala</button>
-        <button>Prótese</button>
-        <button>Andador</button>
-        <button>Cadeira de rodas manual</button>
-        <button>Muleta</button>
-        <button>Órtese</button>
-        <button>Cadeira de rodas motorizada</button>
-        <button>Cadeira de rodas dobrável em X</button>
-        <button>Nenhum</button>
-        <button>Outro</button>
-        <button>Cadeira de rodas monobloco</button>
-        <button>Cadeira de rodas com elevação automatica</button>
+        <div class="cont_formInfo">
+          <h1>Ferramenta Auxiliar de Locomoção</h1>
+          <div class="cont_tool">
+            <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            <div class="tooltip">
+              Selecione o(s) dispositivo(s) auxiliar(es) de locomoção que você utiliza no seu dia a dia
+            </div>
+          </div>
+        </div>
+        <div id="btns_Fer">
+          <button>Bengala</button>
+          <button>Prótese</button>
+          <button>Andador</button>
+          <button>Cadeira de rodas manual</button>
+          <button>Muleta</button>
+          <button>Órtese</button>
+          <button>Cadeira de rodas motorizada</button>
+          <button>Cadeira de rodas dobrável em X</button>
+          <button>Nenhum</button>
+          <button>Outro</button>
+          <button>Cadeira de rodas monobloco</button>
+          <button>Cadeira de rodas com elevação automatica</button>
+        </div>
        </div>
 
        <div class="Rec_Aces">
-        <h1>Recurso de Acessibilidade</h1>
-        <button>Elevador</button>
-        <button>Plataforma Elevatória</button>
-        <button>Ponto de Taxi</button>
-        <button>Sinalização</button>
-        <button>Rampas</button>
-        <button>Corrimões</button>
-        <button>Calçada acessível</button>
-        <button>Portas amplas</button>
-        <button>Vagas preferencias</button>
-        <button>Banheiro familiar</button>
-        <button>Piso nivelado</button>
-        <button>Barras de apoio</button>
-        <button>Ponto de ônibus </button>
-        <button>Funcionarios Treinados</button>
-        <button>Banheiro Adaptado</button>
-        <button>Filas preferenciais</button>
-        <button>Área de transferencia</button>
-        <button>Guia rebaixada</button>
-        <button>Barra sanitária</button>
-        <button>Piso antiderrapante</button>
-        <button>piso não trepidante</button>
-        <button>Outro</button>
+        <div class="cont_formInfo">
+          <h1>Recurso de Acessibilidade</h1>
+          <div class="cont_tool">
+            <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            <div class="tooltip">
+              Selecione a(s) característica(s) que você espera deseja ou encontrar num local ideal para visitar
+            </div>
+          </div>
+        </div>
+        <div id="btns_Rec">
+          <button>Elevador</button>
+          <button>Plataforma Elevatória</button>
+          <button>Ponto de Taxi</button>
+          <button>Sinalização</button>
+          <button>Rampas</button>
+          <button>Corrimões</button>
+          <button>Calçada acessível</button>
+          <button>Portas amplas</button>
+          <button>Vagas preferencias</button>
+          <button>Banheiro familiar</button>
+          <button>Piso nivelado</button>
+          <button>Barras de apoio</button>
+          <button>Ponto de ônibus </button>
+          <button>Funcionarios Treinados</button>
+          <button>Banheiro Adaptado</button>
+          <button>Filas preferenciais</button>
+          <button>Área de transferencia</button>
+          <button>Guia rebaixada</button>
+          <button>Barra sanitária</button>
+          <button>Piso antiderrapante</button>
+          <button>piso não trepidante</button>
+          <button>Outro</button>
+        </div>
        </div>
 
        <div class="Locais_Inter">
-        <h1>Locais de Interesse</h1>
-        <button>Museus</button>
-        <button>Monumentos</button>
-        <button>Praças</button>
-        <button>Artesanatos</button>
-        <button>Igrejas</button>
-        <button>Outros</button>
+        <div class="cont_formInfo">
+          <h1>Locais de Interesse</h1>
+          <div class="cont_tool">
+            <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            <div class="tooltip">
+              Selecione o(s) local(is) que você tem preferência de visitar
+            </div>
+          </div>
+        </div>
+        <div id="btns_Loc">
+          <button>Museus</button>
+          <button>Monumentos</button>
+          <button>Praças</button>
+          <button>Artesanatos</button>
+          <button>Igrejas</button>
+          <button>Outros</button>
+        </div>
        </div>
 
        <div>
