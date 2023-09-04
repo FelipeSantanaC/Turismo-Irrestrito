@@ -19,8 +19,11 @@
        <div class="Cont_Pessoais" >
         <h1>Informações Pessoais</h1>
         <div id="Cont_formPes">
-          <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="img_perfil">
-
+          <div id="cont_foto">
+            <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="img_perfil">
+            <label>Link para Foto</label>
+            {{additional_form.foto_perfil}}
+          </div>
           <div id="P_form">
 
               <label>Nome</label>
@@ -84,18 +87,7 @@
           </div>
         </div>
         <div id="btns_Fer">
-          <button>Bengala</button>
-          <button>Prótese</button>
-          <button>Andador</button>
-          <button>Cadeira de rodas manual</button>
-          <button>Muleta</button>
-          <button>Órtese</button>
-          <button>Cadeira de rodas motorizada</button>
-          <button>Cadeira de rodas dobrável em X</button>
-          <button>Nenhum</button>
-          <button>Outro</button>
-          <button>Cadeira de rodas monobloco</button>
-          <button>Cadeira de rodas com elevação automatica</button>
+          {{additional_form.preferencia_dam}}
         </div>
 
        </div>
@@ -111,28 +103,7 @@
           </div>
         </div>
         <div id="btns_Rec">
-          <button>Elevador</button>
-          <button>Plataforma Elevatória</button>
-          <button>Ponto de Taxi</button>
-          <button>Sinalização</button>
-          <button>Rampas</button>
-          <button>Corrimões</button>
-          <button>Calçada acessível</button>
-          <button>Portas amplas</button>
-          <button>Vagas preferencias</button>
-          <button>Banheiro familiar</button>
-          <button>Piso nivelado</button>
-          <button>Barras de apoio</button>
-          <button>Ponto de ônibus </button>
-          <button>Funcionarios Treinados</button>
-          <button>Banheiro Adaptado</button>
-          <button>Filas preferenciais</button>
-          <button>Área de transferencia</button>
-          <button>Guia rebaixada</button>
-          <button>Barra sanitária</button>
-          <button>Piso antiderrapante</button>
-          <button>piso não trepidante</button>
-          <button>Outro</button>
+          {{additional_form.preferencia_recursos}}
         </div>
        </div>
 
@@ -147,16 +118,11 @@
           </div>
         </div>
         <div id="btns_Loc">
-          <button>Museus</button>
-          <button>Monumentos</button>
-          <button>Praças</button>
-          <button>Artesanatos</button>
-          <button>Igrejas</button>
-          <button>Outros</button>
+          {{additional_form.preferencia_locais}}
         </div>
        </div>
 
-       <div>
+       <div id="botoes">
         <input type="submit" value="Save"/>
         <button>Cancelar</button>
        </div>
