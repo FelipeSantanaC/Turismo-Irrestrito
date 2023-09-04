@@ -243,29 +243,25 @@ def user_display(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def editprofile(request): # é provisoria 
     usuario = request.user  # Obtém o usuário logado
-    preferencias_locais = PreferenciaLocais.objects.filter(user=usuario)
-    preferencias_recursos = PreferenciaRecursos.objects.filter(user=usuario)
+    user_profile_exists = UserProfile.objects.filter(user=usuario).exists()
+    if user_profile_exists:
+        return redirect(user_display) 
+    
+    if request.method == 'POST':
+        additional_form = UserProfileForm(request.POST)
+        if additional_form.is_valid():
+            current_user = additional_form.save(commit=False) #Cria uma instancia de UserProfile
+            current_user.user = request.user #Associa o UserProfile ao usuário logado (MyUser)
+            current_user.save()
 
-    locais_unicos = set()
-    locais_preferidos = []
-    for preferencia in preferencias_locais:
-        if preferencia.local not in locais_unicos:
-            locais_unicos.add(preferencia.local)
-            locais_preferidos.append(preferencia)
+            return redirect('editprofile') # Redirecionar para a tela de perfil quando criar
+    else:
+        additional_form = UserProfileForm()
+    
+    return render(request, 'editprofile.html', context={'additional_form': additional_form, 'usuario': usuario,})  
 
-    recursos_unicos = set()
-    recursos_preferidos = []
-    for preferencia in preferencias_recursos:
-        if preferencia.recurso not in recursos_unicos:
-            recursos_unicos.add(preferencia.recurso)
-            recursos_preferidos.append(preferencia)
 
-    context = {
-        'usuario': usuario,
-        'preferencias_locais': locais_preferidos,
-        'preferencias_recursos': recursos_preferidos,
-    }
 
-    return render(request, 'editprofile.html', context)

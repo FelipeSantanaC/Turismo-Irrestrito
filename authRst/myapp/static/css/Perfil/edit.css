@@ -7,14 +7,16 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body {
-  width: 100%;
-  overflow-x: hidden;
+form, body{
   display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   align-items: center;
   gap: 16px;
+  overflow-x: hidden;
+  width: 100%;
 }
+
 
 :root {
   --gradiente-3: linear-gradient(176deg, #010418 0%, #04247C 28.51%, #0458AB 50.41%, #558BE2 72.78%);}
@@ -32,7 +34,7 @@ body {
   height: 566px;
 }
 
-#Cont_form {
+#Cont_formPes {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,7 +44,7 @@ body {
 
 /*Textos -------------------------*/
 
-.P_form label {
+#P_form label {
   color:#F2FFFF;
   font-size: 20px;
   font-weight: 400;
@@ -58,12 +60,7 @@ h1{
 
 /*Form e Inputs -------------------------*/
 
-.P_form {
-  display: flex;
-  flex-direction: column;
-}
-
-input[type="text"], .ipt_list {
+input[type="text"], .ipt_list, input[type="date"], select{
   font-size: 18px;
   font-weight: 400;
   letter-spacing: -0.36px;
@@ -81,12 +78,16 @@ input[type="text"]{
   border-radius:16px;
 }
 
+input[type="date"]{
+  border-radius: 8px;
+}
 
-.ipt_list{
-  width: 406px;
+.ipt_list, select{
+  width: 480px;
   height: 40px;
   border-radius: 12px;
 }
+
 
 .cont_formInfo, .ipt_radio {
   display: flex;

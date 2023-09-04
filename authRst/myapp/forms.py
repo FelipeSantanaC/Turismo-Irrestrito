@@ -19,9 +19,9 @@ class UserProfileForm(ModelForm):
     acompanhamento = forms.ChoiceField(choices=[('sim', 'Sim'), ('nao', 'Não')], widget=forms.RadioSelect, initial='nao')
     duracao_condicao = forms.ChoiceField(choices=UserProfile.DURACAO_CONDICAO_CHOICES, initial='temporaria')
     tipo_usuario = forms.ChoiceField(choices=UserProfile.TIPO_USUARIO_CHOICES, initial='acompanhantes') #Posteriormente trocar por um upload
-    preferencia_locais = ModelMultipleChoiceField(queryset=TiposLocais.objects.all(), widget=forms.CheckboxSelectMultiple)
-    preferencia_recursos = ModelMultipleChoiceField(queryset=TiposRecursos.objects.all(), widget=forms.CheckboxSelectMultiple)
-    preferencia_dam = ModelMultipleChoiceField(queryset=TiposDispositivos.objects.all(), widget=forms.CheckboxSelectMultiple)
+    # preferencia_locais = ModelMultipleChoiceField(queryset=TiposLocais.objects.all(), widget=forms.CheckboxSelectMultiple)
+    # preferencia_recursos = ModelMultipleChoiceField(queryset=TiposRecursos.objects.all(), widget=forms.CheckboxSelectMultiple)
+    # preferencia_dam = ModelMultipleChoiceField(queryset=TiposDispositivos.objects.all(), widget=forms.CheckboxSelectMultiple)
     data_nascimento = BRDateField(widget=DateInput, input_formats=['%d/%m/%Y'])
     
     class Meta:

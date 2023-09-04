@@ -14,15 +14,17 @@
   {% extends 'base.html' %}{% block content %}
   {% if usuario.is_authenticated %}
 
+    <form method="POST" action="{% url 'editprofile'%} ">
+      {% csrf_token %}
        <div class="Cont_Pessoais" >
         <h1>Informações Pessoais</h1>
-        <div id="Cont_form">
+        <div id="Cont_formPes">
           <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="img_perfil">
 
-          <form action="" class="P_form">
+          <div id="P_form">
 
               <label>Nome</label>
-              <input type="text" placeholder="Nome" value={{usuario.name}}>
+              <input type="text" placeholder="Nome" value={{usuario.name}} >
 
             <div class="cont_formInfo">
               <label>Tipo de Usuario</label>
@@ -33,12 +35,9 @@
                 </div>
               </div>
             </div>
-            <input class="ipt_list" list="tipos_usuarios" >
-            <datalist id="tipos_usuarios">
-                <option value="Acompanhante">
-                <option value="Pessoa com mobilidade de Locomoção reduzida">
-                <option value="Outro">
-            </datalist>
+            <div>
+              {{additional_form.tipo_usuario}}
+            </div>
 
             <div class="cont_formInfo">
               <label>Condição de Mobilidade</label>
@@ -49,12 +48,9 @@
                 </div>
               </div>
             </div>
-              <input class="ipt_list" list="condicao_mobilidade">
-              <datalist id="condicao_mobilidade">
-                <option value="Progressiva/Degenerativa">
-                <option value="Tempóraria">
-                <option value="Estável ou Permanente">
-              </datalist>
+            <div>
+              {{additional_form.duracao_condicao}}
+            </div>
 
             <div class="cont_formInfo">
               <label>Precisa de Acompanhante para Locomoção</label>
@@ -66,14 +62,14 @@
               </div>
             </div>
             <div class="ipt_radio">
-              <input type="radio" name="radio_acom" id="sim">
-              <label for="sim">Sim</label>
+              {{additional_form.acompanhamento}}
             </div>
-            <div class="ipt_radio">
-              <input type="radio" name="radio_acom" id="nao">
-              <label for="nao">Não</label>
+
+            <div id="ipt_date">
+              <label>Data de Nascimento</label>
+              {{additional_form.data_nascimento}} 
             </div>
-      
+          </div>
         </div>
        </div> 
 
@@ -101,6 +97,7 @@
           <button>Cadeira de rodas monobloco</button>
           <button>Cadeira de rodas com elevação automatica</button>
         </div>
+
        </div>
 
        <div class="Rec_Aces">
@@ -160,9 +157,11 @@
        </div>
 
        <div>
-        <button>Salvar</button>
+        <input type="submit" value="Save"/>
         <button>Cancelar</button>
        </div>
+    </form> 
+    
 
   {% else %}
       <label>Por favor, faça o login para acessar esta página.</label>
