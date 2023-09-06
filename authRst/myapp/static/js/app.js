@@ -8,20 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerButtonBoot = document.getElementById("register-button-boot");
   const loginButtonBoot = document.getElementById("login-button-boot");
 
-  registerButton.addEventListener("click", () => {
-    openPopup('/popup/?model=0', 0)
-  });
-  registerButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=0', 0)
-  });
 
-  loginButton.addEventListener("click", () => {
-    openPopup('/popup/?model=1', 1)
-  });
-
-  loginButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=1', 1)
-  });
+  try {
+    registerButton.addEventListener("click", () => {
+      openPopup('/popup/?model=0', 0)
+    });
+    registerButtonBoot.addEventListener("click", () => {
+      openPopup('/popup/?model=0', 0)
+    });
+  
+    loginButton.addEventListener("click", () => {
+      openPopup('/popup/?model=1', 1)
+    });
+  
+    loginButtonBoot.addEventListener("click", () => {
+      openPopup('/popup/?model=1', 1)
+    });
+  } catch (error) {
+    
+  }
 
   const cards = document.querySelectorAll('.card');
 
