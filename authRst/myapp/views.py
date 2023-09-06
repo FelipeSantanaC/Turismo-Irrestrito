@@ -15,6 +15,8 @@ from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
+import json
+import requests
 
 from recommendations.processUserProfileData import ProcessData
 
@@ -251,25 +253,34 @@ def about(request):
 def local_detail(request, local_id):
     local = Local.objects.get(pk=local_id)
     recursos = local.recursos[1:-2]
+    recursos = recursos.replace("'", "")
     recursos = recursos.split(',')
     
     local_data = {
-        'nome': local.nome,
-        'latitude': local.latitude,
-        'longitude': local.longitude,
-        'bairro': local.bairro,
-        'cidade': local.cidade,
-        'estado': local.estado,
-        'recursos': recursos,
-        'cep': local.cep,
-        'foto_url': local.foto_url,
-        'nota': local.nota,
-        'relevancia': local.relevancia,
-        'tipo': local.tipo,
+        "nome": local.nome,
+        "latitude": local.latitude,
+        "longitude": local.longitude,
+        "bairro": local.bairro,
+        "cidade": local.cidade,
+        "estado": local.estado,
+        "recursos": recursos,
+        "cep": local.cep,
+        "foto_url": local.foto_url,
+        "nota": local.nota,
+        "relevancia": local.relevancia,
+        "tipo": local.tipo,
     }
     
     context = {
-        'local_data': local_data,
+        "local_data": local_data,
     }
+    api_url = reverse("get_posts_by_local", args=[local_id])
+    api_url = request.build_absolute_uri(api_url)
+    print(api_url)
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json() # Retrieve the data from the jsonResponse
+    else: 
+        pass
     
     return render(request, 'local.html', context)
