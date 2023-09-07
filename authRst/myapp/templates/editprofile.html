@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/Perfil/edit.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <title>Turismo</title>
+</head>
+<body>
+  {% extends 'base.html' %}{% block content %}
+  {% if usuario.is_authenticated %}
+
+    <form method="POST" action="{% url 'editprofile'%} ">
+      {% csrf_token %}
+       <div class="Cont_Pessoais" >
+        <h1>Informações Pessoais</h1>
+        <div id="Cont_formPes">
+          <div id="cont_foto">
+            <img src="../static/images/Perfil/not-profile-picture.png" alt="Boneco de Login" class="img_perfil">
+            <label>Link para Foto</label>
+            {{additional_form.foto_perfil}}
+          </div>
+          <div id="P_form">
+
+              <label>Nome</label>
+              <input type="text" placeholder="Nome" value={{usuario.name}} >
+
+            <div class="cont_formInfo">
+              <label>Tipo de Usuario</label>
+              <div class="cont_tool">
+                <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+                <div class="tooltip">
+                  Para qual tipo de usuário esta conta é destinada?
+                </div>
+              </div>
+            </div>
+            <div>
+              {{additional_form.tipo_usuario}}
+            </div>
+
+            <div class="cont_formInfo">
+              <label>Condição de Mobilidade</label>
+              <div class="cont_tool">
+                <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+                <div class="tooltip">
+                  Das opções, qual é a sua condição atual de incapacidade para locomoção?
+                </div>
+              </div>
+            </div>
+            <div>
+              {{additional_form.duracao_condicao}}
+            </div>
+
+            <div class="cont_formInfo">
+              <label>Precisa de Acompanhante para Locomoção</label>
+              <div class="cont_tool">
+                <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+                <div class="tooltip">
+                  Para se locomover, você precisa do auxílio de acompanhante?
+                </div>
+              </div>
+            </div>
+            <div class="ipt_radio">
+              {{additional_form.acompanhamento}}
+            </div>
+
+            <div id="ipt_date">
+              <label>Data de Nascimento</label>
+              {{additional_form.data_nascimento}} 
+            </div>
+          </div>
+        </div>
+       </div> 
+
+       <div class="Fer_Auxiliar">
+        <div class="cont_formInfo">
+          <h1>Ferramenta Auxiliar de Locomoção</h1>
+          <div class="cont_tool">
+            <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            <div class="tooltip">
+              Selecione o(s) dispositivo(s) auxiliar(es) de locomoção que você utiliza no seu dia a dia
+            </div>
+          </div>
+        </div>
+        <div id="btns_Fer">
+          {{additional_form.preferencia_dam}}
+        </div>
+
+       </div>
+
+       <div class="Rec_Aces">
+        <div class="cont_formInfo">
+          <h1>Recurso de Acessibilidade</h1>
+          <div class="cont_tool">
+            <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            <div class="tooltip">
+              Selecione a(s) característica(s) que você espera deseja ou encontrar num local ideal para visitar
+            </div>
+          </div>
+        </div>
+        <div id="btns_Rec">
+          {{additional_form.preferencia_recursos}}
+        </div>
+       </div>
+
+       <div class="Locais_Inter">
+        <div class="cont_formInfo">
+          <h1>Locais de Interesse</h1>
+          <div class="cont_tool">
+            <img src="../static/images/Perfil/icon-tooltip.svg" alt="icone de informação">
+            <div class="tooltip">
+              Selecione o(s) local(is) que você tem preferência de visitar
+            </div>
+          </div>
+        </div>
+        <div id="btns_Loc">
+          {{additional_form.preferencia_locais}}
+        </div>
+       </div>
+
+       <div id="botoes">
+        <input type="submit" value="Save"/>
+        <button>Cancelar</button>
+       </div>
+    </form> 
+    
+
+  {% else %}
+      <label>Por favor, faça o login para acessar esta página.</label>
+  {% endif %}
+  {% endblock %}
+</body>
+</html>

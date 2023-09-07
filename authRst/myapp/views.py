@@ -97,18 +97,18 @@ def user_login(request):
 
 
 @login_required
-def complementar_register(request):
-    usuario = request.user
+def editprofile(request): # é provisoria 
+    usuario = request.user  # Obtém o usuário logado
     user_profile_exists = UserProfile.objects.filter(user=usuario).exists()
     if user_profile_exists:
         return redirect(user_display) 
-
+    
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
         if additional_form.is_valid():
             current_user = additional_form.save(commit=False) #Cria uma instancia de UserProfile
             current_user.user = request.user #Associa o UserProfile ao usuário logado (MyUser)
-            #current_user.save()
+            current_user.save()
             """ 
                 As proximas linhas repetem para locais, recursos e dispositivos:
                 Armazena os id dos elementos selecionados no form pelo usuário
@@ -117,31 +117,26 @@ def complementar_register(request):
                 Instancia Preferencias com  o usuario logado e o tipo de elemento
                 Salva o id usuario e o id elemento na tabela"""
             preferencia_locais_ids = additional_form.cleaned_data['preferencia_locais'].values_list('id', flat=True)
-            for tipo_local_id in preferencia_locais_ids:
+            for tipo_local_id in preferencia_locais_ids: # se o usuario escoleher varios 
                 tipo_local_instance = TiposLocais(tipo_local_id)
                 preferencia_locais_instance = PreferenciaLocais(user=current_user.user, local=tipo_local_instance)
                 preferencia_locais_instance.save()
             preferencia_recursos_ids = additional_form.cleaned_data['preferencia_recursos'].values_list('id', flat=True)
-            for tipo_recurso_id in preferencia_recursos_ids:
+            for tipo_recurso_id in preferencia_recursos_ids: # se o recurso escoleher varios
                 tipo_recurso_instance = TiposRecursos(tipo_recurso_id)
                 preferencia_recursos_instance = PreferenciaRecursos(user=current_user.user, recurso=tipo_recurso_instance)
                 preferencia_recursos_instance.save()
             dispositivo_aux_marcha_ids = additional_form.cleaned_data['preferencia_dam'].values_list('id', flat=True)
-            for tipo_dam_id in dispositivo_aux_marcha_ids:
+            for tipo_dam_id in dispositivo_aux_marcha_ids: # varios dispositivos
                 tipo_dispositivo_instance = TiposDispositivos(tipo_dam_id)
                 preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
                 preferencia_dispositivos_instance.save()
 
-            cluster = ProcessData(additional_form.cleaned_data)
-            current_user.cluster_usuario = cluster[0]
-            current_user.save()
-
-            print(f"CLUSTER: ", type(cluster))
-            return redirect('index') # Redirecionar para a tela de perfil quando criar
+            return redirect('editprofile') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()
-
-    return render(request, 'comp.html', context={'additional_form': additional_form,})   
+    
+    return render(request, 'editprofile.html', context={'additional_form': additional_form, 'usuario': usuario,})    
 
 @login_required(login_url='login')
 def home(request):

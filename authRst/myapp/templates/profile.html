@@ -31,7 +31,7 @@
             {% if usuario.userprofile %}
               <p style="font-weight: bold;">Você já preencheu seu cadastro complementar!</p>
             {% else %}
-                <a href="{% url 'complementar_register' %}" class="button-alterar">
+                <a href="/editprofile/" class="button-alterar">
                   <img src="../static/images/Perfil/edit-user.svg" alt="">
                 </a>
             {% endif %}
