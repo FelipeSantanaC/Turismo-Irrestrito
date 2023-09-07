@@ -73,52 +73,37 @@
             <div class="content-avaliacoes">
                 <div class="content-principal">
                     <h2 class="title-avaliacoes">Avaliações</h2>
+                    {% if reviews %}
+                    {% for review in reviews %}
                     <div class="container-avaliacoes">
                         <div class="container-perfil">
                             <div class="image-perfil">
+                                {% if local.profile_picture != None %}
+                                <img src="{{ review.user_profile_picture }}" alt="{{ review.user_name }}">
+                                {% else %}
                                 <img src="../static/images/Perfil/not-profile-picture.png" alt="">
+                                {% endif %}
                             </div>
                             <div class="info-perfil">
-                                <h3>Tânia R. Rocha</h3>
-                                <h3>Março de 2023</h3>
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <h3>{{ review.name }}</h3>
+                                <h3 id="review-date">{{ review.timestamp }}</h3>
+                                {% for _ in "x"|ljust:review.rating %}
+                                    <img src="../static/images/Perfil/filled-star.svg" alt="Star">
+                                {% endfor %}
                             </div>
                         </div>
                         <p class="paragraf-avaliacao">
-                            Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!
+                            {{ review.content }}
                         </p>
                         <hr style="color: black;
                         background-color: black;
                         height: 2px;
                         width: 90%" id="divider" class="divider-coment">
                     </div>
-                    <div class="container-avaliacoes">
-                        <div class="container-perfil">
-                            <div class="image-perfil">
-                                <img src="../static/images/Perfil/not-profile-picture.png" alt="">
-                            </div>
-                            <div class="info-perfil">
-                                <h3>Tânia R. Rocha</h3>
-                                <h3>Março de 2023</h3>
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                            </div>
-                        </div>
-                        <p class="paragraf-avaliacao">
-                            Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!
-                        </p>
-                        <hr style="color: black;
-                        background-color: black;
-                        height: 2px;
-                        width: 90%" id="divider" class="divider-coment">
-                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p id="no-review">Sem Avaliações</p>
+                    {% endif %}
                 </div>
                 <div class="mais-atracoes">
                     <h2>Mais atrações</h2>
@@ -164,6 +149,9 @@
             </div>
         </div>
     </div>
+    <script>
+        const localId = "{{ local_data.id }}";
+    </script>
     {% endblock %}
     
 </body>
