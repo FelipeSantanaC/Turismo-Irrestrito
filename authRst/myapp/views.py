@@ -281,6 +281,7 @@ def local_detail(request, local_id):
     if response.status_code == 200:
         reviews = response.json() # Retrieve the data from the jsonResponse
         for review in reviews:
+            print(review)
             date_string = review['timestamp']
             date_obj = datetime.fromisoformat(date_string.replace("Z", "+00:00"))
             review['timestamp'] = date_obj.strftime("%d de %B de %Y")

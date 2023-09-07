@@ -227,7 +227,7 @@ body, html {
 
 .content-principal {
   flex: 1;
-  margin-left: 8%;
+  /* margin-left: 8%; */
   min-width: 30%;
 }
 
@@ -250,4 +250,23 @@ body, html {
 
 #review-date {
   color: #010418ab;
+}
+
+.image-perfil {
+  max-width: 140px;
+  max-height: 140px;
+  overflow: hidden;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid rgba(4, 36, 124, 1);
+  border-radius: 50%;
+
+}
+
+#profile-picture {
+  max-width: 100%;
+  max-height: 100%;
 }

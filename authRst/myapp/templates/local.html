@@ -78,8 +78,9 @@
                     <div class="container-avaliacoes">
                         <div class="container-perfil">
                             <div class="image-perfil">
-                                {% if local.profile_picture != None %}
-                                <img src="{{ review.user_profile_picture }}" alt="{{ review.user_name }}">
+                                {% if review.profile_picture != None %}
+                                <img id="profile-picture" src="{{ review.profile_picture }}" 
+                                alt="{{ review.user_name }}">
                                 {% else %}
                                 <img src="../static/images/Perfil/not-profile-picture.png" alt="">
                                 {% endif %}
