@@ -108,7 +108,7 @@ def editprofile(request): # é provisoria
         if additional_form.is_valid():
             current_user = additional_form.save(commit=False) #Cria uma instancia de UserProfile
             current_user.user = request.user #Associa o UserProfile ao usuário logado (MyUser)
-            current_user.save()
+            #current_user.save()
             """ 
                 As proximas linhas repetem para locais, recursos e dispositivos:
                 Armazena os id dos elementos selecionados no form pelo usuário
@@ -137,7 +137,6 @@ def editprofile(request): # é provisoria
             current_user.save()
 
             print(f"CLUSTER: ", type(cluster))    
-
             return redirect('editprofile') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()
