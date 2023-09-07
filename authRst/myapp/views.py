@@ -132,6 +132,12 @@ def editprofile(request): # é provisoria
                 preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
                 preferencia_dispositivos_instance.save()
 
+            cluster = ProcessData(additional_form.cleaned_data)
+            current_user.cluster_usuario = cluster[0]
+            current_user.save()
+
+            print(f"CLUSTER: ", type(cluster))    
+
             return redirect('editprofile') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()
