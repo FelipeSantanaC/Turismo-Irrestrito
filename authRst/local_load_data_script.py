@@ -12,7 +12,7 @@ cnx = mysql.connector.connect(
 cursor = cnx.cursor()
 
 # Ler o arquivo CSV e inserir os dados no banco de dados
-with open('./authRst/local_data.csv', 'r', encoding='utf-8') as file:
+with open('Turismo-Irrestrito/authRst/local_data.csv', 'r', encoding='utf-8') as file:
     reader = csv.DictReader(file)
     for row in reader:
         latitude = row['latitude']
