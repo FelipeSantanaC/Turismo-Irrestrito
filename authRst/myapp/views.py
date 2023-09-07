@@ -17,6 +17,7 @@ from django.db.models import Q
 from .forms import UserProfileForm
 import json
 import requests
+from datetime import datetime
 
 from recommendations.processUserProfileData import ProcessData
 
@@ -255,6 +256,7 @@ def local_detail(request, local_id):
     recursos = local.recursos[1:-2]
     recursos = recursos.replace("'", "")
     recursos = recursos.split(',')
+    recursos = list(map(lambda s: s.title(), recursos))
     
     local_data = {
         "nome": local.nome,
@@ -269,18 +271,23 @@ def local_detail(request, local_id):
         "nota": local.nota,
         "relevancia": local.relevancia,
         "tipo": local.tipo,
+        "id": local_id
     }
     
-    context = {
-        "local_data": local_data,
-    }
     api_url = reverse("get_posts_by_local", args=[local_id])
     api_url = request.build_absolute_uri(api_url)
     print(api_url)
     response = requests.get(api_url)
     if response.status_code == 200:
-        data = response.json() # Retrieve the data from the jsonResponse
+        reviews = response.json() # Retrieve the data from the jsonResponse
+        for review in reviews:
+            date_string = review['timestamp']
+            date_obj = datetime.fromisoformat(date_string.replace("Z", "+00:00"))
+            review['timestamp'] = date_obj.strftime("%d de %B de %Y")
     else: 
         pass
-    
+    context = {
+        "local_data": local_data,
+        "reviews": reviews
+    }
     return render(request, 'local.html', context)

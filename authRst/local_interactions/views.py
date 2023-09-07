@@ -20,11 +20,13 @@ def get_posts_by_local(request, local_id):
     return JsonResponse(data, safe=False)
 
 def local_rate(request):
+    local_id =request.POST.get("local_id")
+    print(local_id)
     if request.method == 'POST':
         rating_form = RatingForm(request.POST)
         post_form = PostForm(request.POST)
         user = request.user
-        local = Local.objects.get(id=2) # isso aqui tem que rever, não consegui puxar o id nem a instancia de Local da página, 
+        local = Local.objects.get(id=local_id) # isso aqui tem que rever, não consegui puxar o id nem a instancia de Local da página, 
 
         if rating_form.is_valid() and post_form.is_valid():
             rating = rating_form.save(commit=False)

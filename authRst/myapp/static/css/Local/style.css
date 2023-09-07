@@ -1,3 +1,7 @@
+:root {
+  --review-color-text: #010418;
+}
+
 body, html {
     font-family: "Poppins", sans-serif;
     margin: 0;
@@ -207,26 +211,43 @@ body, html {
     display: flex;
 }
 
-.content-avaliacoes {
-    margin-top: 20px;
-    display: flex;
-    gap: 200px;
-}
-
-.paragraf-avaliacao {
-    margin: 50px;
-    margin-left: -10px;
-}
-
 #primary-image {
     display: flex;
     min-width: 800px;
 }
 
-.content-principal {
-    flex: 1;
-}
+
 
 .mais-atracoes {
     flex: 1;
+}
+
+/* Review Section */
+
+
+.content-principal {
+  flex: 1;
+  margin-left: 8%;
+  min-width: 30%;
+}
+
+.content-avaliacoes {
+  margin-top: 20px;
+  display: flex;
+  gap: 200px;
+  color: var(--review-color-text);
+}
+
+.paragraf-avaliacao {
+  margin: 50px;
+  margin-left: 8px;
+}
+
+#no-review {
+  margin-top: 20%;
+}
+
+
+#review-date {
+  color: #010418ab;
 }
