@@ -129,6 +129,25 @@ input[type="date"]{
   grid-gap: 4px;
 }
 
+#id_preferencia_dam div label, #id_preferencia_recursos div label, #id_preferencia_locais div label {
+  background-color: #558BE2;
+  color: #051537;
+  width: fit-content;
+  border-radius: 16px;
+  padding: 3px 5px;
+}
+
+#id_preferencia_dam div label input[type="checkbox"], #id_preferencia_recursos div label input[type="checkbox"], #id_preferencia_locais div label input[type="checkbox"] {
+  display: none;
+}
+
+#id_preferencia_dam div label:has(> input[type="checkbox"]:checked), #id_preferencia_recursos div label:has(> input[type="checkbox"]:checked), #id_preferencia_locais div label:has(> input[type="checkbox"]:checked) {
+  background-color: #0458AB;
+  color: #C2E2F5;
+  border-radius: 16px;
+  padding: 3px 5px;
+}
+
 #id_preferencia_recursos, #id_preferencia_locais {
   grid-template-columns: 1fr 1fr 1fr; /* Duas colunas de tamanho igual */
 }
