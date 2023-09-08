@@ -30,9 +30,10 @@
 * django-cors-headers;
 * djangorestframework;
 * PyMySQL;
-* myswlclient;
+* mysqlclient;
 * Cryptography;
 * mysql.connector;
+* requests;
 
 ## Instruções para executar:
 1. Instalar as dependências/bibliotecas;
