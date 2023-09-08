@@ -4,12 +4,13 @@ body {
   justify-content: center;
   background-color: #c2e2f5;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  width: 100%;
+  /* width: 100%; */
   margin: 0;
   height: 19vh;
   padding: 10px;
@@ -465,9 +466,7 @@ a.tag {
 
 .search-area {
   min-height: 100%;
-  /* margin-bottom: -50px; */
   padding-bottom: 50px;
-  height: 24vh;
   display: flex;
   flex-direction: column;
   justify-content: baseline;
@@ -480,8 +479,8 @@ a.tag {
 }
 
 #input-local {
-  width: 70vw;
-  height: 5vw;
+  width: 55rem;
+  height: 3rem;
   border-radius: 100px;
   border: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
@@ -542,6 +541,8 @@ a.tag {
 }
 
 .tags {
+  background-color: inherit;
+  margin: 0 3rem;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -703,7 +704,6 @@ button#button-filter:hover {
 }
 
 
-/*  */
 
 /* styles.css */
 /* Hide the pop-up container by default */

@@ -15,7 +15,7 @@
       </div>
       <div class="review-field-container">
         <button class="close-button" id="close-button">X</button>
-        <form method="POST" action="{% url 'local_rate' %}">
+        <form method="POST" action="{% url 'local_rate' %}" class="form-review">
           {% csrf_token %}
           
           {{ rating_form.as_p }}
@@ -24,7 +24,7 @@
           <input type="hidden" name="local_id" id="local_id_value">
           
           <button type="submit">Enviar</button>
-      </form>
+        </form>
         
       </div>
     </div>
