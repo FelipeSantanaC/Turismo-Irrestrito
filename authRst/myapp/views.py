@@ -302,9 +302,18 @@ def local_detail(request, local_id):
             review['timestamp'] = date_obj.strftime("%d de %B de %Y")
     else: 
         pass
+    get_tags_url = reverse("get_tags_for_local", args=[local_id])
+    get_tags_url = request.build_absolute_uri(get_tags_url)    
+    response = requests.get(get_tags_url)
+    
+    if response.status_code == 200:
+        tags = response.json()
+    else:
+        pass
     context = {
         "local_data": local_data,
         "reviews": reviews,
         "recommendations": recommendations,
+        "tags":tags,
     }
     return render(request, 'local.html', context)
