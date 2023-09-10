@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="../static/css/style.css"/>
     <link rel="stylesheet" href="../static/css/Local/style.css"/>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../static/js/local.js"></script>
 </head>
 <body>
@@ -54,9 +56,21 @@
             <h2 class="title-resources">O local possui</h2>
             <div class="tags-container">
                 <div class="button-container">
-                    {% for value in local_data.recursos %}
-                        <button class="button-tags">{{ value|capfirst }}</button>
+                    {% for tag in tags.tags %}
+                        <li class="button-tags" data-tooltip="{{ tag.description }}">{{ tag.title }}</li>
                     {% endfor %}
+                    <script>
+                        $(document).ready(function () {
+                            // Initialize tooltips with 'top' placement
+                            $('.button-tags').tooltip({
+                                title: function () {
+                                    return $(this).data('tooltip'); // Use data-tooltip attribute as the title
+                                },
+                                delay: { show: 100, hide: 0 },
+                                placement: 'bottom', // Set the placement to 'top'
+                            });
+                        });
+                    </script>
                 </div>
             </div>            
             <h2>Contribua</h2>
@@ -106,44 +120,29 @@
                 </div>
                 <div class="mais-atracoes">
                     <h2>Mais atrações</h2>
-                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
-                        <div class="image-overlay">
-                            {% if local.foto_url %}
-                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
-                            {% else %}
-                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                            {% endif %}
-                            <div class="overlay-content">
-                                <h3 id="local-name-card">{{ local.nome }}</h3>
-                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                    {% if recommendations %}
+                    {% for local in recommendations %}
+                        <div class="recommended-card"  data-local-id="{{ local.id }}">
+                            <div class="image-overlay">
+                                {% if local.foto_url %}
+                                    <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
+                                {% else %}
+                                    <img src="../static/images/img-not-found.png" alt="Image Not Found">
+                                {% endif %}
+                                <div class="overlay-content">
+                                    <h3 id="local-name-card">{{ local.nome }}</h3>
+                                    <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                                </div>
+                            </div>
+                            <div id="card-body">
+                                <p>{{ local.relevancia }} Avaliações</p>
+                                <div class="star-rating">
+                                    <p>{{ local.nota }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div id="card-body">
-                            <p>{{ local.relevancia }} Avaliações</p>
-                            <div class="star-rating">
-                                <p>{{ local.nota }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
-                        <div class="image-overlay">
-                            {% if local.foto_url %}
-                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
-                            {% else %}
-                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                            {% endif %}
-                            <div class="overlay-content">
-                                <h3 id="local-name-card">{{ local.nome }}</h3>
-                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
-                            </div>
-                        </div>
-                        <div id="card-body">
-                            <p>{{ local.relevancia }} Avaliações</p>
-                            <div class="star-rating">
-                                <p>{{ local.nota }}</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                {% endif %}
                 </div>
             </div>
         </div>

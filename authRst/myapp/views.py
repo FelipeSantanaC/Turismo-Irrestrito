@@ -34,35 +34,36 @@ error_translation = {
     # Add more translations for other error messages if needed
 }
 
-def index(request):
-    search_query = request.GET.get('search', '')
-    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
-    local_serializer = LocalSerializer(locals, many=True)
-
-    if request.user.is_authenticated:
-        try:
-            user_profile = UserProfile.objects.get(user=request.user)
-            cluster_number = user_profile.cluster_usuario
-
-            recommended_locations = {
+def get_recommendations(request, cluster_number):
+    recommended_locations = {
                 0: ['museu', 'jardim botânico', 'mercado', 'catedral'],
                 1: ['igreja', 'estátua', 'praia', 'mercado'],
                 2: ['mesquita', 'parque', 'mercado', 'zoológico'],
                 3: ['praia', 'farol', 'biblioteca', 'galeria']
             }
 
-            recommended_places = recommended_locations.get(cluster_number, [])
+    recommended_places = recommended_locations.get(cluster_number, [])
             
-            # Filter the recommended places by name
-            recommended_locals = Local.objects.filter(tipo__in=recommended_places)
+    # Filter the recommended places by name
+    recommended_locals = Local.objects.filter(tipo__in=recommended_places)
             
-            # Serialize the recommended places
-            recommended_locals_serializer = LocalSerializer(recommended_locals, many=True)
+    # Serialize the recommended places
+    recommended_locals_serializer = LocalSerializer(recommended_locals, many=True)
+    return recommended_locals_serializer.data
             
-            return render(request, 'home.html', {'data': recommended_locals_serializer.data})
-        except UserProfile.DoesNotExist:
-            pass
-    
+
+def index(request):
+    search_query = request.GET.get('search', '')
+    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
+    local_serializer = LocalSerializer(locals, many=True)
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            cluster_number = user_profile.cluster_usuario
+            recommendations = get_recommendations(request,cluster_number)
+            return render(request, 'home.html', {'data': recommendations})
+        except:
+            return render(request, 'home.html', {'data': local_serializer.data})
     return render(request, 'home.html', {'data': local_serializer.data})
 
 def user_register(request):
@@ -258,6 +259,20 @@ def local_detail(request, local_id):
     recursos = recursos.replace("'", "")
     recursos = recursos.split(',')
     recursos = list(map(lambda s: s.title(), recursos))
+    #para exibição dos cards de locais recomendados
+    search_query = request.GET.get('search', '')
+    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:2]
+    local_serializer = LocalSerializer(locals, many=True)
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            cluster_number = user_profile.cluster_usuario
+            recommendations = get_recommendations(request,cluster_number)[:2]
+            
+        except:
+            recommendations = local_serializer.data
+    else:
+        recommendations = local_serializer.data    
     
     local_data = {
         "nome": local.nome,
@@ -288,8 +303,18 @@ def local_detail(request, local_id):
             review['timestamp'] = date_obj.strftime("%d de %B de %Y")
     else: 
         pass
+    get_tags_url = reverse("get_tags_for_local", args=[local_id])
+    get_tags_url = request.build_absolute_uri(get_tags_url)    
+    response = requests.get(get_tags_url)
+    
+    if response.status_code == 200:
+        tags = response.json()
+    else:
+        pass
     context = {
         "local_data": local_data,
-        "reviews": reviews
+        "reviews": reviews,
+        "recommendations": recommendations,
+        "tags":tags,
     }
     return render(request, 'local.html', context)

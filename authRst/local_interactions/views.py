@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from local_interactions.models import Post , LocalTags
 from myapp.models import Local, TiposRecursos
 from .forms import RatingForm, PostForm
-
+from django.shortcuts import get_object_or_404
 
 def get_posts_by_local(request, local_id):
     posts = Post.objects.select_related('rating_id', 'user_id__userprofile').filter(local_id=local_id).values('rating_id__rating', 'content', 'timestamp', 'user_id__name', 'user_id__userprofile__foto_perfil')
@@ -50,4 +50,8 @@ def local_rate(request):
         else:
             return HttpResponse('Algo deu errado, preencha novamente os campos.')
 
-    
+def get_tags_for_local(request, local_id):
+    local = get_object_or_404(Local, pk=local_id)
+    tags = LocalTags.objects.filter(local=local)
+    tag_info = [{'title': tag.tag.title, 'description': tag.tag.description} for tag in tags]
+    return JsonResponse({'tags': tag_info})
