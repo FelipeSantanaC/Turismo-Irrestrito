@@ -37,10 +37,22 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = url;
     })
   })
+  const recommendedCards = document.querySelectorAll('.recommended-card');
+
+  recommendedCards.forEach(function(card) {
+      card.addEventListener('click', function() {
+          const localId = card.getAttribute('data-local-id');
+          const url = `/local/${localId}`;
+          window.location.href = url;
+      })
+  })
+
+  
 
 
 })
 
+  
 function openPopup(url, typePopup=undefined) {
   // Make an AJAX request to the provided URL
   fetch(url)

@@ -120,44 +120,29 @@
                 </div>
                 <div class="mais-atracoes">
                     <h2>Mais atrações</h2>
-                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
-                        <div class="image-overlay">
-                            {% if local.foto_url %}
-                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
-                            {% else %}
-                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                            {% endif %}
-                            <div class="overlay-content">
-                                <h3 id="local-name-card">{{ local.nome }}</h3>
-                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                    {% if recommendations %}
+                    {% for local in recommendations %}
+                        <div class="recommended-card"  data-local-id="{{ local.id }}">
+                            <div class="image-overlay">
+                                {% if local.foto_url %}
+                                    <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
+                                {% else %}
+                                    <img src="../static/images/img-not-found.png" alt="Image Not Found">
+                                {% endif %}
+                                <div class="overlay-content">
+                                    <h3 id="local-name-card">{{ local.nome }}</h3>
+                                    <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                                </div>
+                            </div>
+                            <div id="card-body">
+                                <p>{{ local.relevancia }} Avaliações</p>
+                                <div class="star-rating">
+                                    <p>{{ local.nota }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div id="card-body">
-                            <p>{{ local.relevancia }} Avaliações</p>
-                            <div class="star-rating">
-                                <p>{{ local.nota }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
-                        <div class="image-overlay">
-                            {% if local.foto_url %}
-                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
-                            {% else %}
-                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                            {% endif %}
-                            <div class="overlay-content">
-                                <h3 id="local-name-card">{{ local.nome }}</h3>
-                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
-                            </div>
-                        </div>
-                        <div id="card-body">
-                            <p>{{ local.relevancia }} Avaliações</p>
-                            <div class="star-rating">
-                                <p>{{ local.nota }}</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                {% endif %}
                 </div>
             </div>
         </div>
