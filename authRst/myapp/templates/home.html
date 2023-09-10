@@ -76,7 +76,7 @@
       <div class="input-container">
       <form class="form-search"  method="GET" action="{% url 'results' %}">
         {% csrf_token %}
-        <input id="input-local" type="text" name="search" placeholder="Aonde você quer ir?">
+        <input id="input-local" type="text" name="searchQuery" placeholder="Aonde você quer ir?">
         <button id="search-button" class="search-icon" type="submit">
         <i class="bi bi-search"></i>
         </button>

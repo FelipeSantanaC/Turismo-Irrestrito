@@ -187,8 +187,9 @@ def results(request):
         'selected_types': selected_types,
         'search_query': search_query,
     }
-
-    if search or tags:
+    csrf_token = request.GET.get('csrfmiddlewaretoken') # Verify if it exists in the request
+    if (search or tags) and csrf_token == None:
+        # Only return JsonResponse if there's tag selected or some input into the search bar, with exception when there's csrf_token in the request.
         return JsonResponse(context)
     return render(request, 'results.html', context)
 
