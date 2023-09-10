@@ -53,22 +53,27 @@ function updateCardSelect(checkboxes=undefined) {
   let queryParams = ''
   if (searchInput.length == 0 && selected == 0) {
     queryParams = new URLSearchParams({
+      csrfmiddlewaretoken: csrfToken,
       checkboxesData: 'all', // Convert the selected array to a comma-separated string
       searchQuery: 'all',
     });
 
   } else {
     queryParams = new URLSearchParams({
+      csrfmiddlewaretoken: csrfToken,
       checkboxesData: selected.join(','), // Convert the selected array to a comma-separated string
       searchQuery: searchInput,
     });
   }
   const url = '/results/?' + queryParams;
 
-
-
   fetch(url, {
     method:'GET',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-My-Boolean-Header': 'true',
+      "X-CSRFToken": csrfToken
+    }
     })
   .then(response => response.json())
   .then(data => {

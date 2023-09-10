@@ -163,6 +163,7 @@ def results(request):
     except: pass
     try: selected_types = request.GET.get('checkboxesData')
     except: pass
+    my_boolean_header = request.META.get('HTTP_X_MY_BOOLEAN_HEADER')
 
     locals = Local.objects.all()
     if selected_types == 'all' and search_query == 'all':
@@ -189,8 +190,9 @@ def results(request):
         'search_query': search_query,
     }
     csrf_token = request.GET.get('csrfmiddlewaretoken') # Verify if it exists in the request
-    if (search or tags) and csrf_token == None:
-        # Only return JsonResponse if there's tag selected or some input into the search bar, with exception when there's csrf_token in the request.
+    if (search or tags) and my_boolean_header == 'true':
+        # Only return JsonResponse if there's tag selected or some input into the search bar, 
+        # With the exception that the request came from the results pages
         return JsonResponse(context)
     return render(request, 'results.html', context)
 
