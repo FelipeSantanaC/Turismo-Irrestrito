@@ -95,7 +95,7 @@ def user_login(request):
             login(request, user)
             return JsonResponse({'success': True, 'redirect_url': reverse('index')}) 
         else:
-            return JsonResponse({'success': False, 'message': 'Invalid credentials'})
+            return JsonResponse({'success': False, 'message': 'Você precisa estar logado!'})
 
 
 @login_required

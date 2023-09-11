@@ -1,9 +1,10 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from django.http import JsonResponse
 from local_interactions.models import Post , LocalTags
 from myapp.models import Local, TiposRecursos
 from .forms import RatingForm, PostForm
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 def get_posts_by_local(request, local_id):
     posts = Post.objects.select_related('rating_id', 'user_id__userprofile').filter(local_id=local_id).values('rating_id__rating', 'content', 'timestamp', 'user_id__name', 'user_id__userprofile__foto_perfil')
@@ -19,6 +20,7 @@ def get_posts_by_local(request, local_id):
     ]
     return JsonResponse(data, safe=False)
 
+@login_required
 def local_rate(request):
     local_id =request.POST.get("local_id")
     print(local_id)
@@ -45,10 +47,10 @@ def local_rate(request):
                 tag_instance = TiposRecursos(tag_id)
                 local_tag_instance = LocalTags(local = local , tag =tag_instance)
                 local_tag_instance.save()  
-            return HttpResponse('Agradecemos sua contribuição.')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
         else:
-            return HttpResponse('Algo deu errado, preencha novamente os campos.')
+            return render(request, 'login_popup.html', {'error_message': 'Você precisa fazer login para acessar esta página'})
 
 def get_tags_for_local(request, local_id):
     local = get_object_or_404(Local, pk=local_id)
