@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from django.http import JsonResponse
 from local_interactions.models import Post , LocalTags
 from myapp.models import Local, TiposRecursos
@@ -45,7 +45,7 @@ def local_rate(request):
                 tag_instance = TiposRecursos(tag_id)
                 local_tag_instance = LocalTags(local = local , tag =tag_instance)
                 local_tag_instance.save()  
-            return HttpResponse('Agradecemos sua contribuição.')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
         else:
             return HttpResponse('Algo deu errado, preencha novamente os campos.')
