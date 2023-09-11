@@ -11,7 +11,7 @@
   <title>Turismo</title>
 </head>
 <body>
-  {% extends 'base.html' %}{% block content %}
+  {% extends 'base.html' %}{% block content %}{% load custom_filters %}
 
   {% if usuario.is_authenticated %}
         
@@ -42,26 +42,26 @@
         </div>
       </div>
       <div class="container-comentario">
-        <h1 class="titulo-comentario">Últimos comentários</h1>
+        <h1 class="titulo-comentario">Último comentário</h1>
+        {% if last_comment %}
         <div class="container-dados-comentario">
-          <h3>Museu da abolição</h3>
+          <h3><a href="{% url 'local_detail' last_comment.local.id %}" style="a {text-decoration: none;}">{{ last_comment.local.nome|title }}</a></h3>
           <div class="data-visita">
             <h3>Data: </h3>
-            <span>23 de março 2023</span>
+            <span>{{ last_comment.timestamp|date:"d/m/Y H:i" }}</span>
           </div>
           <div class="score-visita">
             <h3>Nota: </h3>
-            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
-            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
-            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
-            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
-            <span><img src="../static/images/Perfil/filled-star.svg" alt=""></span>
+            <span>{{ last_comment.rating.rating|render_stars }}</span>
           </div>
           <div class="comentario-visita">
             <h3>Comentário: </h3>
-            <span>Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!</span>
+            <span>{{ last_comment.content }}</span>
           </div>
         </div>
+        {% else %}
+        <p class="not-comment">Nenhum comentário encontrado.</p>
+        {% endif %}
       </div>
       <div class="container-recursos">
         <h1 class="titulo-recursos">Recursos de acessibilidade</h1>

@@ -210,3 +210,9 @@ body {
 .container-locais {
   margin-bottom: 80px;
 }
+
+.not-comment {
+  margin-left: 50px;
+  font-size: 20px;
+  margin-top: 40px;
+}

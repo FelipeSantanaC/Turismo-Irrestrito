@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
+from local_interactions.models import Post
 import json
 import requests
 from datetime import datetime
@@ -242,11 +243,15 @@ def user_display(request):
         if preferencia.recurso not in recursos_unicos:
             recursos_unicos.add(preferencia.recurso)
             recursos_preferidos.append(preferencia)
+    
+    if usuario.is_authenticated:
+        last_comment = Post.objects.filter(user=usuario).order_by('-timestamp').first()
 
     context = {
         'usuario': usuario,
         'preferencias_locais': locais_preferidos,
         'preferencias_recursos': recursos_preferidos,
+        'last_comment': last_comment,
     }
 
     return render(request, 'profile.html', context)
