@@ -250,14 +250,14 @@ body, html {
   background-color: #558BE2;
   color: #051537;
   border-radius: 15px ;
-  padding: 5px 10px;
+  padding: 0.1em 0.3em;
+  margin-bottom: 0;
 }
 
 #id_tag_list div label:has(> input[type="checkbox"]:checked) {
   background-color: #0458AB;
   color: #C2E2F5;
-  border-radius: 15px ;
-  padding: 5px 10px;
+
 }
 
 #id_tag_list div label input[type="checkbox"] {
