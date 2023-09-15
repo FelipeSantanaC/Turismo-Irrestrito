@@ -8,22 +8,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerButtonBoot = document.getElementById("register-button-boot");
   const loginButtonBoot = document.getElementById("login-button-boot");
 
-  registerButton.addEventListener("click", () => {
-    openPopup('/popup/?model=0', 0)
-  });
-  registerButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=0', 0)
-  });
 
-  loginButton.addEventListener("click", () => {
-    openPopup('/popup/?model=1', 1)
-  });
+  try {
+    registerButton.addEventListener("click", () => {
+      openPopup('/popup/?model=0', 0)
+    });
+    registerButtonBoot.addEventListener("click", () => {
+      openPopup('/popup/?model=0', 0)
+    });
+  
+    loginButton.addEventListener("click", () => {
+      openPopup('/popup/?model=1', 1)
+    });
+  
+    loginButtonBoot.addEventListener("click", () => {
+      openPopup('/popup/?model=1', 1)
+    });
+  } catch (error) {
+    
+  }
 
-  loginButtonBoot.addEventListener("click", () => {
-    openPopup('/popup/?model=1', 1)
-  });
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      const localId =card.getAttribute('data-local-id');
+      const url = `/local/${localId}`;
+      window.location.href = url;
+    })
+  })
+  const recommendedCards = document.querySelectorAll('.recommended-card');
+
+  recommendedCards.forEach(function(card) {
+      card.addEventListener('click', function() {
+          const localId = card.getAttribute('data-local-id');
+          const url = `/local/${localId}`;
+          window.location.href = url;
+      })
+  })
+
+  
+
+
 })
 
+  
 function openPopup(url, typePopup=undefined) {
   // Make an AJAX request to the provided URL
   fetch(url)

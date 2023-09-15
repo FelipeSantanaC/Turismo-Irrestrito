@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/header/style.css" />
-    <link rel="stylesheet" href="../static/css/Local/style.css" />
+    <!-- <link rel="stylesheet" href="../static/css/header/style.css"/> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css"/>
+    <link rel="stylesheet" href="../static/css/Local/style.css"/>
     <script src="../static/js/local.js"></script>
 </head>
 <body>
@@ -24,10 +29,7 @@
               </button>
             </form>
             </div>    
-            <div class="local-underneath-search">
-                <button id="alter-local">Alterar Local</button>
-                <p id="current-local">Local Atual: <span>Recife - PE</span></p>
-            </div>
+            
           </div>
       
         
@@ -54,9 +56,21 @@
             <h2 class="title-resources">O local possui</h2>
             <div class="tags-container">
                 <div class="button-container">
-                    {% for value in local_data.recursos %}
-                        <button class="button-tags">{{ value|capfirst }}</button>
+                    {% for tag in tags.tags %}
+                        <li class="button-tags" data-tooltip="{{ tag.description }}">{{ tag.title }}</li>
                     {% endfor %}
+                    <script>
+                        $(document).ready(function () {
+                            // Initialize tooltips with 'top' placement
+                            $('.button-tags').tooltip({
+                                title: function () {
+                                    return $(this).data('tooltip'); // Use data-tooltip attribute as the title
+                                },
+                                delay: { show: 100, hide: 0 },
+                                placement: 'bottom', // Set the placement to 'top'
+                            });
+                        });
+                    </script>
                 </div>
             </div>            
             <h2>Contribua</h2>
@@ -64,106 +78,79 @@
                 <div class="image-feedback">
                     <img src="../static/images/Local/Group 60.svg" alt="">
                 </div>
-                <div class="buttons-feedback">
-                    <button id="make-review-button">Faça Uma Avaliação</button>
-                    <button id="send-image-button">Envie uma Imagem</button>
-                </div>
+                <button id="make-review-button">Faça Uma Avaliação</button>
+                
             </div>  
             <!-- Reviews  -->
             <div class="content-avaliacoes">
                 <div class="content-principal">
                     <h2 class="title-avaliacoes">Avaliações</h2>
+                    {% if reviews %}
+                    {% for review in reviews %}
                     <div class="container-avaliacoes">
                         <div class="container-perfil">
                             <div class="image-perfil">
+                                {% if review.profile_picture != None %}
+                                <img id="profile-picture" src="{{ review.profile_picture }}" 
+                                alt="{{ review.user_name }}">
+                                {% else %}
                                 <img src="../static/images/Perfil/not-profile-picture.png" alt="">
+                                {% endif %}
                             </div>
                             <div class="info-perfil">
-                                <h3>Tânia R. Rocha</h3>
-                                <h3>Março de 2023</h3>
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
+                                <h3>{{ review.name }}</h3>
+                                <h3 id="review-date">{{ review.timestamp }}</h3>
+                                {% for _ in "x"|ljust:review.rating %}
+                                    <img src="../static/images/Perfil/filled-star.svg" alt="Star">
+                                {% endfor %}
                             </div>
                         </div>
                         <p class="paragraf-avaliacao">
-                            Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!
+                            {{ review.content }}
                         </p>
                         <hr style="color: black;
                         background-color: black;
                         height: 2px;
                         width: 90%" id="divider" class="divider-coment">
                     </div>
-                    <div class="container-avaliacoes">
-                        <div class="container-perfil">
-                            <div class="image-perfil">
-                                <img src="../static/images/Perfil/not-profile-picture.png" alt="">
-                            </div>
-                            <div class="info-perfil">
-                                <h3>Tânia R. Rocha</h3>
-                                <h3>Março de 2023</h3>
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                                <img src="../static/images/Perfil/filled-star.svg" alt="">
-                            </div>
-                        </div>
-                        <p class="paragraf-avaliacao">
-                            Lugar maravilhoso! Adorei, pude conhecer tudo sem nenhum problema!
-                        </p>
-                        <hr style="color: black;
-                        background-color: black;
-                        height: 2px;
-                        width: 90%" id="divider" class="divider-coment">
-                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p id="no-review">Sem Avaliações</p>
+                    {% endif %}
                 </div>
                 <div class="mais-atracoes">
                     <h2>Mais atrações</h2>
-                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
-                        <div class="image-overlay">
-                            {% if local.foto_url %}
-                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
-                            {% else %}
-                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                            {% endif %}
-                            <div class="overlay-content">
-                                <h3 id="local-name-card">{{ local.nome }}</h3>
-                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                    {% if recommendations %}
+                    {% for local in recommendations %}
+                        <div class="recommended-card"  data-local-id="{{ local.id }}">
+                            <div class="image-overlay">
+                                {% if local.foto_url %}
+                                    <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
+                                {% else %}
+                                    <img src="../static/images/img-not-found.png" alt="Image Not Found">
+                                {% endif %}
+                                <div class="overlay-content">
+                                    <h3 id="local-name-card">{{ local.nome }}</h3>
+                                    <p id="local-neighborhood-card">{{ local.bairro }}</p>
+                                </div>
+                            </div>
+                            <div id="card-body">
+                                <p>{{ local.relevancia }} Avaliações</p>
+                                <div class="star-rating">
+                                    <p>{{ local.nota }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div id="card-body">
-                            <p>{{ local.relevancia }} Avaliações</p>
-                            <div class="star-rating">
-                                <p>{{ local.nota }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="background-color: #558BE2; min-width: 300px;">
-                        <div class="image-overlay">
-                            {% if local.foto_url %}
-                            <img src="{{ local.foto_url }}" alt="{{ local.nome }}">
-                            {% else %}
-                            <img src="../static/images/img-not-found.png" alt="Image Not Found">
-                            {% endif %}
-                            <div class="overlay-content">
-                                <h3 id="local-name-card">{{ local.nome }}</h3>
-                                <p id="local-neighborhood-card">{{ local.bairro }}</p>
-                            </div>
-                        </div>
-                        <div id="card-body">
-                            <p>{{ local.relevancia }} Avaliações</p>
-                            <div class="star-rating">
-                                <p>{{ local.nota }}</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                {% endif %}
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        const localId = "{{ local_data.id }}";
+    </script>
     {% endblock %}
+    
 </body>
 </html>

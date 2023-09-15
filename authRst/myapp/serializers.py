@@ -14,6 +14,7 @@ class LocalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Local
         fields = (
+        'id',
         'nome',
         'bairro',
         'cidade',
@@ -22,5 +23,4 @@ class LocalSerializer(serializers.ModelSerializer):
         'tipo',
         'nota',
         'relevancia'
-            
         )

@@ -15,6 +15,10 @@ from django.contrib.auth.decorators import login_required
 from .admin import UserCreationForm
 from django.db.models import Q
 from .forms import UserProfileForm
+from local_interactions.models import Post
+import json
+import requests
+from datetime import datetime
 
 from recommendations.processUserProfileData import ProcessData
 
@@ -31,35 +35,36 @@ error_translation = {
     # Add more translations for other error messages if needed
 }
 
-def index(request):
-    search_query = request.GET.get('search', '')
-    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
-    local_serializer = LocalSerializer(locals, many=True)
-
-    if request.user.is_authenticated:
-        try:
-            user_profile = UserProfile.objects.get(user=request.user)
-            cluster_number = user_profile.cluster_usuario
-
-            recommended_locations = {
+def get_recommendations(request, cluster_number):
+    recommended_locations = {
                 0: ['museu', 'jardim botânico', 'mercado', 'catedral'],
                 1: ['igreja', 'estátua', 'praia', 'mercado'],
                 2: ['mesquita', 'parque', 'mercado', 'zoológico'],
                 3: ['praia', 'farol', 'biblioteca', 'galeria']
             }
 
-            recommended_places = recommended_locations.get(cluster_number, [])
+    recommended_places = recommended_locations.get(cluster_number, [])
             
-            # Filter the recommended places by name
-            recommended_locals = Local.objects.filter(tipo__in=recommended_places)
+    # Filter the recommended places by name
+    recommended_locals = Local.objects.filter(tipo__in=recommended_places)
             
-            # Serialize the recommended places
-            recommended_locals_serializer = LocalSerializer(recommended_locals, many=True)
+    # Serialize the recommended places
+    recommended_locals_serializer = LocalSerializer(recommended_locals, many=True)
+    return recommended_locals_serializer.data
             
-            return render(request, 'home.html', {'data': recommended_locals_serializer.data})
-        except UserProfile.DoesNotExist:
-            pass
-    
+
+def index(request):
+    search_query = request.GET.get('search', '')
+    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:10]
+    local_serializer = LocalSerializer(locals, many=True)
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            cluster_number = user_profile.cluster_usuario
+            recommendations = get_recommendations(request,cluster_number)
+            return render(request, 'home.html', {'data': recommendations})
+        except:
+            return render(request, 'home.html', {'data': local_serializer.data})
     return render(request, 'home.html', {'data': local_serializer.data})
 
 def user_register(request):
@@ -91,16 +96,16 @@ def user_login(request):
             login(request, user)
             return JsonResponse({'success': True, 'redirect_url': reverse('index')}) 
         else:
-            return JsonResponse({'success': False, 'message': 'Invalid credentials'})
+            return JsonResponse({'success': False, 'message': 'Você precisa estar logado!'})
 
 
 @login_required
-def complementar_register(request):
-    usuario = request.user
+def editprofile(request): # é provisoria 
+    usuario = request.user  # Obtém o usuário logado
     user_profile_exists = UserProfile.objects.filter(user=usuario).exists()
     if user_profile_exists:
         return redirect(user_display) 
-
+    
     if request.method == 'POST':
         additional_form = UserProfileForm(request.POST)
         if additional_form.is_valid():
@@ -115,17 +120,17 @@ def complementar_register(request):
                 Instancia Preferencias com  o usuario logado e o tipo de elemento
                 Salva o id usuario e o id elemento na tabela"""
             preferencia_locais_ids = additional_form.cleaned_data['preferencia_locais'].values_list('id', flat=True)
-            for tipo_local_id in preferencia_locais_ids:
+            for tipo_local_id in preferencia_locais_ids: # se o usuario escoleher varios 
                 tipo_local_instance = TiposLocais(tipo_local_id)
                 preferencia_locais_instance = PreferenciaLocais(user=current_user.user, local=tipo_local_instance)
                 preferencia_locais_instance.save()
             preferencia_recursos_ids = additional_form.cleaned_data['preferencia_recursos'].values_list('id', flat=True)
-            for tipo_recurso_id in preferencia_recursos_ids:
+            for tipo_recurso_id in preferencia_recursos_ids: # se o recurso escoleher varios
                 tipo_recurso_instance = TiposRecursos(tipo_recurso_id)
                 preferencia_recursos_instance = PreferenciaRecursos(user=current_user.user, recurso=tipo_recurso_instance)
                 preferencia_recursos_instance.save()
             dispositivo_aux_marcha_ids = additional_form.cleaned_data['preferencia_dam'].values_list('id', flat=True)
-            for tipo_dam_id in dispositivo_aux_marcha_ids:
+            for tipo_dam_id in dispositivo_aux_marcha_ids: # varios dispositivos
                 tipo_dispositivo_instance = TiposDispositivos(tipo_dam_id)
                 preferencia_dispositivos_instance = PreferenciaDispositivos(user=current_user.user, dispositivo=tipo_dispositivo_instance)
                 preferencia_dispositivos_instance.save()
@@ -134,12 +139,12 @@ def complementar_register(request):
             current_user.cluster_usuario = cluster[0]
             current_user.save()
 
-            print(f"CLUSTER: ", type(cluster))
-            return redirect('index') # Redirecionar para a tela de perfil quando criar
+            print(f"CLUSTER: ", type(cluster))    
+            return redirect('editprofile') # Redirecionar para a tela de perfil quando criar
     else:
         additional_form = UserProfileForm()
-
-    return render(request, 'comp.html', context={'additional_form': additional_form,})   
+    
+    return render(request, 'editprofile.html', context={'additional_form': additional_form, 'usuario': usuario,})    
 
 @login_required(login_url='login')
 def home(request):
@@ -152,31 +157,6 @@ def logout_view(request):
     logout(request)
     return redirect('index')       
 
-
-@api_view(['GET', 'POST', 'DELETE'])
-def users_list(request):
-    if request.method == 'GET':
-        users = MyUser.objects.all()
-        
-        title = request.GET.get('title', None)
-        if title is not None:
-            users = users.filter(title__icontains=title)
-        
-        users_serializer = UserSerializer(users, many=True)
-        return JsonResponse(users_serializer.data, safe=False)
-        # 'safe=False' for objects serialization
-    elif request.method == 'POST':
-        users_data = JSONParser().parse(request)
-        users_data['password'] = make_password(users_data['password'])  # Gera o hash da senha
-        users_serializer = UserSerializer(data=users_data)
-        if users_serializer.is_valid():
-            users_serializer.save()
-            return JsonResponse(users_serializer.data, status=status.HTTP_201_CREATED) 
-        return JsonResponse(users_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE': #Delete all instances
-        count = MyUser.objects.all().delete()
-        return JsonResponse({'message': '{} Users were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
- 
 def results(request):
     search = False
     tags = False
@@ -184,6 +164,7 @@ def results(request):
     except: pass
     try: selected_types = request.GET.get('checkboxesData')
     except: pass
+    my_boolean_header = request.META.get('HTTP_X_MY_BOOLEAN_HEADER')
 
     locals = Local.objects.all()
     if selected_types == 'all' and search_query == 'all':
@@ -209,8 +190,10 @@ def results(request):
         'selected_types': selected_types,
         'search_query': search_query,
     }
-
-    if search or tags:
+    csrf_token = request.GET.get('csrfmiddlewaretoken') # Verify if it exists in the request
+    if (search or tags) and my_boolean_header == 'true':
+        # Only return JsonResponse if there's tag selected or some input into the search bar, 
+        # With the exception that the request came from the results pages
         return JsonResponse(context)
     return render(request, 'results.html', context)
 
@@ -260,11 +243,15 @@ def user_display(request):
         if preferencia.recurso not in recursos_unicos:
             recursos_unicos.add(preferencia.recurso)
             recursos_preferidos.append(preferencia)
+    
+    if usuario.is_authenticated:
+        last_comment = Post.objects.filter(user=usuario).order_by('-timestamp').first()
 
     context = {
         'usuario': usuario,
         'preferencias_locais': locais_preferidos,
         'preferencias_recursos': recursos_preferidos,
+        'last_comment': last_comment,
     }
 
     return render(request, 'profile.html', context)
@@ -276,25 +263,65 @@ def about(request):
 def local_detail(request, local_id):
     local = Local.objects.get(pk=local_id)
     recursos = local.recursos[1:-2]
+    recursos = recursos.replace("'", "")
     recursos = recursos.split(',')
+    recursos = list(map(lambda s: s.title(), recursos))
+    #para exibição dos cards de locais recomendados
+    search_query = request.GET.get('search', '')
+    locals = Local.objects.filter(nome__icontains=search_query).order_by('-nota')[:2]
+    local_serializer = LocalSerializer(locals, many=True)
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            cluster_number = user_profile.cluster_usuario
+            recommendations = get_recommendations(request,cluster_number)[:2]
+            
+        except:
+            recommendations = local_serializer.data
+    else:
+        recommendations = local_serializer.data    
     
     local_data = {
-        'nome': local.nome,
-        'latitude': local.latitude,
-        'longitude': local.longitude,
-        'bairro': local.bairro,
-        'cidade': local.cidade,
-        'estado': local.estado,
-        'recursos': recursos,
-        'cep': local.cep,
-        'foto_url': local.foto_url,
-        'nota': local.nota,
-        'relevancia': local.relevancia,
-        'tipo': local.tipo,
+        "nome": local.nome,
+        "latitude": local.latitude,
+        "longitude": local.longitude,
+        "bairro": local.bairro,
+        "cidade": local.cidade,
+        "estado": local.estado,
+        "recursos": recursos,
+        "cep": local.cep,
+        "foto_url": local.foto_url,
+        "nota": local.nota,
+        "relevancia": local.relevancia,
+        "tipo": local.tipo,
+        "id": local_id
     }
     
+    api_url = reverse("get_posts_by_local", args=[local_id])
+    api_url = request.build_absolute_uri(api_url)
+    print(api_url)
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        reviews = response.json() # Retrieve the data from the jsonResponse
+        for review in reviews:
+            print(review)
+            date_string = review['timestamp']
+            date_obj = datetime.fromisoformat(date_string.replace("Z", "+00:00"))
+            review['timestamp'] = date_obj.strftime("%d de %B de %Y")
+    else: 
+        pass
+    get_tags_url = reverse("get_tags_for_local", args=[local_id])
+    get_tags_url = request.build_absolute_uri(get_tags_url)    
+    response = requests.get(get_tags_url)
+    
+    if response.status_code == 200:
+        tags = response.json()
+    else:
+        pass
     context = {
-        'local_data': local_data,
+        "local_data": local_data,
+        "reviews": reviews,
+        "recommendations": recommendations,
+        "tags":tags,
     }
-    
     return render(request, 'local.html', context)

@@ -52,10 +52,6 @@
           </button>
         </form>
       </div>
-      <div class="local-underneath-search">
-        <button id="alter-local">Alterar Local</button>
-        <p id="current-local">Local Atual: <span>Recife - PE</span></p>
-      </div>
     </div>
     <h2 class="title-filter">Filtrar por Tipo</h2>
     <div class="tags">
@@ -76,7 +72,7 @@
     <div id="parent-container">
       <div class="card-container" id="card-container">
         {% if data %} {% for local in data %}
-        <div class="card" style="background-color: #558BE2"> 
+        <div class="card" style="background-color: #558BE2" data-local-id="{{ local.id }}"> 
           <div class="image-overlay">
             <!-- <h1>{{local}}</h1> -->
             {% if local.foto_url %}
@@ -107,6 +103,9 @@
       </div>
     </div>
   </div>
+  <script>
+    const csrfToken = "{{ csrf_token}}"
+  </script>
   {% endblock %}
     
   </body>

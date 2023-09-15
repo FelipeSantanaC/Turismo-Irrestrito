@@ -53,22 +53,27 @@ function updateCardSelect(checkboxes=undefined) {
   let queryParams = ''
   if (searchInput.length == 0 && selected == 0) {
     queryParams = new URLSearchParams({
+      csrfmiddlewaretoken: csrfToken,
       checkboxesData: 'all', // Convert the selected array to a comma-separated string
       searchQuery: 'all',
     });
 
   } else {
     queryParams = new URLSearchParams({
+      csrfmiddlewaretoken: csrfToken,
       checkboxesData: selected.join(','), // Convert the selected array to a comma-separated string
       searchQuery: searchInput,
     });
   }
   const url = '/results/?' + queryParams;
 
-
-
   fetch(url, {
     method:'GET',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-My-Boolean-Header': 'true',
+      "X-CSRFToken": csrfToken
+    }
     })
   .then(response => response.json())
   .then(data => {
@@ -86,6 +91,7 @@ function updateCardSelect(checkboxes=undefined) {
       // Create a new div for each local
       const cardDiv = document.createElement('div');
       cardDiv.className = 'card';
+      cardDiv.setAttribute('data-local-id', local.id)
       cardDiv.style.backgroundColor = '#558BE2';
 
       // Create the image overlay
@@ -142,6 +148,16 @@ function updateCardSelect(checkboxes=undefined) {
 
     // Replace the existing card-container div with the updated content
     parentContainer.replaceChild(updatedCardContainer, document.getElementById('card-container'));
+
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        const localId =card.getAttribute('data-local-id');
+        const url = `/local/${localId}`;
+        window.location.href = url;
+      })
+    })
   })
   .catch(error => {
     console.error('Error occurred during AJAX request:', error);

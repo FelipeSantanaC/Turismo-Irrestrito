@@ -14,7 +14,7 @@ body {
 
 .container-perfil {
   width: 90%;
-  height: 351px;
+  height: 280px;
   background-color: #F2FFFF;
   display: flex;
   flex-direction: column;
@@ -209,4 +209,10 @@ body {
 
 .container-locais {
   margin-bottom: 80px;
+}
+
+.not-comment {
+  margin-left: 50px;
+  font-size: 20px;
+  margin-top: 40px;
 }

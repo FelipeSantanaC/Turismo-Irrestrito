@@ -58,6 +58,7 @@ class TiposLocais(models.Model):
         return self.title
 class TiposRecursos(models.Model):
     title = models.CharField(max_length=80)
+    description = models.TextField(default='')
     def __str__(self):
         return self.title
 class TiposDispositivos(models.Model):

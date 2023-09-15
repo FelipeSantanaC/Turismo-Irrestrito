@@ -1,0 +1,236 @@
+/*Padões -------------------------*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --gradiente-3: linear-gradient(176deg, #010418 0%, #04247C 28.51%, #0458AB 50.41%, #558BE2 72.78%);}
+
+/*Conteiners -------------------------*/
+
+#cont_foto, form, body{
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+form, body{
+  align-items: center;
+  gap: 16px;
+  overflow-x: hidden;
+  width: 100%;
+  height: auto;
+}
+
+body{
+  height: auto;
+}
+
+
+.Fer_Auxiliar, .Cont_Pessoais, .Rec_Aces, .Locais_Inter{
+  width: 90%;
+  background: var(--gradiente-3);
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Cont_Pessoais {
+  height: 566px;
+}
+
+#Cont_formPes {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 64px;
+  gap: 80px;
+}
+
+#btns_Rec, #btns_Loc, #btns_Fer{
+  width: 95%;
+  background-color: #F2FFFF;
+  margin-left: 28px;
+  margin: 0px 0px 48px 28px;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow:  0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+/*Textos -------------------------*/
+
+#P_form label, #cont_foto label{
+  color:#F2FFFF;
+  font-size: 20px;
+  font-weight: 400;
+  text-transform:none;
+}
+
+#cont_foto label{
+  margin-top: 16px;
+}
+
+h1{
+  color: #F2FFFF;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 20px 0px 16px 40px;
+}
+
+/*Form e Inputs -------------------------*/
+
+input[type="text"], .ipt_list, input[type="date"], select, #cont_foto input{
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.36px;
+  border: none;
+  margin: 8px 0 16px 0;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;;
+  padding-left: 12px;
+  outline: 0
+}
+
+input[type="text"],  #cont_foto input{
+  color: #010418;
+  width: 669px;
+  height: 32px;
+  border-radius:16px;
+}
+
+#cont_foto input{
+  width: auto;
+}
+
+input[type="date"]{
+  border-radius: 8px;
+}
+
+.ipt_list, select{
+  width: 480px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+
+.cont_formInfo, .ipt_radio{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+#id_preferencia_dam, #id_preferencia_recursos, #id_preferencia_locais {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Duas colunas de tamanho igual */
+  grid-gap: 4px;
+}
+
+#id_preferencia_dam div label, #id_preferencia_recursos div label, #id_preferencia_locais div label {
+  background-color: #558BE2;
+  color: #051537;
+  width: fit-content;
+  border-radius: 16px;
+  padding: 3px 5px;
+}
+
+#id_preferencia_dam div label input[type="checkbox"], #id_preferencia_recursos div label input[type="checkbox"], #id_preferencia_locais div label input[type="checkbox"] {
+  display: none;
+}
+
+#id_preferencia_dam div label:has(> input[type="checkbox"]:checked), #id_preferencia_recursos div label:has(> input[type="checkbox"]:checked), #id_preferencia_locais div label:has(> input[type="checkbox"]:checked) {
+  background-color: #0458AB;
+  color: #C2E2F5;
+  border-radius: 16px;
+  padding: 3px 5px;
+}
+
+#id_preferencia_recursos, #id_preferencia_locais {
+  grid-template-columns: 1fr 1fr 1fr; /* Duas colunas de tamanho igual */
+}
+
+/*Imgs e buttons-------------------------*/
+
+.img_perfil{
+  width: 222px;
+  height: 222px;
+  border: 3px solid #F2FFFF;
+  border-radius: 50%;
+}
+
+button, input[type="submit"]{
+  width: 170.651px;
+  height: 38px;
+  font-size: 18px;
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+input[type="submit"]{
+  background-color: #558BE2;
+  color: #F2FFFF;
+}
+
+#botoes{
+  display: flex;
+  gap: 8px;
+}
+
+
+/*Tooltip -------------------------*/
+.cont_tool {
+    position: relative; /* Importante para o posicionamento absoluto */
+    }
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  width: 300px;
+  padding: 10px;
+  border-radius: 8px;
+  top: 50%;
+  left: 125%; /* Posição à direita do elemento */
+  transform: translateY(-50%); /* Centraliza verticalmente */
+  display: none;
+  }
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent rgba(0, 0, 0, 0.9)transparent transparent ;
+}
+
+.cont_tool:hover .tooltip {
+  display: block;
+}
+
+/*Tooltip -------------------------*/
+
+#id_acompanhamento_0, #id_acompanhamento_1{
+  appearance: none;
+  width: 24px; /* Definindo a largura */
+  height: 24px; /* Definindo a altura */
+  appearance: none; /* Removendo o estilo nativo do sistema */
+  border: 2px solid #F2FFFF;
+  border-radius: 50%; /* Tornando o botão redondo */
+  outline: none;
+  cursor: pointer;
+}
+
+  #id_acompanhamento_0:checked, #id_acompanhamento_1:checked {
+  background-color: #051537;
+  border: 2px solid #F2FFFF;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  }
